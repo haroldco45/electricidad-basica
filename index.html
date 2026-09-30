@@ -1,0 +1,2260 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Electricidad básica</title>
+<meta name="description" content="Curso de electricidad básica: casa, motores y bombas, energía solar, finca, multímetro, planos y oficio. Con herramientas, evaluaciones y certificado.">
+<meta name="theme-color" content="#1B2A3A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E8ECEE; --panel:#F7F9FA; --ink:#1B2A3A; --muted:#58687A; --line:#C9D1D7;
+  --copper:#B5652B; --copper-soft:#F3E3D6; --live:#E9B308; --ok:#2E7D4F; --danger:#B3261E;
+  --shadow:0 1px 0 rgba(27,42,58,.08);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121A22; --panel:#1A2530; --ink:#E6ECF1; --muted:#9AAABA; --line:#2E3C4A;
+    --copper:#E08A4B; --copper-soft:#3A2A1E; --live:#F5C518; --ok:#5CC389; --danger:#F07167;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121A22; --panel:#1A2530; --ink:#E6ECF1; --muted:#9AAABA; --line:#2E3C4A;
+  --copper:#E08A4B; --copper-soft:#3A2A1E; --live:#F5C518; --ok:#5CC389; --danger:#F07167;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 "Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;font-weight:700;line-height:1.1;margin:0}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--live);outline-offset:2px}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px}
+[hidden]{display:none!important}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--ink);color:#fff}
+:root[data-theme="dark"] header.top,:root:not([data-theme="light"]) header.top{background:#1B2A3A}
+header.top .wrap{display:flex;align-items:center;gap:14px;height:56px}
+.brand{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:22px;display:flex;align-items:center;gap:8px;color:#fff}
+nav.tabs{margin-left:auto;display:flex;gap:2px}
+nav.tabs button{background:none;border:0;color:#B9C6D3;padding:8px 14px;border-radius:6px;font-weight:600;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:#fff;background:rgba(255,255,255,.12);box-shadow:inset 0 -3px 0 #F5C518}
+@media (max-width:600px){
+  header.top .wrap{height:52px}
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;background:#1B2A3A;justify-content:space-around;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));margin:0;z-index:10}
+  nav.tabs button{flex:1;padding:10px 4px}
+  main{padding-bottom:90px}
+}
+
+/* portada */
+.hero{padding:30px 0 22px;display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center}
+.hero h1{font-size:clamp(40px,7vw,62px)}
+.hero p{color:var(--muted);max-width:42ch;margin:12px 0 0}
+.circuit{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+.circuit svg{width:100%;height:auto;display:block}
+.circuit .hint{font-size:14px;color:var(--muted);text-align:center;margin-top:6px}
+#sw{cursor:pointer}
+#bulbGlow{transition:opacity .35s}
+.wire{stroke:var(--copper);stroke-width:5;fill:none;stroke-linecap:round}
+.flow{stroke:var(--live);stroke-width:5;fill:none;stroke-dasharray:4 18;stroke-linecap:round;opacity:0}
+.on .flow{opacity:1;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-22}}
+@media (prefers-reduced-motion:reduce){.on .flow{animation:none}}
+@media (max-width:700px){.hero{grid-template-columns:1fr;padding-top:20px}}
+.stats{display:flex;gap:28px;flex-wrap:wrap;align-items:center;margin:4px 0 16px}
+.stats b{font:700 36px "Barlow Condensed",sans-serif;color:var(--copper);margin-right:6px}
+.stats small{color:var(--muted)}
+.stats div{display:flex;align-items:baseline}
+
+ol.cards{list-style:none;padding:0;margin:0 0 30px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.ccard{width:100%;height:100%;display:flex;gap:14px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+.ccard:hover{border-color:var(--copper)}
+.cn{flex:none;width:34px;height:34px;border-radius:50%;border:3px solid var(--copper);display:grid;place-items:center;font:700 17px "Barlow Condensed",sans-serif}
+.cbody{flex:1;display:flex;flex-direction:column;gap:6px}
+.cbody h3{font-size:24px}.cbody p{margin:0;color:var(--muted);font-size:15px;line-height:1.4}
+.cbody small{color:var(--muted);font-size:14px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.cbody em{font-style:normal;font-weight:600}.cbody em.pass{color:var(--ok)}
+.bar{display:block;flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--copper);width:0;transition:width .4s}
+.cbody .bar{flex:none;margin-top:auto}
+
+section.view{display:none;padding-bottom:40px}
+section.view.active{display:block}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
+.muted{color:var(--muted)}
+.progress{display:flex;align-items:center;gap:12px;margin:6px 0 18px;font-weight:600}
+.back{background:none;border:0;padding:16px 0 4px;color:var(--copper);font-weight:600}
+
+ol.lessons{list-style:none;padding:0;margin:0 0 0 14px;border-left:4px solid var(--copper)}
+ol.lessons > li{position:relative;padding:0 0 10px 26px}
+ol.lessons > li::before{content:attr(data-n);position:absolute;left:-17px;top:12px;width:30px;height:30px;border-radius:50%;background:var(--bg);border:3px solid var(--copper);font:700 15px/24px "Barlow Condensed",sans-serif;text-align:center;color:var(--ink)}
+ol.lessons > li.done::before{background:var(--copper);color:#fff;content:"✓"}
+details.lesson{background:var(--panel);border:1px solid var(--line);border-radius:10px}
+details.lesson summary{list-style:none;padding:14px 16px;cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:center}
+details.lesson summary::-webkit-details-marker{display:none}
+details.lesson summary h3{font-size:24px}
+details.lesson summary span{font-size:14px;color:var(--muted);white-space:nowrap}
+details.lesson[open] summary{border-bottom:1px solid var(--line)}
+.lesson-body{padding:12px 18px 18px;max-width:70ch}
+.lesson-body h4{margin:18px 0 4px;font-size:17px}
+.lesson-body ul,.lesson-body ol{padding-left:22px}.lesson-body li{margin:4px 0}
+.listen{background:var(--copper-soft);border:0;border-radius:99px;padding:6px 14px;font-weight:600;font-size:15px;color:var(--ink)}
+.listen::before{content:"";display:inline-block;width:0;height:0;border-left:9px solid var(--copper);border-top:6px solid transparent;border-bottom:6px solid transparent;margin-right:8px;vertical-align:1px}
+.listen.on::before{width:9px;height:10px;border:0;background:var(--copper)}
+.formula{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:700;background:var(--copper-soft);border-radius:8px;padding:10px 16px;display:inline-block;margin:6px 0}
+.note{border-left:4px solid var(--live);padding:8px 12px;background:color-mix(in srgb,var(--live) 12%,transparent);border-radius:0 8px 8px 0;margin:12px 0}
+.warn{border-left-color:var(--danger);background:color-mix(in srgb,var(--danger) 10%,transparent)}
+.note.good{border-left-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.btn{background:var(--ink);color:var(--bg);border:0;border-radius:8px;padding:10px 16px;font-weight:600}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.btn.small{padding:6px 12px;font-size:15px}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.wires{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.wires div{display:flex;align-items:center;gap:8px;font-size:15px}
+.wires b{width:34px;height:10px;border-radius:5px;border:1px solid var(--muted)}
+.diagram{background:var(--bg);border-radius:10px;padding:10px;margin:10px 0}
+.diagram svg{width:100%;max-width:540px;height:auto;display:block}
+.symgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin:12px 0}
+.sym{margin:0;background:var(--bg);border-radius:8px;padding:8px;text-align:center;font-size:14px}
+.sym svg{width:52px;height:52px}
+
+h2{font-size:32px;margin:24px 0 6px}
+.panel h3{font-size:24px;margin-bottom:10px}
+label.f{display:block;font-size:15px;font-weight:600;margin:10px 0 4px}
+input[type=number],input[type=text],select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+input[type=range]{width:100%;accent-color:var(--copper)}
+.seg{display:inline-flex;border:2px solid var(--ink);border-radius:8px;overflow:hidden}
+.seg button{background:none;border:0;padding:8px 14px;font-weight:600}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.result{font-family:"Barlow Condensed",sans-serif;font-size:38px;font-weight:700;color:var(--copper);margin-top:12px}
+.readout{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;text-align:center}
+.readout div{background:var(--bg);border-radius:8px;padding:8px}
+.readout b{display:block;font:700 22px "Barlow Condensed",sans-serif}
+.readout small{color:var(--muted)}
+#simSvg{width:100%;height:auto;background:var(--bg);border-radius:10px;margin-top:10px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0 16px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:14px}
+.kv div{background:var(--bg);border-radius:8px;padding:10px 12px}
+.kv small{color:var(--muted)}
+.kv b{display:block;font:700 26px "Barlow Condensed",sans-serif;color:var(--copper)}
+.ok{color:var(--ok);font-weight:600}.bad{color:var(--danger);font-weight:600}
+
+.table-wrap{overflow-x:auto}
+.table-wrap table{width:100%;border-collapse:collapse;min-width:520px}
+.lesson-body .table-wrap table{min-width:440px;margin:10px 0}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);font-size:15px;vertical-align:top}
+th{color:var(--muted);font-weight:600}
+td input{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg)}
+td.num{text-align:right;font-weight:600;white-space:nowrap}
+tr.hl td{background:var(--copper-soft)}
+.x{background:none;border:0;color:var(--muted);font-size:20px}
+.totals{display:flex;flex-wrap:wrap;gap:20px;margin-top:14px;align-items:flex-end}
+.totals div b{display:block;font:700 34px "Barlow Condensed",sans-serif;color:var(--copper)}
+
+/* herramientas */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 16px}
+.chips button{background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-weight:600;font-size:15px}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tool h3{margin-bottom:4px}
+.tool > .muted{margin:0 0 6px;font-size:15px}
+
+/* multímetro */
+.meter{max-width:360px;margin:14px auto 6px;background:#E9B308;border-radius:22px;padding:18px;box-shadow:inset 0 0 0 6px #1B2A3A}
+.lcd{background:#C8D3B5;color:#1B2A3A;font:700 44px "Barlow Condensed",monospace;text-align:right;border-radius:8px;padding:8px 14px;min-height:72px;letter-spacing:1px;border:3px solid #1B2A3A}
+.dial{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:14px 0}
+.dial button,.jacks button,.jacks span{background:#1B2A3A;color:#fff;border:0;border-radius:8px;padding:10px 4px;font-weight:700;font-size:16px;text-align:center}
+.dial button[aria-pressed="true"]{background:#fff;color:#1B2A3A;box-shadow:inset 0 0 0 3px #1B2A3A}
+.jacks{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.jacks span{background:#2c2c2c}
+.jacks button{background:#4a1a18}
+.jacks button[aria-pressed="true"]{background:#C0392B;box-shadow:inset 0 0 0 3px #fff}
+.meter small{display:block;text-align:center;color:#1B2A3A;font-weight:600;margin-top:8px;font-size:13px}
+
+/* evaluación */
+.q{font-size:21px;font-weight:600;margin:6px 0 14px}
+.opts{display:grid;gap:8px}
+.opts button{text-align:left;background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:12px 14px}
+.opts button.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--bg))}
+.opts button.wrong{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 12%,var(--bg))}
+.expl{margin-top:12px}
+.etab td.acts{justify-content:flex-end}
+.etab td{vertical-align:middle}
+.final{margin-top:16px}
+#certImg{width:100%;height:auto;border-radius:8px;border:1px solid var(--line);display:block;margin:10px 0}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;font-weight:600;z-index:20;max-width:90vw;text-align:center}
+@media (min-width:601px){#toast{bottom:30px}}
+footer{padding:20px 0 30px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="#F5C518"/></svg>
+      Electricidad básica
+    </div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-v="inicio" aria-selected="true">Cursos</button>
+      <button role="tab" data-v="herramientas" aria-selected="false">Herramientas</button>
+      <button role="tab" data-v="evaluacion" aria-selected="false">Evaluación</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= INICIO ================= -->
+<section class="view active" id="inicio">
+  <div class="hero">
+    <div>
+      <h1>Aprenda electricidad, de la pila al motor</h1>
+      <p>Nueve módulos para la casa, la finca, la mina y el taller, once herramientas de cálculo y un certificado al final. Las lecciones se pueden escuchar en voz alta.</p>
+      <button class="btn" id="installBtn" hidden style="margin-top:16px">Instalar la app en este teléfono</button>
+    </div>
+    <div class="circuit" id="heroCircuit">
+      <svg viewBox="0 0 320 200" role="img" aria-label="Circuito con pila, interruptor y bombillo">
+        <path class="wire" d="M60 150 V50 H140"/><path class="wire" d="M190 50 H260 V90"/>
+        <path class="wire" d="M260 130 V150 H60"/>
+        <path class="flow" d="M60 150 V50 H140 M190 50 H260 V90 M260 130 V150 H60"/>
+        <rect x="40" y="85" width="40" height="44" rx="4" fill="var(--ink)"/>
+        <rect x="52" y="78" width="16" height="8" rx="2" fill="var(--ink)"/>
+        <text x="60" y="113" text-anchor="middle" font-size="14" font-weight="700" fill="var(--bg)">9 V</text>
+        <g id="sw" tabindex="0" role="switch" aria-checked="false" aria-label="Interruptor">
+          <rect x="130" y="25" width="70" height="50" fill="transparent"/>
+          <circle cx="140" cy="50" r="5" fill="var(--ink)"/><circle cx="190" cy="50" r="5" fill="var(--ink)"/>
+          <line id="lever" x1="140" y1="50" x2="185" y2="22" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" style="transition:all .2s"/>
+        </g>
+        <circle id="bulbGlow" cx="260" cy="108" r="36" fill="var(--live)" opacity="0"/>
+        <circle cx="260" cy="104" r="18" fill="var(--panel)" stroke="var(--ink)" stroke-width="3"/>
+        <path d="M252 106 l4 -6 4 6 4 -6 4 6" stroke="var(--copper)" stroke-width="2" fill="none"/>
+        <rect x="251" y="120" width="18" height="12" fill="var(--muted)"/>
+      </svg>
+      <div class="hint" id="heroHint">Toque el interruptor para cerrar el circuito</div>
+    </div>
+  </div>
+  <div class="stats" id="stats"></div>
+  <ol class="cards" id="cards"></ol>
+</section>
+
+<!-- ================= CURSO ================= -->
+<section class="view" id="curso">
+  <button class="back" id="cBack">‹ Volver a los cursos</button>
+  <h2 id="cTitle" style="margin-top:6px"></h2>
+  <p class="muted" id="cDesc" style="max-width:64ch;margin:6px 0 0"></p>
+  <div class="progress"><span id="cTxt"></span><span class="bar"><i id="cBar"></i></span></div>
+  <ol class="lessons" id="courseList"></ol>
+  <div class="panel" style="margin-top:18px">
+    <h3>¿Terminó el módulo?</h3>
+    <p class="muted" style="margin:0 0 12px">Presente la evaluación. Con 80 % o más obtiene el certificado del módulo.</p>
+    <button class="btn" id="cQuiz">Presentar la evaluación de este módulo</button>
+  </div>
+</section>
+
+<!-- ================= HERRAMIENTAS ================= -->
+<section class="view" id="herramientas">
+  <h2>Herramientas</h2>
+  <div class="chips" id="chips" role="group" aria-label="Herramientas">
+    <button data-t="ohm">Ley de Ohm</button><button data-t="serie">Serie y paralelo</button><button data-t="multi">Multímetro</button>
+    <button data-t="consumo">Consumo</button><button data-t="circuito">Circuito</button><button data-t="carga">Carga de la casa</button>
+    <button data-t="presupuesto">Presupuesto</button><button data-t="bomba">Bomba</button><button data-t="motor">Motor</button>
+    <button data-t="solar">Solar</button><button data-t="bombeo">Bombeo solar</button>
+  </div>
+
+  <div class="panel tool" id="tool-ohm">
+    <h3>Calculadora de la ley de Ohm</h3>
+    <label class="f" for="ohmFind">¿Qué quiere hallar?</label>
+    <select id="ohmFind"><option value="I">Corriente (I) en amperios</option><option value="V">Voltaje (V) en voltios</option><option value="R">Resistencia (R) en ohmios</option></select>
+    <div id="ohmInputs"></div>
+    <div class="result" id="ohmRes">—</div>
+    <div class="muted" id="ohmExpl"></div>
+  </div>
+
+  <div class="panel tool" id="tool-serie" hidden>
+    <h3>Bombillos en serie o en paralelo</h3>
+    <div class="seg" role="group" aria-label="Tipo de conexión"><button id="bSerie" aria-pressed="true">Serie</button><button id="bPar" aria-pressed="false">Paralelo</button></div>
+    <label class="f">Voltaje de la fuente: <span id="vV">12</span> V</label><input type="range" id="sV" min="1" max="24" value="12">
+    <label class="f">Bombillo A: <span id="vR1">6</span> Ω</label><input type="range" id="sR1" min="1" max="30" value="6">
+    <label class="f">Bombillo B: <span id="vR2">6</span> Ω</label><input type="range" id="sR2" min="1" max="30" value="6">
+    <svg id="simSvg" viewBox="0 0 320 170" aria-label="Diagrama del circuito"></svg>
+    <div class="readout" id="simOut"></div>
+    <p class="muted" id="simExpl" style="font-size:15px"></p>
+  </div>
+
+  <div class="panel tool" id="tool-multi" hidden>
+    <h3>Simulador de multímetro</h3>
+    <p class="muted">Escoja qué va a medir, gire la perilla y ponga la punta roja en el borne correcto. Aquí los errores no queman a nadie.</p>
+    <label class="f" for="mmS">¿Qué va a medir?</label><select id="mmS"></select>
+    <div class="meter">
+      <div class="lcd" id="mmLcd" aria-live="polite"></div>
+      <div class="dial" id="mmDial" role="group" aria-label="Perilla">
+        <button data-f="off">OFF</button><button data-f="vac">V~</button><button data-f="vdc">V⎓</button><button data-f="ohm">Ω</button>
+        <button data-f="cont">🔊</button><button data-f="aac">A~</button><button data-f="adc">A⎓</button>
+      </div>
+      <div class="jacks" id="mmJacks" role="group" aria-label="Borne de la punta roja">
+        <span>COM</span><button data-j="v">VΩ</button><button data-j="a">10 A</button>
+      </div>
+      <small>La punta negra va siempre en COM. Toque el borne donde pondrá la roja.</small>
+    </div>
+    <div class="note" id="mmMsg"></div>
+    <button class="btn alt" id="mmFuse" hidden>Cambiar el fusible</button>
+  </div>
+
+  <div class="panel tool" id="tool-consumo" hidden>
+    <h3>¿Cuánto gasta mi casa?</h3>
+    <p class="muted">Ajuste los vatios y las horas de uso. Para ver la plata, escriba el valor del kWh que aparece en su factura.</p>
+    <label class="f" for="tarifa">Valor del kWh en su factura (pesos)</label>
+    <input type="number" id="tarifa" min="0" step="1" placeholder="El valor que dice su recibo" style="max-width:320px">
+    <div class="table-wrap" style="margin-top:14px"><table>
+      <thead><tr><th>Aparato</th><th>Vatios</th><th>Horas/día</th><th style="text-align:right">kWh/mes</th><th style="text-align:right">$/mes</th><th></th></tr></thead>
+      <tbody id="apps"></tbody></table></div>
+    <button class="btn alt" id="addApp" style="margin-top:12px">Agregar aparato</button>
+    <div class="totals"><div><small class="muted">Energía al mes</small><b id="totK">0 kWh</b></div><div><small class="muted">Costo aproximado al mes</small><b id="totP">—</b></div></div>
+    <p class="muted" style="font-size:14px">Neveras y aires acondicionados no trabajan a toda potencia todo el día, así que conviene poner menos horas de las que están enchufados.</p>
+  </div>
+
+  <div class="panel tool" id="tool-circuito" hidden>
+    <h3>Calibre, breaker y caída de tensión de un circuito</h3>
+    <div class="grid3">
+      <div><label class="f" for="cP">Potencia de la carga (vatios)</label><input type="number" id="cP" value="3500" min="1"></div>
+      <div><label class="f" for="cV">Voltaje</label><select id="cV"><option value="120">120 V</option><option value="240">240 V</option></select></div>
+      <div><label class="f" for="cL">Distancia del tablero a la carga (m)</label><input type="number" id="cL" value="20" min="0"></div>
+    </div>
+    <div class="kv" id="cOut"></div>
+    <div class="table-wrap" style="margin-top:12px"><table id="cTab"></table></div>
+    <p class="muted" style="font-size:14px">Se toma la corriente con un margen del 25 % y se busca el calibre más delgado que la soporte sin pasar de 3 % de caída de tensión.</p>
+  </div>
+
+  <div class="panel tool" id="tool-carga" hidden>
+    <h3>Carga total de la vivienda</h3>
+    <div class="grid3">
+      <div><label class="f" for="hA">Área construida (m²)</label><input type="number" id="hA" value="80" min="1"></div>
+      <div><label class="f" for="hD">Ducha eléctrica (W, 0 si no hay)</label><input type="number" id="hD" value="3500" min="0"></div>
+      <div><label class="f" for="hAir">Aires acondicionados (cantidad)</label><input type="number" id="hAir" value="1" min="0"></div>
+      <div><label class="f" for="hAirW">Vatios de cada aire</label><input type="number" id="hAirW" value="1200" min="0"></div>
+      <div><label class="f" for="hE">Estufa u horno eléctrico (W)</label><input type="number" id="hE" value="0" min="0"></div>
+      <div><label class="f" for="hC">Calentador de agua (W)</label><input type="number" id="hC" value="0" min="0"></div>
+      <div><label class="f" for="hM">Motobomba (W)</label><input type="number" id="hM" value="0" min="0"></div>
+      <div><label class="f" for="hO">Otras cargas fijas (W)</label><input type="number" id="hO" value="0" min="0"></div>
+    </div>
+    <div class="table-wrap" style="margin-top:14px"><table id="hTab"></table></div>
+    <div class="kv" id="hOut"></div>
+    <div id="hCirc" style="margin-top:12px"></div>
+  </div>
+
+  <div class="panel tool" id="tool-presupuesto" hidden>
+    <h3>Presupuesto de una instalación</h3>
+    <p class="muted">Escriba las cantidades de la obra. La lista de materiales es una estimación para empezar a cotizar: revísela contra el plano. Los precios que escriba quedan guardados en este teléfono.</p>
+    <div class="grid3">
+      <div><label class="f" for="qL">Salidas de lámpara</label><input type="number" id="qL" value="10" min="0"></div>
+      <div><label class="f" for="qT">Tomacorrientes dobles</label><input type="number" id="qT" value="14" min="0"></div>
+      <div><label class="f" for="qG">De ellos, con diferencial (GFCI)</label><input type="number" id="qG" value="3" min="0"></div>
+      <div><label class="f" for="qS1">Interruptores sencillos</label><input type="number" id="qS1" value="6" min="0"></div>
+      <div><label class="f" for="qS2">Interruptores dobles</label><input type="number" id="qS2" value="2" min="0"></div>
+      <div><label class="f" for="qS3">Pares de conmutables</label><input type="number" id="qS3" value="1" min="0"></div>
+      <div><label class="f" for="qCi">Circuitos de iluminación</label><input type="number" id="qCi" value="2" min="0"></div>
+      <div><label class="f" for="qCt">Circuitos de tomas</label><input type="number" id="qCt" value="4" min="0"></div>
+      <div><label class="f" for="qCe">Circuitos especiales a 240 V</label><input type="number" id="qCe" value="2" min="0"></div>
+      <div><label class="f" for="qD">Distancia promedio entre salidas (m)</label><input type="number" id="qD" value="4" min="0"></div>
+      <div><label class="f" for="qH">Recorrido de cada circuito al tablero (m)</label><input type="number" id="qH" value="10" min="0"></div>
+      <div><label class="f" for="qMO">Mano de obra por punto ($)</label><input type="number" id="qMO" value="" min="0" placeholder="Su valor"></div>
+      <div><label class="f" for="qImp">Imprevistos (%)</label><input type="number" id="qImp" value="5" min="0"></div>
+    </div>
+    <div class="table-wrap" style="margin-top:14px"><table id="qTab"></table></div>
+    <div class="kv" id="qOut"></div>
+    <p class="muted" style="font-size:14px">Aquí se cuentan como puntos las lámparas (con su interruptor), los tomacorrientes y los circuitos especiales. El cable incluye 10 % de desperdicio; repártalo en los colores del RETIE.</p>
+    <button class="btn alt" id="qCsv">Descargar presupuesto (CSV para Excel)</button>
+  </div>
+
+  <div class="panel tool" id="tool-bomba" hidden>
+    <h3>¿Qué bomba necesito?</h3>
+    <div class="grid3">
+      <div><label class="f" for="pQ">Caudal que necesita (litros por minuto)</label><input type="number" id="pQ" value="300" min="1"></div>
+      <div><label class="f" for="pH">Altura vertical total a vencer (m)</label><input type="number" id="pH" value="25" min="0"></div>
+      <div><label class="f" for="pF">Pérdidas por tubería y accesorios (%)</label><input type="number" id="pF" value="20" min="0" max="200"></div>
+      <div><label class="f" for="pE">Eficiencia de la bomba (%)</label><input type="number" id="pE" value="50" min="10" max="90"></div>
+    </div>
+    <div class="kv" id="pOut"></div>
+    <p class="muted" style="font-size:14px">La altura vertical va desde el nivel del agua hasta el punto más alto de la descarga. Bombas pequeñas rinden entre 40 y 60 %.</p>
+    <button class="btn alt" id="pUse">Llevar este motor a la calculadora de motor</button>
+  </div>
+
+  <div class="panel tool" id="tool-motor" hidden>
+    <h3>Instalación eléctrica del motor</h3>
+    <div class="grid3">
+      <div><label class="f" for="mHP">Potencia del motor</label><select id="mHP"></select></div>
+      <div><label class="f" for="mS">Sistema</label><select id="mS">
+        <option value="m120">Monofásico 120 V</option><option value="m240">Monofásico 220-240 V</option>
+        <option value="t208">Trifásico 208 V</option><option value="t220" selected>Trifásico 220 V</option><option value="t440">Trifásico 440 V</option></select></div>
+      <div><label class="f" for="mL">Distancia del tablero al motor (m)</label><input type="number" id="mL" value="30" min="0"></div>
+    </div>
+    <div class="kv" id="mOut"></div>
+    <p class="muted" style="font-size:14px" id="mNote"></p>
+  </div>
+
+  <div class="panel tool" id="tool-solar" hidden>
+    <h3>Sistema solar aislado</h3>
+    <p class="muted">Anote los aparatos que va a alimentar con el sol.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Aparato</th><th>Vatios</th><th>Horas/día</th><th style="text-align:right">Wh/día</th><th></th></tr></thead>
+      <tbody id="sLoads"></tbody></table></div>
+    <button class="btn alt" id="sAdd" style="margin-top:10px">Agregar aparato</button>
+    <div class="grid3" style="margin-top:6px">
+      <div><label class="f" for="sHSP">Horas sol pico de la zona</label><input type="number" id="sHSP" value="4.5" step="0.1" min="1"></div>
+      <div><label class="f" for="sD">Días de autonomía</label><input type="number" id="sD" value="1" step="0.5" min="0.5"></div>
+      <div><label class="f" for="sB">Tipo de batería</label><select id="sB"><option value="0.8">Litio (LiFePO4)</option><option value="0.5">Plomo, AGM o gel</option></select></div>
+      <div><label class="f" for="sSys">Voltaje del sistema</label><select id="sSys"><option value="12">12 V</option><option value="24" selected>24 V</option><option value="48">48 V</option></select></div>
+      <div><label class="f" for="sWp">Potencia de cada panel (Wp)</label><input type="number" id="sWp" value="450" min="10"></div>
+    </div>
+    <div class="kv" id="sOut"></div>
+    <p class="muted" style="font-size:14px">Incluye 10 % de pérdidas del inversor y 20 % de pérdidas de los paneles por calor, suciedad y cables. El inversor debe revisarse además contra el arranque de neveras y bombas.</p>
+  </div>
+
+  <div class="panel tool" id="tool-bombeo" hidden>
+    <h3>Bombeo solar</h3>
+    <div class="grid3">
+      <div><label class="f" for="bQ">Agua que necesita al día (m³)</label><input type="number" id="bQ" value="10" min="0" step="0.5"></div>
+      <div><label class="f" for="bH">Altura dinámica total (m)</label><input type="number" id="bH" value="30" min="0"></div>
+      <div><label class="f" for="bHSP">Horas sol pico</label><input type="number" id="bHSP" value="4.5" step="0.1" min="1"></div>
+      <div><label class="f" for="bE">Eficiencia de la motobomba (%)</label><input type="number" id="bE" value="40" min="10" max="80"></div>
+      <div><label class="f" for="bWp">Potencia de cada panel (Wp)</label><input type="number" id="bWp" value="450" min="10"></div>
+    </div>
+    <div class="kv" id="bOut"></div>
+    <p class="muted" style="font-size:14px">Un metro cúbico levantado un metro necesita unos 2,7 Wh. El caudal medio sirve para escoger la bomba en su curva; el fabricante confirma el modelo.</p>
+  </div>
+</section>
+
+<!-- ================= EVALUACIÓN ================= -->
+<section class="view" id="evaluacion">
+  <h2>Evaluación y certificados</h2>
+  <p class="muted" style="max-width:64ch">Cada módulo tiene su evaluación. Con 80 % o más obtiene el certificado del módulo, y al aprobar los nueve, el del curso completo.</p>
+  <label class="f" for="eName">Nombre completo para los certificados</label>
+  <input type="text" id="eName" autocomplete="name" placeholder="Como quiere que aparezca" style="max-width:420px">
+  <div id="eList" style="margin-top:16px"></div>
+  <div class="panel" id="quiz" hidden style="margin-top:16px"></div>
+  <div class="panel" id="certBox" hidden style="margin-top:16px">
+    <h3>Su certificado</h3>
+    <img id="certImg" alt="">
+    <div class="acts"><button class="btn" id="certDl">Descargar certificado</button><button class="btn alt" id="certBack">Volver a las evaluaciones</button></div>
+    <p class="muted" style="font-size:14px">Si la descarga no aparece en su teléfono, mantenga presionada la imagen para guardarla.</p>
+  </div>
+</section>
+
+<footer>Contenido educativo. Cualquier trabajo en una instalación eléctrica debe hacerlo un profesional con matrícula vigente, cumpliendo el RETIE (Resolución 40117 de 2024 y sus modificaciones).<br>Vibras Positivas HM</footer>
+</main>
+<div id="toast" role="status" hidden></div>
+
+<script>
+/* ---------- base ---------- */
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+             set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const $=id=>document.getElementById(id);
+const fmt=(n,d=2)=>Number.isFinite(n)?n.toLocaleString('es-CO',{maximumFractionDigits:d}):'—';
+/* ---------- circuito de portada ---------- */
+const hero=document.getElementById('heroCircuit'),sw=document.getElementById('sw'),lever=document.getElementById('lever');
+let on=false;
+function toggle(){on=!on;hero.classList.toggle('on',on);sw.setAttribute('aria-checked',on);
+  lever.setAttribute('x2',on?190:185);lever.setAttribute('y2',on?50:22);
+  document.getElementById('bulbGlow').setAttribute('opacity',on?.45:0);
+  document.getElementById('heroHint').textContent=on?'Circuito cerrado: la corriente fluye y el bombillo prende':'Circuito abierto: sin camino, no hay corriente';}
+sw.onclick=toggle;sw.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}};
+
+
+const L=[
+{t:'¿Qué es la electricidad?',m:'3 min',h:`
+<p>Todo está hecho de átomos, y los átomos tienen <b>electrones</b>, unas partículas con carga negativa. La electricidad es el movimiento ordenado de esos electrones por un material.</p>
+<h4>Conductores y aislantes</h4>
+<ul><li><b>Conductores:</b> dejan pasar la corriente fácil. El cobre (el de los cables), el aluminio, el agua con sales y también el cuerpo humano.</li>
+<li><b>Aislantes:</b> casi no la dejan pasar. El plástico del forro del cable, el caucho, la madera seca, la cerámica.</li></ul>
+<p>Por eso un cable tiene cobre por dentro (para llevar la corriente) y plástico por fuera (para que no nos llegue a nosotros).</p>
+<div class="note">Para que haya corriente se necesita un <b>circuito cerrado</b>: un camino completo que sale de la fuente y vuelve a ella. Eso es lo que hace el interruptor del circuito de la portada: abre o cierra el camino.</div>`},
+{t:'Voltaje, corriente y resistencia',m:'4 min',h:`
+<p>La forma más fácil de entenderlo es pensar en el agua de una manguera:</p>
+<ul><li><b>Voltaje (V, voltios):</b> es la presión o el "empuje". Más voltaje, más fuerza para mover los electrones.</li>
+<li><b>Corriente (I, amperios):</b> es la cantidad de electrones que pasan cada segundo, como los litros por segundo de la manguera.</li>
+<li><b>Resistencia (R, ohmios Ω):</b> es lo que frena el paso, como una manguera delgada o estrangulada.</li></ul>
+<div class="note">Una pila de 1,5 V empuja poco. El tomacorriente de la casa empuja mucho más, por eso es peligroso y la pila no.</div>
+<p>Para medirlas se usa el <b>multímetro</b> (tester): voltios en paralelo con lo que se mide, amperios en serie, y ohmios siempre con el circuito desconectado.</p>`},
+{t:'La ley de Ohm',m:'4 min',h:`
+<p>Las tres magnitudes están amarradas por una fórmula sencilla:</p>
+<div class="formula">V = I × R</div>
+<p>De ahí salen las otras dos: <b>I = V ÷ R</b> y <b>R = V ÷ I</b>.</p>
+<h4>Ejemplo</h4>
+<p>Una resistencia de 60 Ω conectada a 120 V deja pasar I = 120 ÷ 60 = <b>2 amperios</b>.</p>
+<p>Si la resistencia baja a la mitad (30 Ω), la corriente se duplica (4 A). Por eso un <b>cortocircuito</b>, donde la resistencia es casi cero, produce una corriente enorme que calienta los cables y puede causar un incendio. Para eso están los breakers.</p>
+<div class="note">Practique con la calculadora de la ley de Ohm, en Herramientas.</div>`},
+{t:'Potencia y energía',m:'4 min',h:`
+<p>La <b>potencia (P, vatios W)</b> dice qué tan rápido un aparato gasta energía:</p>
+<div class="formula">P = V × I</div>
+<p>Un bombillo LED de 9 W gasta poco; una ducha eléctrica de 3.500 W gasta muchísimo mientras está prendida.</p>
+<h4>El kilovatio-hora (kWh)</h4>
+<p>La empresa de energía no cobra por vatios sino por <b>energía</b>, que es potencia por tiempo. Un kWh es gastar 1.000 W durante una hora.</p>
+<div class="formula">kWh = W × horas ÷ 1.000</div>
+<p>Ejemplo: un televisor de 100 W prendido 5 horas al día gasta 0,5 kWh diarios, unos 15 kWh al mes.</p>
+<div class="note">La calculadora de consumo, en Herramientas, hace la cuenta de su casa con el valor del kWh de su propia factura.</div>`},
+{t:'Corriente continua y alterna',m:'3 min',h:`
+<ul><li><b>Corriente continua (CC o DC):</b> los electrones van siempre en la misma dirección. La dan las pilas, baterías de carro, paneles solares y los cargadores de celular por su salida.</li>
+<li><b>Corriente alterna (CA o AC):</b> la dirección cambia muchas veces por segundo. Es la que llega a las casas porque se transporta mejor a grandes distancias.</li></ul>
+<p>En Colombia la red trabaja a <b>60 Hz</b> (la corriente cambia de sentido 60 veces por segundo en cada dirección) y el tomacorriente normal de la casa es de <b>120 V</b>. Algunos aparatos grandes, como ciertos aires acondicionados, usan 220 o 240 V.</p>
+<div class="note">El cargador del celular es un pequeño convertidor: toma 120 V alterna y entrega unos 5 V continua.</div>`},
+{t:'Circuitos en serie y en paralelo',m:'4 min',h:`
+<h4>En serie</h4>
+<p>Los aparatos van uno detrás de otro, en un solo camino. La corriente es la misma para todos y el voltaje se reparte. Si uno se daña, se apagan todos (como las instalaciones navideñas viejas).</p>
+<h4>En paralelo</h4>
+<p>Cada aparato tiene su propio camino entre los dos cables. Todos reciben el voltaje completo y, si uno se daña, los demás siguen funcionando.</p>
+<div class="note">Las casas se instalan <b>en paralelo</b>: por eso puede apagar un bombillo sin que se apague la nevera. Compruébelo en el simulador de serie y paralelo, en Herramientas.</div>`},
+{t:'La instalación de la casa',m:'5 min',h:`
+<p>El recorrido de la energía en su casa es este:</p>
+<ul><li><b>Acometida:</b> los cables que bajan del poste.</li>
+<li><b>Contador (medidor):</b> cuenta los kWh que usted gasta.</li>
+<li><b>Tablero o caja de breakers:</b> reparte la energía en circuitos y los protege.</li>
+<li><b>Breaker (interruptor automático):</b> se dispara si pasa más corriente de la debida, por sobrecarga o cortocircuito.</li>
+<li><b>Polo a tierra:</b> un camino seguro para que una falla se vaya a la tierra y no a través de una persona. Es el tercer hueco del tomacorriente.</li></ul>
+<h4>Colores de los cables</h4>
+<p>El RETIE (el reglamento técnico colombiano) define colores para identificar cada conductor. En una instalación monofásica típica de casa:</p>
+<div class="wires">
+<div><b style="background:var(--w-fase)"></b>Fase: negro o rojo</div>
+<div><b style="background:var(--w-neutro)"></b>Neutro: blanco</div>
+<div><b style="background:var(--w-tierra)"></b>Tierra: verde o cobre desnudo</div></div>
+<div class="note warn">En casas viejas o mal instaladas los colores pueden no respetarse. Nunca confíe solo en el color: verifique con un probador de tensión.</div>`},
+{t:'Seguridad ante todo',m:'4 min',h:`
+<p>Una corriente muy pequeña, del orden de milésimas de amperio, pasando por el pecho ya puede alterar el corazón. Con 120 V eso es fácil de alcanzar si la piel está mojada.</p>
+<ul><li><b>Baje el breaker</b> del circuito antes de tocar cualquier cable, y compruebe con un probador que de verdad no hay tensión.</li>
+<li><b>Nada de agua:</b> manos, pies y piso secos. Nunca manipule aparatos enchufados en la ducha o cerca del lavaplatos.</li>
+<li><b>No sobrecargue</b> tomacorrientes con multitomas encadenadas. Si un cable o enchufe se calienta, algo anda mal.</li>
+<li><b>No puentee ni agrande breakers:</b> si se dispara seguido, es un aviso, no una molestia.</li>
+<li>En baños, cocinas y zonas húmedas se usan tomacorrientes con <b>protección diferencial (GFCI)</b>, que cortan la energía si detectan una fuga.</li>
+<li>Herramientas con mango aislado y zapatos de suela de caucho.</li></ul>
+<div class="note warn">Las reparaciones en la instalación las debe hacer un electricista con matrícula profesional (CONTE). Esta app es para entender, no para reemplazarlo.</div>
+<h4>Si alguien se electrocuta</h4>
+<p>No lo toque con las manos. Corte la energía en el tablero o sepárelo con un objeto seco que no conduzca (palo de escoba de madera, silla plástica). Luego llame a la línea de emergencias <b>123</b>.</p>`}
+];
+
+
+/* ---------- diagramas de conexión ---------- */
+const WC={f:'#C0392B',n:'#FFFFFF',t:'#2E8B3E',r:'#D9822B',v:'#E9B308'};
+const W=(d,c)=>`<path d="${d}" stroke="var(--ink)" stroke-width="7" fill="none" stroke-linejoin="round" stroke-linecap="round"/><path d="${d}" stroke="${c}" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round"/>`;
+const T=(x,y,s,a='start')=>`<text x="${x}" y="${y}" font-size="12" fill="var(--ink)" text-anchor="${a}">${s}</text>`;
+const TAB=`<rect x="8" y="22" width="54" height="133" rx="6" fill="var(--panel)" stroke="var(--ink)" stroke-width="2"/>${T(35,15,'Tablero','middle')}`;
+const LAMP=(x,y)=>`<circle cx="${x}" cy="${y}" r="20" fill="var(--live)" opacity=".35"/><circle cx="${x}" cy="${y}" r="14" fill="var(--panel)" stroke="var(--ink)" stroke-width="2.5"/><path d="M${x-7} ${y+2} l3.5 -5 3.5 5 3.5 -5 3.5 5" stroke="var(--copper)" stroke-width="2" fill="none"/>`;
+const DOT=(x,y)=>`<circle cx="${x}" cy="${y}" r="4" fill="var(--ink)"/>`;
+const BOX=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+const svg=(inner,label)=>`<div class="diagram"><svg viewBox="0 0 360 172" role="img" aria-label="${label}">${inner}</svg></div>`;
+const LEG=(keys)=>`<div class="wires">${keys.map(k=>`<div><b style="background:${WC[k]}"></b>${{f:'Fase',n:'Neutro',t:'Tierra',r:'Retorno',v:'Viajeros'}[k]}</div>`).join('')}</div>`;
+
+const D_SENCILLO=svg(
+  TAB+BOX(140,24,70,38)+T(175,18,'Interruptor','middle')+
+  W('M62 43 H150',WC.f)+W('M200 43 H300 V86',WC.r)+W('M62 100 H286',WC.n)+W('M62 140 H300 V114',WC.t)+
+  DOT(150,43)+DOT(200,43)+`<line x1="150" y1="43" x2="193" y2="29" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>`+
+  LAMP(300,100)+T(96,36,'Fase')+T(232,36,'Retorno')+T(160,93,'Neutro')+T(160,133,'Tierra')+T(300,166,'Lámpara','middle'),
+  'Conexión de un interruptor sencillo con una lámpara')+LEG(['f','r','n','t']);
+
+const D_CONMUT=svg(
+  TAB+BOX(108,24,62,44)+BOX(210,24,62,44)+T(139,18,'Conmutable 1','middle')+T(241,18,'Conmutable 2','middle')+
+  W('M62 46 H118',WC.f)+W('M162 34 H218',WC.v)+W('M162 58 H218',WC.v)+W('M262 46 H315 V86',WC.r)+
+  W('M62 104 H301',WC.n)+W('M62 142 H315 V114',WC.t)+
+  DOT(118,46)+DOT(162,34)+DOT(162,58)+DOT(218,34)+DOT(218,58)+DOT(262,46)+
+  `<line x1="118" y1="46" x2="158" y2="35" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/><line x1="262" y1="46" x2="222" y2="35" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>`+
+  LAMP(315,100)+T(72,39,'Fase')+T(190,82,'Viajeros','middle')+T(270,36,'Retorno')+T(160,97,'Neutro')+T(160,135,'Tierra')+T(315,166,'Lámpara','middle'),
+  'Conexión de dos interruptores conmutables que controlan una lámpara')+LEG(['f','v','r','n','t']);
+
+const D_TOMA=`<div class="diagram"><svg viewBox="0 0 360 172" role="img" aria-label="Frente de un tomacorriente polarizado con polo a tierra">
+  <rect x="24" y="12" width="110" height="148" rx="16" fill="var(--panel)" stroke="var(--ink)" stroke-width="2.5"/>
+  <rect x="46" y="44" width="10" height="36" rx="2" fill="var(--ink)"/>
+  <rect x="102" y="48" width="10" height="26" rx="2" fill="var(--ink)"/>
+  <path d="M70 124 v-8 a9 9 0 0 1 18 0 v8 z" fill="var(--ink)"/>
+  <text x="51" y="98" font-size="13" font-weight="700" fill="var(--muted)" text-anchor="middle">N</text>
+  <text x="107" y="98" font-size="13" font-weight="700" fill="var(--muted)" text-anchor="middle">F</text>
+  <text x="79" y="146" font-size="13" font-weight="700" fill="var(--muted)" text-anchor="middle">T</text>
+  ${T(160,40,'F: fase, ranura corta')}${T(160,55,'se conecta al tornillo dorado')}
+  ${T(160,85,'N: neutro, ranura larga')}${T(160,100,'se conecta al tornillo plateado')}
+  ${T(160,130,'T: tierra, orificio redondo')}${T(160,145,'se conecta al tornillo verde')}
+</svg></div>`;
+
+
+const FAN=(x,y)=>`<circle cx="${x}" cy="${y}" r="22" fill="var(--panel)" stroke="var(--ink)" stroke-width="2.5"/>`+
+  [0,120,240].map(a=>`<ellipse cx="${x}" cy="${y-11}" rx="5" ry="10" fill="var(--copper)" transform="rotate(${a} ${x} ${y})"/>`).join('')+
+  `<circle cx="${x}" cy="${y}" r="4" fill="var(--ink)"/>`;
+const D_VENT=`<div class="diagram"><svg viewBox="0 0 360 172" role="img" aria-label="Conexión de un ventilador de techo con luz controlado por un interruptor doble">
+  ${TAB}${BOX(128,20,82,56)}${T(169,14,'Interruptor doble','middle')}
+  ${W('M62 48 H136 M136 48 V34 H148 M136 48 V62 H148',WC.f)}
+  ${W('M198 34 H296 V76',WC.r)}${W('M198 62 H322 V78',WC.v)}
+  ${W('M62 104 H286',WC.n)}${W('M62 146 H310 V122',WC.t)}
+  ${DOT(148,34)+DOT(198,34)+DOT(148,62)+DOT(198,62)}
+  <line x1="148" y1="34" x2="190" y2="24" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="148" y1="62" x2="190" y2="52" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round"/>
+  ${FAN(310,100)}${T(88,41,'Fase')}${T(228,27,'Motor')}${T(250,55,'Luz')}${T(160,97,'Neutro')}${T(160,139,'Tierra')}${T(310,168,'Ventilador','middle')}
+</svg></div><div class="wires"><div><b style="background:${WC.f}"></b>Fase</div><div><b style="background:${WC.r}"></b>Retorno del motor</div><div><b style="background:${WC.v}"></b>Retorno de la luz</div><div><b style="background:${WC.n}"></b>Neutro</div><div><b style="background:${WC.t}"></b>Tierra</div></div>`;
+
+const NC=(x1,x2,y)=>`${DOT(x1,y)}${DOT(x2,y)}<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="var(--ink)" stroke-width="3"/><line x1="${(x1+x2)/2}" y1="${y}" x2="${(x1+x2)/2}" y2="${y-14}" stroke="var(--ink)" stroke-width="2"/><line x1="${(x1+x2)/2-8}" y1="${y-14}" x2="${(x1+x2)/2+8}" y2="${y-14}" stroke="var(--ink)" stroke-width="3"/>`;
+const NO=(x1,x2,y,btn=true)=>`${DOT(x1,y)}${DOT(x2,y)}<line x1="${x1+2}" y1="${y-7}" x2="${x2-2}" y2="${y-7}" stroke="var(--ink)" stroke-width="3"/>`+(btn?`<line x1="${(x1+x2)/2}" y1="${y-7}" x2="${(x1+x2)/2}" y2="${y-19}" stroke="var(--ink)" stroke-width="2"/><line x1="${(x1+x2)/2-8}" y1="${y-19}" x2="${(x1+x2)/2+8}" y2="${y-19}" stroke="var(--ink)" stroke-width="3"/>`:'');
+const LN=(d)=>`<path d="${d}" stroke="var(--copper)" stroke-width="3" fill="none"/>`;
+const D_MANDO=`<div class="diagram"><svg viewBox="0 0 360 150" role="img" aria-label="Circuito de mando de arranque directo con auto-retención">
+  <line x1="18" y1="22" x2="18" y2="120" stroke="var(--ink)" stroke-width="3"/><line x1="342" y1="22" x2="342" y2="120" stroke="var(--ink)" stroke-width="3"/>
+  ${T(18,16,'L','middle')}${T(342,16,'N','middle')}
+  ${LN('M18 60 H40 M64 60 H84 M114 60 H140 M170 60 H224 M254 60 H278 M308 60 H342 M127 60 V104 H140 M170 104 H186 V60')}
+  <rect x="40" y="54" width="24" height="12" rx="2" fill="none" stroke="var(--ink)" stroke-width="2"/>
+  ${NC(84,114,60)}${NO(140,170,60)}${NO(140,170,104,false)}
+  <circle cx="239" cy="60" r="15" fill="var(--panel)" stroke="var(--ink)" stroke-width="2.5"/><text x="239" y="64" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">KM</text>
+  ${NC(278,308,60).replace(/<line x1="(\d+)" y1="60" x2="\1" y2="46"[^>]*\/><line[^>]*\/>/,'')}
+  <path d="M286 48 q4 -6 7 0 t7 0" stroke="var(--danger)" stroke-width="2" fill="none"/>
+  ${T(52,86,'Fusible','middle')}${T(99,86,'Parada','middle')}${T(155,86,'Marcha','middle')}${T(155,128,'Contacto auxiliar KM','middle')}${T(239,92,'Bobina','middle')}${T(293,86,'Térmico','middle')}
+</svg></div>`;
+
+
+
+/* ---------- diagramas nuevos ---------- */
+const SYM=(inner,label)=>`<figure class="sym"><svg viewBox="0 0 60 60" aria-hidden="true">${inner}</svg><figcaption>${label}</figcaption></figure>`;
+const sk='stroke="var(--ink)" stroke-width="2.5" fill="none"';
+const D_SIMBOLOS=`<div class="symgrid">
+${SYM(`<circle cx="30" cy="30" r="14" ${sk}/><path d="M20 20 L40 40 M40 20 L20 40" ${sk}/>`,'Salida de lámpara en techo')}
+${SYM(`<path d="M16 38 A14 14 0 0 1 44 38 Z" ${sk}/><path d="M24 26 L36 38 M36 26 L24 38" ${sk}/>`,'Aplique de pared')}
+${SYM(`<text x="30" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="var(--ink)">S</text>`,'Interruptor sencillo')}
+${SYM(`<text x="30" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="var(--ink)">S<tspan font-size="13" dy="4">2</tspan></text>`,'Interruptor doble')}
+${SYM(`<text x="30" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="var(--ink)">S<tspan font-size="13" dy="4">3</tspan></text>`,'Conmutable')}
+${SYM(`<circle cx="30" cy="30" r="12" ${sk}/><path d="M12 24 H18 M12 36 H18" ${sk}/>`,'Tomacorriente doble')}
+${SYM(`<circle cx="30" cy="30" r="12" ${sk}/><path d="M12 24 H18 M12 36 H18" ${sk}/><text x="30" y="35" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">GF</text>`,'Toma con diferencial')}
+${SYM(`<circle cx="30" cy="30" r="12" ${sk}/><path d="M24 36 L30 24 L36 36 Z" fill="var(--ink)"/>`,'Toma de 240 V')}
+${SYM(`<rect x="14" y="18" width="32" height="24" ${sk}/><path d="M14 42 L46 18 L46 42 Z" fill="var(--ink)"/>`,'Tablero')}
+${SYM(`<circle cx="30" cy="30" r="14" ${sk}/><text x="30" y="35" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">kWh</text>`,'Contador')}
+${SYM(`<path d="M30 10 V28 M16 28 H44 M21 35 H39 M26 42 H34" ${sk}/>`,'Puesta a tierra')}
+${SYM(`<circle cx="30" cy="30" r="14" ${sk}/><path d="M30 30 L30 17 M30 30 L41 37 M30 30 L19 37" ${sk}/>`,'Ventilador de techo')}
+</div>`;
+
+const D_UNIFILAR=`<div class="diagram"><svg viewBox="0 0 360 190" role="img" aria-label="Diagrama unifilar de una vivienda">
+  <path d="M20 20 V60" stroke="var(--copper)" stroke-width="3"/>${T(28,30,'Acometida')}
+  <circle cx="20" cy="74" r="13" fill="var(--panel)" stroke="var(--ink)" stroke-width="2"/><text x="20" y="78" text-anchor="middle" font-size="9" font-weight="700" fill="var(--ink)">kWh</text>
+  <path d="M20 87 V110" stroke="var(--copper)" stroke-width="3"/>
+  <rect x="10" y="110" width="20" height="16" rx="3" fill="none" stroke="var(--ink)" stroke-width="2"/>${T(38,122,'Totalizador 2×50 A')}
+  <path d="M20 126 V150 M20 150 H340" stroke="var(--copper)" stroke-width="3"/>${T(250,144,'Barras del tablero')}
+  ${[[60,'1×15 A','Iluminación','14 AWG'],[125,'1×20 A','Tomas','12 AWG'],[190,'1×20 A','Cocina','12 AWG'],[255,'2×30 A','Ducha','10 AWG'],[320,'2×20 A','Aire','12 AWG']].map(([x,b,n,c])=>
+   `<path d="M${x} 150 V160" stroke="var(--copper)" stroke-width="3"/><rect x="${x-9}" y="160" width="18" height="10" rx="2" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M${x} 170 V176" stroke="var(--copper)" stroke-width="3"/><text x="${x}" y="186" text-anchor="middle" font-size="10" fill="var(--ink)">${n}</text>`).join('')}
+</svg></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Circuito</th><th>Breaker</th><th>Cable</th></tr></thead><tbody>
+<tr><td>Iluminación</td><td>1×15 A</td><td>14 AWG</td></tr><tr><td>Tomas</td><td>1×20 A</td><td>12 AWG</td></tr><tr><td>Cocina</td><td>1×20 A</td><td>12 AWG</td></tr><tr><td>Ducha a 240 V</td><td>2×30 A</td><td>10 AWG</td></tr><tr><td>Aire a 240 V</td><td>2×20 A</td><td>12 AWG</td></tr>
+</tbody></table></div>`;
+
+const D_CERCA=`<div class="diagram"><svg viewBox="0 0 360 170" role="img" aria-label="Partes de una cerca eléctrica">
+  <rect x="14" y="30" width="58" height="46" rx="6" fill="var(--panel)" stroke="var(--ink)" stroke-width="2.5"/>
+  <path d="M43 40 l-6 12 h8 l-6 12" stroke="var(--live)" stroke-width="3" fill="none"/>${T(43,22,'Energizador','middle')}
+  <path d="M72 48 H330" stroke="var(--copper)" stroke-width="3"/><path d="M72 48 H330" stroke="var(--live)" stroke-width="3" stroke-dasharray="3 12"/>
+  ${[130,200,270,330].map(x=>`<rect x="${x-4}" y="40" width="8" height="90" fill="var(--muted)"/><rect x="${x-6}" y="44" width="12" height="8" rx="2" fill="var(--panel)" stroke="var(--ink)" stroke-width="1.5"/>`).join('')}
+  ${T(230,36,'Alambre en aisladores','middle')}
+  <path d="M30 76 V120 H110" stroke="#2E8B3E" stroke-width="3" fill="none"/>
+  <path d="M0 130 H360" stroke="var(--line)" stroke-width="2"/>
+  ${[40,70,100].map(x=>`<path d="M${x} 120 V160" stroke="#2E8B3E" stroke-width="4"/>`).join('')}
+  ${T(118,152,'Tierra: varias varillas')}
+</svg></div>`;
+
+const D_SOLAR=`<div class="diagram"><svg viewBox="0 0 360 150" role="img" aria-label="Componentes de un sistema solar aislado">
+  <path d="M14 70 L60 40 L96 40 L50 70 Z" fill="var(--ink)" opacity=".85"/><path d="M28 61 L73 61 M37 55 L82 55 M46 49 L90 49 M44 70 L90 40 M32 70 L78 40" stroke="var(--panel)" stroke-width="1"/>
+  ${T(55,90,'Paneles','middle')}
+  <path d="M96 55 H130" stroke="var(--copper)" stroke-width="3"/>
+  <rect x="130" y="38" width="56" height="34" rx="5" fill="var(--panel)" stroke="var(--ink)" stroke-width="2"/>${T(158,59,'MPPT','middle')}${T(158,90,'Controlador','middle')}
+  <path d="M158 72 V112" stroke="var(--copper)" stroke-width="3"/>
+  <rect x="132" y="112" width="52" height="30" rx="4" fill="var(--panel)" stroke="var(--ink)" stroke-width="2"/>${T(158,132,'Baterías','middle')}
+  <path d="M186 55 H220" stroke="var(--copper)" stroke-width="3"/>
+  <rect x="220" y="38" width="56" height="34" rx="5" fill="var(--panel)" stroke="var(--ink)" stroke-width="2"/>${T(248,59,'DC→AC','middle')}${T(248,90,'Inversor','middle')}
+  <path d="M276 55 H306" stroke="var(--copper)" stroke-width="3"/>
+  ${LAMP(322,55)}${T(322,90,'Cargas','middle')}
+</svg></div>`;
+
+/* ---------- módulo: energía solar ---------- */
+const SOLAR=[
+{t:'Cómo funciona un panel solar',m:'6 min',h:`
+<p>Un panel está hecho de <b>celdas de silicio</b>. Cuando les pega la luz, los electrones se mueven y aparece un voltaje: el panel produce <b>corriente continua</b>. Sin partes móviles, sin combustible y sin ruido.</p>
+<h4>Vatios pico y horas sol pico</h4>
+<ul>
+<li>Un panel se vende por <b>vatios pico (Wp)</b>: lo que entrega con sol fuerte en condiciones de laboratorio. Hoy son comunes de 400 a 600 Wp.</li>
+<li>El sol no está fuerte todo el día. Las <b>horas sol pico (HSP)</b> convierten todo el sol de un día en "horas de sol a plena potencia". En buena parte de Colombia están entre 4 y 5 al día; el Atlas de Radiación Solar del IDEAM trae el dato de cada región.</li>
+<li>Por el calor, el polvo y las pérdidas en cables, un panel entrega en la práctica un 75 a 80 % de lo teórico.</li>
+</ul>
+<div class="formula">Wh al día ≈ Wp × HSP × 0,8</div>
+<p>Un panel de 450 Wp con 4,5 HSP da unos 450 × 4,5 × 0,8 = <b>1.620 Wh</b> al día, es decir 1,6 kWh.</p>
+<h4>Ubicación</h4>
+<ul>
+<li>Colombia está cerca del ecuador, así que los paneles van casi planos: con <b>10 a 15° de inclinación</b>, suficiente para que la lluvia los lave, mirando hacia el sur en la mayor parte del país.</li>
+<li><b>Nada de sombra</b>, ni de un árbol, un tanque o una antena. Una sombra sobre una parte del panel baja la producción mucho más de lo que parece.</li>
+</ul>`},
+
+{t:'Tipos de sistemas solares',m:'4 min',h:`
+<h4>Aislado (off-grid)</h4>
+<p>No hay red. Los paneles cargan <b>baterías</b> y de ellas se alimenta la casa, la finca o el campamento. Es la solución donde la red no llega o es muy mala.</p>
+<h4>Conectado a la red (on-grid)</h4>
+<p>No lleva baterías. Un inversor de conexión a red entrega la energía solar a la casa y, si sobra, la manda a la red. Baja la factura. <b>Cuando se va la luz, el sistema se apaga</b> a propósito, para no energizar la red mientras los linieros trabajan.</p>
+<h4>Híbrido</h4>
+<p>Tiene red y baterías. Usa el sol, guarda lo que sobra y, si se va la luz, sigue alimentando las cargas importantes.</p>
+<div class="note">Primero se mide el consumo y después se escoge el sistema. Muchas veces bajar el consumo (bombillos LED, nevera eficiente) sale más barato que poner más paneles.</div>`},
+
+{t:'Componentes: controlador, baterías e inversor',m:'7 min',h:`
+${D_SOLAR}
+<h4>Controlador de carga</h4>
+<ul>
+<li><b>PWM:</b> económico y sencillo. El panel debe tener un voltaje parecido al de la batería.</li>
+<li><b>MPPT:</b> aprovecha bastante más la energía del panel, sobre todo con calor, y permite usar paneles de alto voltaje con baterías de 12, 24 o 48 V. Para sistemas de más de un par de paneles, es el que se usa.</li>
+</ul>
+<h4>Baterías</h4>
+<div class="table-wrap"><table>
+<thead><tr><th>Tipo</th><th>Cuánto se puede descargar</th><th>Observación</th></tr></thead><tbody>
+<tr><td>Plomo-ácido abierta</td><td>50 %</td><td>Económica, requiere agua destilada y ventilación</td></tr>
+<tr><td>AGM y gel</td><td>50 %</td><td>Sellada, sin mantenimiento</td></tr>
+<tr><td>Litio (LiFePO4)</td><td>80 a 90 %</td><td>Más cara al comprarla, dura muchos más ciclos y pesa menos. Trae su BMS de protección</td></tr>
+</tbody></table></div>
+<p>Descargar una batería de plomo por debajo del 50 % todos los días le acorta mucho la vida.</p>
+<h4>Inversor</h4>
+<ul>
+<li>Convierte la corriente continua de las baterías en alterna de 120 V.</li>
+<li>Para neveras, bombas, ventiladores y equipos electrónicos se usa <b>onda senoidal pura</b>. Los de onda modificada son más baratos, pero calientan motores y dañan algunos equipos.</li>
+<li>Su potencia debe cubrir lo que se prende al mismo tiempo, más el pico de arranque de los motores.</li>
+</ul>
+<h4>Protecciones</h4>
+<p>Fusibles o breakers <b>de corriente continua</b> entre paneles y controlador, entre controlador y batería (bien cerca de la batería) y entre batería e inversor. Un breaker común de corriente alterna puede no ser capaz de cortar un arco de continua.</p>`},
+
+{t:'Cómo dimensionar un sistema aislado',m:'7 min',h:`
+<p>Se hace en cuatro pasos. Siga el ejemplo de una casa de finca que gasta <b>2.000 Wh al día</b> (bombillos LED, televisor, nevera eficiente, cargadores y un ventilador).</p>
+<h4>1. Consumo diario</h4>
+<p>Vatios de cada aparato por horas de uso, sumados. Se divide por 0,9 para cubrir la pérdida del inversor: 2.000 ÷ 0,9 ≈ <b>2.220 Wh</b>.</p>
+<h4>2. Paneles</h4>
+<div class="formula">Wp = Wh ÷ (HSP × 0,8)</div>
+<p>2.220 ÷ (4,5 × 0,8) ≈ 617 Wp. Con paneles de 450 Wp se necesitan <b>2</b>.</p>
+<h4>3. Baterías</h4>
+<div class="formula">Ah = Wh × días ÷ (descarga × V)</div>
+<p>Con un día de autonomía, litio al 80 % y sistema de 24 V: 2.220 ÷ (0,8 × 24) ≈ <b>116 Ah</b>. Con plomo al 50 % serían unos 185 Ah.</p>
+<h4>4. Controlador e inversor</h4>
+<ul>
+<li>Controlador: vatios de paneles ÷ voltaje de baterías, más 25 %. 900 ÷ 24 × 1,25 ≈ 47 A: uno de <b>50 A</b>.</li>
+<li>Inversor: la suma de lo que puede estar prendido al mismo tiempo, más 25 %, revisando el arranque de la nevera o la bomba.</li>
+</ul>
+<div class="note">La calculadora solar de Herramientas hace todas estas cuentas con sus propios aparatos.</div>`},
+
+{t:'Bombeo solar',m:'6 min',h:`
+<p>Para sacar agua de un pozo, un caño o un reservorio donde no hay red, el bombeo solar es de lo más rentable: bombea mientras hay sol y el agua se guarda en un <b>tanque elevado</b>, que hace de batería.</p>
+<h4>Tipos</h4>
+<ul>
+<li><b>Bombas solares de corriente continua:</b> sumergibles de pozo o de superficie, que se conectan casi directo a los paneles a través de su controlador.</li>
+<li><b>Bomba de corriente alterna con variador solar:</b> un variador especial toma la corriente continua de los paneles y mueve una bomba trifásica común, ajustando la velocidad según haya más o menos sol.</li>
+</ul>
+<p>Ninguna de las dos necesita baterías, que son lo más costoso y lo que primero se daña.</p>
+<h4>Cuánto panel se necesita</h4>
+<p>Subir un metro cúbico de agua un metro de altura necesita unos <b>2,7 Wh</b>. Para 10 m³ al día a 30 m de altura dinámica: 10 × 30 × 2,725 ≈ 817 Wh hidráulicos. Con una bomba que rinde 40 %, son unos 2.040 Wh eléctricos. Con 4,5 HSP y 0,8 de pérdidas: 2.040 ÷ 3,6 ≈ <b>570 Wp</b>.</p>
+<div class="note">El tanque se dimensiona para uno a tres días de consumo, pensando en los días nublados. La calculadora de bombeo solar está en Herramientas.</div>`},
+
+{t:'Instalación segura',m:'6 min',h:`
+<ul>
+<li><b>Un panel al sol siempre tiene voltaje.</b> No hay interruptor que lo apague. Tápelo o trabaje con los conectores abiertos y verificados.</li>
+<li>Los paneles en <b>serie suman voltaje</b>: diez paneles pueden pasar de 400 V de continua, que es muy peligroso. En paralelo suman corriente.</li>
+<li>La corriente continua <b>no pasa por cero</b> como la alterna: un arco que se forma al desconectar bajo carga no se apaga solo y quema conectores. Nunca desconecte un conector MC4 con el sistema trabajando.</li>
+<li>Use conectores <b>MC4 de la misma marca</b> en cada unión y la herramienta de ponchar correcta. Conectores mezclados o mal ponchados son la primera causa de incendios en sistemas solares.</li>
+<li><b>Cable solar</b> (resistente al sol y al calor), del calibre adecuado, sujeto y protegido.</li>
+<li>Estructura anclada contra el viento. Marcos de los paneles y estructura conectados a tierra, y DPS de corriente continua.</li>
+<li>Una batería en cortocircuito entrega cientos de amperios: fusible a pocos centímetros del borne positivo y herramientas aisladas.</li>
+<li>Baterías de plomo en sitio ventilado: al cargar sueltan hidrógeno.</li>
+</ul>
+<div class="note warn">Los sistemas solares también se rigen por el RETIE. Los equipos deben estar certificados y la instalación la firma un profesional competente.</div>`},
+
+{t:'Conexión a la red y normativa',m:'4 min',h:`
+<p>Quien pone paneles en su casa o negocio conectados a la red se vuelve un <b>autogenerador a pequeña escala (AGPE)</b>. Las reglas las fija la CREG en la Resolución 174 de 2021, y los derechos de estos usuarios están en la Resolución CREG 135 de 2021.</p>
+<ul>
+<li>Se hace una <b>solicitud de conexión</b> ante el operador de red de la zona, que revisa si el transformador y el circuito aguantan el sistema.</li>
+<li>Se instala un <b>medidor bidireccional</b>, que registra lo que se toma de la red y lo que se entrega.</li>
+<li>Los <b>excedentes</b> que se entregan a la red se reconocen en la factura.</li>
+<li>La instalación debe cumplir el RETIE, con sus declaraciones de cumplimiento.</li>
+</ul>
+<p>La Ley 1715 de 2014 creó incentivos tributarios para proyectos de energías renovables. Si le interesan, confirme con un contador cuáles aplican hoy a su caso.</p>
+<div class="note">Un sistema aislado que no se conecta a la red no hace este trámite con el operador, pero sí debe cumplir el RETIE.</div>`},
+
+{t:'Mantenimiento del sistema solar',m:'4 min',h:`
+<ul>
+<li><b>Paneles:</b> lavarlos con agua y un trapo o cepillo suave, temprano en la mañana o al final de la tarde. Nada de detergentes fuertes ni hidrolavadora a presión.</li>
+<li><b>Sombras nuevas:</b> los árboles crecen. Revise cada tanto que nada tape los paneles.</li>
+<li><b>Conexiones:</b> reapretar bornes y revisar conectores, buscando marcas de calentamiento.</li>
+<li><b>Baterías de plomo abiertas:</b> nivel de agua destilada cada mes y bornes limpios, sin sulfato.</li>
+<li><b>Inversor y controlador:</b> en sitio fresco, ventilado y sin polvo. Anote cada semana lo que marcan: si la producción baja sin razón, algo está fallando.</li>
+</ul>`}
+];
+
+/* ---------- módulo: electricidad en la finca ---------- */
+const FINCA=[
+{t:'Cercas eléctricas',m:'8 min',h:`
+<p>Una cerca eléctrica no retiene al animal por fuerza: le enseña a respetarla con un corrientazo corto y fuerte. El <b>energizador</b> manda pulsos de miles de voltios que duran una fracción de segundo, más o menos uno por segundo. Cuando el animal toca el alambre, la corriente pasa por su cuerpo hacia la tierra y vuelve al energizador por la tierra de la cerca.</p>
+${D_CERCA}
+<h4>Las tres partes</h4>
+<ul>
+<li><b>Energizador:</b> de red (120 V), de batería o solar. Se escoge según los kilómetros de cerca y la cantidad de maleza que va a tocar el alambre. Debe ser un equipo certificado, nunca uno hechizo.</li>
+<li><b>La cerca:</b> alambre liso galvanizado o cinta, montado en <b>aisladores</b> en cada poste, con empalmes bien hechos y tensión pareja.</li>
+<li><b>La tierra de la cerca:</b> la parte más descuidada y la que más falla. Varias varillas galvanizadas bien enterradas, separadas entre sí unos metros, unidas con alambre galvanizado, en suelo que se mantenga húmedo y separadas de la puesta a tierra de la casa según indique el fabricante.</li>
+</ul>
+<h4>Cuando la cerca "no pica"</h4>
+<p>Con un <b>voltímetro de cercas</b> se mide a lo largo de la línea. Para ganado se busca normalmente más de 3.000 V. Si el voltaje cae, las causas más comunes son maleza tocando el alambre, aisladores rotos, empalmes flojos o una tierra insuficiente.</p>
+<div class="note warn">Nunca conecte una cerca directo a 120 V: eso ya no es un pulso, es una corriente continua que puede matar a una persona o a un animal. Tampoco electrifique alambre de púas, porque un animal o un niño enredado no se puede soltar. Ponga avisos de "cerca eléctrica" en caminos y puertas.</div>`},
+
+{t:'La instalación eléctrica de la finca',m:'6 min',h:`
+<ul>
+<li><b>Distancias largas:</b> en la finca los circuitos recorren cientos de metros hasta el establo, la bomba o la casa del mayordomo. Aquí la caída de tensión manda: muchas veces hay que usar un cable más grueso o llevar 240 V.</li>
+<li><b>Cables enterrados:</b> dentro de tubo o con cable apto para enterrar, a una profundidad segura y señalizados, lejos de donde pasan tractores.</li>
+<li><b>Aéreos:</b> altura suficiente para que no los alcance un camión, un tractor o un caballo con jinete.</li>
+<li><b>Tableros a la intemperie:</b> con techo, cerrados, con empaque y grado de protección adecuado.</li>
+<li><b>Roedores:</b> los ratones pelan cables en galpones, bodegas y cielorrasos. Tubería completa y cajas tapadas.</li>
+<li><b>Tomas exteriores</b> con tapa, protección diferencial y a buena altura.</li>
+<li><b>Iluminación exterior:</b> reflectores LED con fotocelda para que se prendan solos al anochecer.</li>
+</ul>
+<div class="note">Todas las estructuras metálicas grandes (bebederos, comederos, corrales de tubo, tanques) cerca de equipos eléctricos deben quedar unidas a la tierra.</div>`},
+
+{t:'Galpones, porquerizas y ordeño',m:'6 min',h:`
+<h4>Galpones y porquerizas</h4>
+<ul>
+<li>El <b>amoníaco</b> y la humedad corroen contactos y breakers. Use tableros cerrados, fuera del área de los animales, y aparatos para ambiente húmedo.</li>
+<li>Criadoras, bombillos de calor y ventiladores van en circuitos repartidos: prenderlos todos a la vez en un solo circuito dispara el breaker justo cuando más se necesitan.</li>
+<li>Los bombillos de calor, lejos de la cama de viruta: son una causa conocida de incendios en galpones.</li>
+</ul>
+<h4>Ordeño mecánico y tanque de leche</h4>
+<ul>
+<li>La bomba de vacío y el <b>tanque de enfriamiento</b> van en circuitos exclusivos con su protección de motor.</li>
+<li><b>Tensión parásita:</b> un voltaje pequeño entre el equipo de ordeño y el piso que la persona ni siente, pero la vaca sí. Las vacas se ponen nerviosas, se resisten a entrar y bajan la producción. Se evita con buena puesta a tierra y uniendo todas las partes metálicas y la malla del piso en un mismo sistema de tierra.</li>
+</ul>`},
+
+{t:'Agua y motores en la finca',m:'5 min',h:`
+<ul>
+<li><b>Bebederos y tanques:</b> bomba con flotador eléctrico o automático de nivel para que se prenda y apague sola. Todo lo de bombas está en el módulo Motores y bombas.</li>
+<li><b>Bombeo solar</b> para potreros alejados: vea el módulo de energía solar.</li>
+<li><b>Picadoras de pasto y molinos:</b> motores de 2 a 5 HP o más. Arrancador con parada de emergencia al alcance, protección térmica y guardas en poleas y cuchillas.</li>
+</ul>
+<div class="note warn">Antes de destapar una picadora para limpiarla: apagar, desconectar y esperar a que las cuchillas paren por completo. La mayoría de accidentes graves con picadoras pasan destrabando la máquina con el motor energizado.</div>`},
+
+{t:'Rayos, cercas y animales',m:'4 min',h:`
+<p>En tierra caliente los rayos matan ganado todos los años. Casi siempre pasa en dos lugares: <b>debajo de un árbol aislado</b> y <b>junto a una cerca de alambre</b>.</p>
+<ul>
+<li>Un rayo que cae cerca de una cerca de alambre de púas viaja por el alambre y mata a los animales que están recostados en ella, a veces lejos del punto donde cayó.</li>
+<li>Las cercas largas de alambre se <b>aterrizan a intervalos</b> con varillas conectadas a los hilos, para que la descarga se vaya a tierra antes de llegar lejos. Un técnico le indica cada cuánto según el terreno.</li>
+<li>Las cercas eléctricas llevan su <b>pararrayos de cerca</b> para que un rayo no queme el energizador.</li>
+<li>Las personas, en tormenta: lejos de cercas, bebederos metálicos, árboles aislados y potreros abiertos.</li>
+</ul>`}
+];
+
+/* ---------- módulo: multímetro y pinza ---------- */
+const MULTI=[
+{t:'Conozca su multímetro',m:'5 min',h:`
+<ul>
+<li><b>Pantalla:</b> muestra el valor. "OL" significa que el valor es demasiado grande para la escala o que el circuito está abierto.</li>
+<li><b>Perilla:</b> escoge qué se mide. V~ es voltaje alterno (tomacorrientes); V⎓ es voltaje continuo (pilas, baterías, paneles); Ω es resistencia; el símbolo de sonido es continuidad; A es corriente.</li>
+<li><b>Bornes:</b> la punta negra siempre va en <b>COM</b>. La roja va en <b>VΩ</b> para casi todo, y solo se pasa al borne <b>A</b> (o mA) para medir corriente.</li>
+<li><b>Categoría de seguridad:</b> en el frente dice CAT II, CAT III o CAT IV con un voltaje. Para trabajar en tableros de casa se usa mínimo <b>CAT III 600 V</b>. Un multímetro barato sin categoría puede explotar en un tablero.</li>
+</ul>
+<div class="note">Practique con el simulador de multímetro en Herramientas: ahí sí se puede equivocar.</div>`},
+
+{t:'Medir voltaje',m:'5 min',h:`
+<h4>Voltaje alterno, en un tomacorriente</h4>
+<ol>
+<li>Punta negra en COM, roja en VΩ.</li>
+<li>Perilla en V~, en una escala mayor que 120 V (200 o 600 V, o automática).</li>
+<li>Puntas en las dos ranuras, sin tocar el metal con los dedos.</li>
+</ol>
+<ul>
+<li>Entre fase y neutro: alrededor de <b>120 V</b>.</li>
+<li>Entre fase y tierra: también cerca de 120 V. Si da cero, falta la tierra o está mal conectada.</li>
+<li>Entre neutro y tierra: casi <b>0 V</b>. Si da varios voltios, hay un neutro flojo o muy cargado.</li>
+</ul>
+<h4>Voltaje continuo</h4>
+<p>Perilla en V⎓. Roja en el positivo, negra en el negativo. Si la pantalla muestra un signo menos, las puntas están al revés: no pasa nada, solo indica la polaridad.</p>`},
+
+{t:'Resistencia y continuidad',m:'5 min',h:`
+<p>La regla que no se rompe: <b>resistencia y continuidad se miden sin energía</b>. Con voltaje, la lectura es falsa y el multímetro se puede dañar.</p>
+<ul>
+<li><b>Continuidad:</b> el multímetro pita si hay un camino. Sirve para saber si un cable está roto, si un fusible sirve, a qué caja llega un cable o si un interruptor cierra.</li>
+<li><b>Resistencia:</b> da el valor en ohmios. Una resistencia de ducha sana marca unos pocos ohmios; abierta marca OL.</li>
+<li><b>Bobinas de un motor trifásico:</b> las tres deben marcar casi lo mismo entre sí. Una diferente indica una bobina dañada, y cualquier bobina con continuidad a la carcasa indica un motor en corto a tierra.</li>
+</ul>`},
+
+{t:'Medir corriente y usar la pinza',m:'6 min',h:`
+<h4>Con el multímetro</h4>
+<p>Para medir corriente con las puntas, el multímetro tiene que quedar <b>en serie</b>: hay que abrir el circuito y hacer que la corriente pase por dentro del aparato. Se pasa la punta roja al borne A y se pone la perilla en A~ o A⎓. Solo sirve para corrientes pequeñas, casi siempre hasta 10 A.</p>
+<div class="note warn">El error más peligroso: dejar la punta en el borne A y medir un tomacorriente. En el borne A el multímetro es casi un cable, así que produce un cortocircuito. Si tiene suerte, se funde el fusible interno. En un tablero puede causar un arco que quema manos y cara.</div>
+<h4>Con la pinza amperimétrica</h4>
+<p>Mide la corriente sin tocar ni cortar nada: se abraza el cable con la mordaza. Es la herramienta para revisar motores, bombas y aires.</p>
+<ul>
+<li>Se abraza <b>un solo conductor</b>. Si se abraza el cable dúplex completo (fase y neutro juntos), las corrientes van en sentidos contrarios, se cancelan y la pinza marca casi cero.</li>
+<li>En un motor trifásico, mida cada fase: deben ser parecidas y menores que la corriente de placa.</li>
+</ul>`},
+
+{t:'Probadores y hábitos seguros',m:'4 min',h:`
+<ul>
+<li><b>Probador sin contacto:</b> útil para una revisión rápida, pero no es infalible: con la batería baja o con un cable blindado puede no pitar aunque haya energía.</li>
+<li><b>Probar, probar, probar:</b> antes de confiar en que no hay tensión, pruebe el instrumento en una fuente que sepa que está viva, mida el circuito y vuelva a probarlo en la fuente viva. Así sabe que el instrumento no se dañó en el camino.</li>
+<li>Puntas con el aislamiento entero y con sus protectores.</li>
+<li>Cuando se pueda, trabaje con <b>una sola mano</b> en el tablero. La otra fuera, para que una descarga no le cruce el pecho.</li>
+<li>Escoja la función <b>antes</b> de poner las puntas, nunca gire la perilla con las puntas puestas.</li>
+</ul>`}
+];
+
+/* ---------- módulo: planos y presupuesto ---------- */
+const PLANOS=[
+{t:'Símbolos eléctricos',m:'4 min',h:`
+<p>Un plano eléctrico se dibuja con símbolos sobre la planta de la casa. Estos son de los más usados:</p>
+${D_SIMBOLOS}
+<div class="note">No existe un único juego de símbolos: cada diseñador trae su <b>cuadro de convenciones</b> (leyenda) en el mismo plano. Léalo siempre antes de interpretar nada.</div>`},
+
+{t:'Cómo leer un plano eléctrico',m:'6 min',h:`
+<h4>La planta</h4>
+<ul>
+<li>Cada símbolo es una <b>salida</b>: una lámpara, un toma, un interruptor.</li>
+<li>Las líneas curvas que los unen representan la <b>tubería</b>. Junto a ellas va el número del circuito y unas rayitas que indican cuántos cables pasan.</li>
+<li>Las letras junto a un interruptor y a una lámpara (a, b, c) indican cuál controla cuál.</li>
+</ul>
+<h4>El cuadro de cargas</h4>
+<p>Una tabla con cada circuito: qué alimenta, cuántas salidas tiene, su carga en vatios, a qué fase va, el breaker y el calibre. Es la receta del tablero.</p>
+<h4>El diagrama unifilar</h4>
+<p>Muestra con una sola línea todo el camino de la energía: acometida, medidor, breaker principal y cada circuito con su protección y su cable.</p>
+${D_UNIFILAR}`},
+
+{t:'Cómo se cobra un trabajo eléctrico',m:'5 min',h:`
+<ul>
+<li><b>Por punto:</b> la forma más común en vivienda. Un precio por cada salida. Lo importante es dejar escrito <b>qué incluye un punto</b>: ¿tubo, cable y caja?, ¿el aparato?, ¿hasta el tablero o desde la salida anterior?</li>
+<li><b>Por obra:</b> un valor global para todo el trabajo, con las cantidades anexas.</li>
+<li><b>Por día:</b> para reparaciones y mantenimiento.</li>
+</ul>
+<h4>En contratos con entidades y empresas</h4>
+<ul>
+<li>Se trabaja con <b>APU</b> (análisis de precio unitario): para cada actividad se detallan materiales, mano de obra, herramienta y transporte.</li>
+<li>Al total se le suma el <b>AIU</b>: administración, imprevistos y utilidad, cada uno en porcentaje.</li>
+</ul>
+<div class="note">Deje por escrito lo que <b>no</b> incluye: regatas, resanes, pintura, trámites ante el operador de red, certificación. Los problemas casi siempre salen de lo que se dio por entendido.</div>`},
+
+{t:'Cómo armar un presupuesto',m:'5 min',h:`
+<ol>
+<li><b>Levante las cantidades</b> del plano o de la visita: lámparas, tomas, interruptores, circuitos especiales y distancias.</li>
+<li><b>Calcule materiales</b> con la calculadora de presupuesto de Herramientas y revise la lista.</li>
+<li><b>Pida precios</b> en dos o tres almacenes y anótelos en la calculadora: quedan guardados para la próxima.</li>
+<li><b>Mano de obra:</b> cuántos días de oficial y ayudante, o el valor por punto que usted maneja.</li>
+<li><b>Imprevistos:</b> un porcentaje para lo que siempre aparece.</li>
+<li><b>Presente la oferta por escrito:</b> alcance, cantidades, valor, plazo, forma de pago, garantía y validez de la oferta.</li>
+</ol>`}
+];
+
+/* ---------- módulo: el oficio ---------- */
+const OFICIO=[
+{t:'Los niveles del oficio',m:'4 min',h:`
+<ul>
+<li><b>Ayudante o auxiliar:</b> aprende en obra al lado de un técnico. No firma ni responde por instalaciones.</li>
+<li><b>Técnico electricista:</b> con matrícula del <b>CONTE</b> (Consejo Nacional de Técnicos Electricistas). Construye, repara y mantiene instalaciones dentro de las clases que diga su matrícula.</li>
+<li><b>Tecnólogo:</b> se matricula ante el consejo de tecnólogos (CONALTEL). Puede diseñar y dirigir trabajos de mayor alcance.</li>
+<li><b>Ingeniero electricista:</b> matrícula ante el consejo profesional de ingeniería eléctrica. Diseña y firma instalaciones grandes.</li>
+</ul>
+<p>El RETIE exige que quien firma una declaración de cumplimiento sea un profesional competente con matrícula vigente, y que actúe dentro de lo que su matrícula le permite.</p>`},
+
+{t:'Dónde estudiar',m:'4 min',h:`
+<ul>
+<li><b>SENA:</b> programas técnicos y tecnológicos en electricidad gratuitos, y cursos complementarios cortos, muchos virtuales.</li>
+<li><b>Certificación de competencias laborales del SENA:</b> para quien ya trabaja en el oficio y quiere que su experiencia quede certificada.</li>
+<li><b>Institutos técnicos</b> aprobados por el Ministerio de Educación o la secretaría de educación.</li>
+<li><b>Cursos de fabricantes y almacenes:</b> sobre solar, variadores o automatización; sirven para actualizarse.</li>
+</ul>
+<div class="note">Este curso sirve para entender y arrancar. Para ejercer se necesita la formación formal y la matrícula.</div>`},
+
+{t:'La matrícula del CONTE',m:'5 min',h:`
+<p>La profesión de técnico electricista está reglamentada por la <b>Ley 19 de 1990</b>. Quien no tenga matrícula no puede ejercerla legalmente. El CONTE la otorga en estas clases:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Clase</th><th>Especialidad</th></tr></thead><tbody>
+<tr><td>TE-1</td><td>Instalaciones eléctricas interiores</td></tr>
+<tr><td>TE-2</td><td>Bobinados eléctricos y accesorios</td></tr>
+<tr><td>TE-3</td><td>Mantenimiento eléctrico</td></tr>
+<tr><td>TE-4</td><td>Electricidad industrial</td></tr>
+<tr><td>TE-5</td><td>Redes eléctricas</td></tr>
+<tr><td>TE-6</td><td>Instalaciones eléctricas especiales</td></tr>
+</tbody></table></div>
+<p>Cada clase es independiente: solo se puede trabajar en las que figuran en la matrícula.</p>
+<h4>Cómo se obtiene</h4>
+<ul>
+<li>Con un <b>título de técnico</b> en el área, de una institución aprobada.</li>
+<li>O con <b>experiencia certificada</b>: el CONTE pide un mínimo de cinco años en la actividad, contados desde la mayoría de edad, junto con certificados de cursos en el área con una intensidad mínima que el CONTE establece.</li>
+</ul>
+<div class="note">Los requisitos, valores y tiempos del trámite pueden cambiar. Confírmelos en conte.org.co o en una asociación de técnicos electricistas antes de empezar.</div>`},
+
+{t:'Trabajo seguro',m:'7 min',h:`
+<h4>Las cinco reglas de oro</h4>
+<p>El RETIE las exige antes de trabajar en cualquier circuito sin tensión:</p>
+<ol>
+<li><b>Corte efectivo</b> de todas las fuentes que pueden alimentar el circuito, incluidas plantas y sistemas solares.</li>
+<li><b>Bloqueo</b> de los interruptores con candado y tarjeta, para que nadie los vuelva a subir.</li>
+<li><b>Verificar la ausencia de tensión</b> con un instrumento probado.</li>
+<li><b>Puesta a tierra y en cortocircuito</b> de los conductores, cuando aplica (redes y equipos de potencia).</li>
+<li><b>Señalizar y delimitar</b> la zona de trabajo.</li>
+</ol>
+<h4>Elementos de protección</h4>
+<p>Casco dieléctrico, gafas, guantes dieléctricos de la clase que corresponda al voltaje, calzado dieléctrico y, en tableros de potencia, ropa resistente al arco eléctrico.</p>
+<h4>Trabajo en alturas</h4>
+<p>Según la <b>Resolución 4272 de 2021</b> del Ministerio del Trabajo, es trabajo en alturas toda labor con riesgo de caída de más de 2 metros. Quien lo hace debe tener el <b>certificado de capacitación y entrenamiento</b> para trabajo en alturas (o el de competencia laboral), usar arnés y sistemas de protección certificados, y contar con permiso de trabajo cuando se labora para una empresa.</p>
+<div class="note warn">Los postes y redes de la calle son del operador de red. Solo su personal autorizado trabaja en ellos. Las conexiones directas a la red, además de ilegales, matan a quien las hace.</div>`},
+
+{t:'Primeros auxilios ante una descarga',m:'5 min',h:`
+<ol>
+<li><b>No toque a la persona</b> mientras siga en contacto con la corriente. Corte la energía en el tablero, o sepárela con un objeto seco que no conduzca.</li>
+<li>Si es alta tensión (cables de la calle, transformadores), <b>no se acerque</b>: la corriente puede saltar y el suelo alrededor puede estar energizado. Llame al operador de red y al 123.</li>
+<li><b>Llame a la línea de emergencias 123.</b></li>
+<li>Si la persona no responde y no respira con normalidad, inicie la <b>reanimación</b>: compresiones fuertes y rápidas en el centro del pecho, unas 100 a 120 por minuto, sin parar hasta que llegue ayuda. Si hay un desfibrilador (DEA), úselo y siga sus instrucciones.</li>
+<li>Aunque se vea bien, debe ir al médico: una descarga puede dejar el corazón alterado horas después.</li>
+</ol>
+<p>Las <b>quemaduras eléctricas</b> engañan: por fuera pueden ser dos puntos pequeños (entrada y salida), pero por dentro la corriente quemó músculos y nervios a su paso.</p>
+<div class="note">Un curso presencial de primeros auxilios y reanimación, como los de la Cruz Roja, es de las mejores inversiones para cualquier electricista.</div>`},
+
+{t:'Formalizarse y conseguir clientes',m:'5 min',h:`
+<ul>
+<li><b>RUT</b> ante la DIAN, con la actividad económica de instalaciones eléctricas.</li>
+<li><b>Seguridad social como independiente:</b> salud, pensión y riesgos laborales (ARL). El trabajo eléctrico es de alto riesgo y la ARL lo cubre si tiene un accidente.</li>
+<li><b>Facturación</b> según el régimen que le corresponda. Confírmelo con un contador.</li>
+<li><b>Cotización y garantía por escrito</b>, siempre.</li>
+<li><b>Portafolio:</b> fotos del antes y el después de cada trabajo, tableros ordenados y marcados. Es su mejor publicidad.</li>
+<li><b>Contratos con el Estado:</b> las alcaldías y entidades publican sus procesos en <b>SECOP II</b>, donde una persona natural se puede registrar como proveedor.</li>
+</ul>`}
+];
+
+/* ---------- módulo: motos y carros 12 V ---------- */
+const MOTOS=[
+{t:'El sistema eléctrico de una moto',m:'5 min',h:`
+<ul>
+<li><b>Batería de 12 V:</b> arranca el motor y alimenta todo cuando el motor está apagado.</li>
+<li><b>Estator:</b> bobinas fijas dentro de la tapa del motor. El volante con imanes gira alrededor y genera corriente alterna.</li>
+<li><b>Regulador rectificador:</b> convierte esa corriente alterna en continua y la limita para no sobrecargar la batería.</li>
+<li><b>Encendido:</b> la CDI o la computadora (ECU) dispara la bobina, que produce la chispa en la bujía.</li>
+<li><b>Arranque:</b> el botón activa un relé que conecta la batería al motor de arranque.</li>
+<li><b>Fusibles, luces, pito, direccionales y tablero.</b></li>
+<li><b>La masa:</b> el chasis hace de cable negativo. Una masa sucia o floja produce fallas raras.</li>
+</ul>`},
+
+{t:'La batería',m:'5 min',h:`
+<div class="table-wrap"><table>
+<thead><tr><th>Voltaje en reposo (plomo-ácido)</th><th>Estado</th></tr></thead><tbody>
+<tr><td>12,6 a 12,8 V</td><td>Cargada</td></tr>
+<tr><td>Alrededor de 12,2 V</td><td>Mitad de carga</td></tr>
+<tr><td>Menos de 12 V</td><td>Descargada</td></tr>
+</tbody></table></div>
+<p>Se mide con la moto apagada y después de un rato sin usarla.</p>
+<ul>
+<li><b>Tipos:</b> plomo-ácido con mantenimiento (se le revisa el nivel), sellada AGM o gel (sin mantenimiento) y litio (liviana, necesita cargador compatible).</li>
+<li><b>Cargar:</b> con un cargador para batería de moto, a baja corriente. Un cargador grande de carro la calienta y la daña.</li>
+<li><b>Quitarla:</b> primero el cable <b>negativo</b>. <b>Ponerla:</b> primero el <b>positivo</b>. Así, si la llave toca el chasis mientras aprieta, no hay cortocircuito.</li>
+<li>Al cargarse suelta gases inflamables: nada de chispas ni cigarrillos cerca.</li>
+</ul>`},
+
+{t:'Diagnóstico de carga',m:'6 min',h:`
+<ol>
+<li>Mida la batería con la moto apagada: debe estar cargada, 12,6 V o más.</li>
+<li>Prenda la moto y acelere a unas 3.000 a 5.000 RPM, según el modelo.</li>
+<li>Mida en la batería: lo normal es entre <b>13,5 y 14,5 V</b>.</li>
+</ol>
+<ul>
+<li><b>Menos de 13 V acelerada:</b> no está cargando. Revise el conector del regulador (es muy común que se queme el terminal), el regulador y el estator.</li>
+<li><b>Más de 15 V:</b> el regulador está dañado. Sobrecarga la batería, que se calienta o se hincha, y quema bombillos y equipos.</li>
+</ul>
+<h4>La batería se descarga sola</h4>
+<p>Con todo apagado, se pone el multímetro en serie entre el borne negativo y su cable, en la escala de mA. Las motos con computadora o alarma consumen algo, pocos miliamperios. Si el consumo es alto, se quitan los fusibles uno por uno hasta que baje: ese circuito tiene el problema.</p>`},
+
+{t:'Accesorios bien instalados',m:'6 min',h:`
+<p>El estator de una moto pequeña produce poca potencia de sobra. Exploradoras grandes, pitos potentes y cargadores pueden consumir más de lo que la moto genera, y la batería se descarga andando.</p>
+<ul>
+<li>Calcule la corriente: a 12 V, un accesorio de 36 W consume 3 A. Sume todo lo que va a instalar.</li>
+<li><b>Relé:</b> los accesorios de más consumo se conectan a la batería a través de un relé, que se activa con la llave o con el interruptor. Así el interruptor no se quema y el accesorio se apaga con la moto.</li>
+<li><b>Fusible</b> propio para cada accesorio, lo más cerca posible de la batería.</li>
+<li><b>Cable</b> del calibre adecuado, conectores sellados y termoencogible. Nada de pelar, torcer y envolver en cinta.</li>
+<li>Cables sujetos, lejos del exosto y de las partes que se mueven con la dirección.</li>
+<li><b>Direccionales LED:</b> consumen tan poco que el flasher original parpadea rápido o no parpadea. Se cambia por un <b>flasher electrónico</b> para LED.</li>
+</ul>`},
+
+{t:'Carros: alternador y pasar corriente',m:'5 min',h:`
+<p>El carro funciona igual que la moto, pero con una batería más grande y un <b>alternador</b> movido por una correa, con regulador incorporado. Con el motor encendido, en la batería se miden normalmente entre 13,8 y 14,7 V.</p>
+<h4>Pasar corriente con cables</h4>
+<ol>
+<li>Rojo al <b>positivo</b> de la batería descargada.</li>
+<li>Rojo al <b>positivo</b> de la batería buena.</li>
+<li>Negro al <b>negativo</b> de la batería buena.</li>
+<li>Negro a una <b>parte metálica sin pintura del motor</b> del carro descargado, lejos de la batería.</li>
+<li>Encienda el carro bueno, espere unos minutos y encienda el descargado.</li>
+<li>Quite los cables en el orden inverso.</li>
+</ol>
+<p>La última conexión se hace lejos de la batería porque es la que puede sacar chispa, y la batería suelta gases inflamables.</p>
+<div class="note warn">No pase corriente a una batería hinchada, rota o que huele a huevo podrido. En carros híbridos y eléctricos, los cables naranja son de alto voltaje: no se tocan.</div>`}
+];
+
+/* ---------- preguntas nuevas ---------- */
+const QSOLAR=[
+['¿Qué son las horas sol pico?',['Las horas en que el sol está visible','El sol de un día expresado como horas a plena potencia','Las horas de la mañana'],1,'Convierten toda la energía solar de un día en horas equivalentes de sol fuerte. Con ellas se calcula la producción.'],
+['¿Qué ventaja tiene un controlador MPPT frente a uno PWM?',['Es más barato','Aprovecha más la energía del panel y admite paneles de mayor voltaje','No necesita baterías'],1,'El MPPT busca el punto de máxima potencia del panel y convierte el voltaje sobrante en corriente útil.'],
+['¿Hasta cuánto conviene descargar a diario una batería de plomo-ácido?',['Hasta el 50 %','Hasta el 100 %','Hasta el 10 %'],0,'Por debajo del 50 % la batería de plomo pierde vida rápidamente. Las de litio aguantan 80 a 90 %.'],
+['¿Qué inversor se usa para una nevera o una bomba?',['De onda modificada','De onda senoidal pura','Cualquiera'],1,'Los motores y la electrónica necesitan una onda como la de la red. La modificada calienta los motores.'],
+['Un sistema solar conectado a la red, sin baterías, ¿qué hace cuando se va la luz?',['Sigue alimentando la casa','Se apaga para no energizar la red','Carga la red del barrio'],1,'Se apaga a propósito para proteger a los linieros que trabajan en la red.'],
+['¿Dónde se guarda la energía en un sistema de bombeo solar sin baterías?',['En el inversor','En un tanque elevado de agua','En el panel'],1,'Se bombea mientras hay sol y el agua almacenada en altura cubre la noche y los días nublados.'],
+['Un panel solar desconectado y al sol…',['No tiene voltaje','Tiene voltaje en sus terminales','Solo tiene voltaje si hay baterías'],1,'Mientras haya luz, el panel genera voltaje. Por eso se tapa o se trabaja con los conectores abiertos.']
+];
+const QFINCA=[
+['¿Cuáles son las tres partes de una cerca eléctrica?',['Energizador, alambre y tierra','Bombillo, alambre y breaker','Poste, alambre y candado'],0,'Sin una buena tierra el pulso no vuelve al energizador y la cerca no pica.'],
+['¿Se puede conectar una cerca directo a 120 V?',['Sí, si el alambre es grueso','Nunca: puede matar a una persona o a un animal','Solo de noche'],1,'El energizador manda pulsos muy cortos. La corriente continua de la red no suelta a quien la toca.'],
+['La cerca "no pica". ¿Qué es lo más probable?',['El ganado se acostumbró','Maleza tocando el alambre o mala tierra','Falta pintura en los postes'],1,'La maleza fuga el pulso a tierra y una tierra pobre impide que el circuito se cierre bien.'],
+['¿Por qué no se electrifica el alambre de púas?',['Porque se oxida','Porque un animal o una persona enredada no se puede soltar','Porque no conduce'],1,'Enredado en púas, el corrientazo se repite sin poder soltarse. Se usa alambre liso o cinta.'],
+['Las vacas se resisten a entrar al ordeño y bajó la producción. ¿Qué puede ser?',['Tensión parásita por mala puesta a tierra','Exceso de luz','Un breaker grande'],0,'Un voltaje pequeño entre el equipo y el piso molesta a las vacas. Se corrige con tierra y unión de partes metálicas.'],
+['En una tormenta, ¿dónde corre más riesgo el ganado?',['En el establo','Bajo un árbol aislado o junto a una cerca de alambre','En el centro de un potrero con otros animales'],1,'El rayo busca el árbol alto y viaja por los alambres de la cerca largas distancias.']
+];
+const QMULTI=[
+['Para medir un tomacorriente, ¿cómo se prepara el multímetro?',['Perilla en V~ y punta roja en VΩ','Perilla en A y punta roja en A','Perilla en Ω'],0,'Voltaje alterno con la punta roja en el borne de voltaje.'],
+['¿Cuándo se mide resistencia o continuidad?',['Con el circuito energizado','Sin energía','Solo con pinza'],1,'Con voltaje la lectura es falsa y el multímetro se puede dañar.'],
+['¿Qué pasa si mide un tomacorriente con la punta roja en el borne A?',['Marca 120 V','Produce un cortocircuito: se funde el fusible o hay un arco','Nada'],1,'En el borne A el multímetro es casi un cable. Es el error más peligroso con un multímetro.'],
+['Con la pinza, abraza el cable dúplex completo de una plancha. ¿Qué marca?',['El doble','Casi cero','La corriente correcta'],1,'Fase y neutro llevan la corriente en sentidos contrarios y se cancelan. Se abraza un solo conductor.'],
+['¿Qué es "probar, probar, probar"?',['Medir tres veces el mismo punto','Probar el instrumento en una fuente viva, medir, y volver a probarlo','Usar tres multímetros'],1,'Así se confirma que el instrumento funcionaba antes y después de la medición.'],
+['¿Cuánto debe marcar entre neutro y tierra en un toma bien instalado?',['120 V','Casi 0 V','240 V'],1,'Neutro y tierra se unen en el tablero principal, así que entre ellos casi no hay voltaje.']
+];
+const QPLANOS=[
+['¿Qué muestra un diagrama unifilar?',['La fachada de la casa','Con una sola línea, el camino de la energía y las protecciones de cada circuito','La ubicación de los muebles'],1,'Resume la acometida, el medidor, el principal y cada circuito con su breaker y su cable.'],
+['¿Qué es el cuadro de cargas?',['La factura de energía','Una tabla con cada circuito, su carga, fase, breaker y calibre','La lista de precios'],1,'Es la receta para armar y balancear el tablero.'],
+['Los símbolos de un plano no coinciden con los que usted conoce. ¿Qué hace?',['Adivina','Revisa el cuadro de convenciones del plano','Pide otro plano'],1,'Cada diseñador trae su leyenda. Siempre se lee primero.'],
+['En un presupuesto para una entidad, ¿qué es el AIU?',['Un impuesto','Administración, imprevistos y utilidad','Un tipo de cable'],1,'Se suma como porcentajes sobre los costos directos.'],
+['¿Qué es lo más importante al cobrar por punto?',['Cobrar poco','Dejar escrito qué incluye cada punto','No dar garantía'],1,'Los conflictos salen de lo que se dio por entendido.'],
+['¿Qué debe llevar una oferta escrita?',['Solo el valor','Alcance, cantidades, valor, plazo, forma de pago, garantía y validez','El número de celular'],1,'Una oferta completa protege al cliente y al electricista.']
+];
+const QOFICIO=[
+['¿Quién otorga la matrícula profesional del técnico electricista?',['La DIAN','El CONTE','El operador de red'],1,'El Consejo Nacional de Técnicos Electricistas, según la Ley 19 de 1990.'],
+['La clase TE-1 corresponde a…',['Redes eléctricas','Instalaciones eléctricas interiores','Bobinados'],1,'TE-1 es instalaciones interiores. Cada clase es independiente.'],
+['Según la Resolución 4272 de 2021, ¿desde qué altura hay trabajo en alturas?',['Con riesgo de caída de más de 2 m','Desde 5 m','Desde 10 m'],0,'Toda labor con riesgo de caída de más de 2 metros requiere certificado y equipos de protección.'],
+['¿Cuál es la primera regla de oro?',['Ponerse los guantes','Corte efectivo de todas las fuentes de tensión','Llamar al jefe'],1,'Primero se cortan todas las fuentes, incluidas plantas y sistemas solares.'],
+['Una persona recibió una descarga, no responde y no respira normal. ¿Qué hace, con la energía ya cortada?',['Darle agua','Llamar al 123 e iniciar compresiones en el pecho','Esperar a que despierte'],1,'La reanimación inmediata puede salvarle la vida hasta que llegue ayuda.'],
+['Una quemadura eléctrica se ve pequeña por fuera. ¿Qué significa?',['Que no es grave','Que puede haber daño grande por dentro y requiere médico','Que se cura con crema'],1,'La corriente quema músculos y nervios a su paso. Siempre debe valorarla un médico.']
+];
+const QMOTOS=[
+['¿Cuánto marca una batería de plomo de moto cargada, en reposo?',['12,6 a 12,8 V','9 V','15 V'],0,'Por debajo de 12 V está descargada.'],
+['Con la moto acelerada, ¿cuánto debe marcar la batería si carga bien?',['12 V','13,5 a 14,5 V','18 V'],1,'Menos de 13 V indica que no carga; más de 15 V, regulador dañado.'],
+['La batería se hincha y se queman los bombillos. ¿Qué falla?',['El regulador rectificador','La bujía','Las llantas'],0,'Un regulador dañado deja pasar demasiado voltaje.'],
+['Puso direccionales LED y parpadean muy rápido. ¿Qué se cambia?',['La batería','El flasher, por uno electrónico para LED','El estator'],1,'El flasher original depende del consumo de los bombillos incandescentes.'],
+['Al quitar la batería, ¿qué cable se suelta primero?',['El positivo','El negativo','Da igual'],1,'Soltando primero el negativo, si la llave toca el chasis no hay cortocircuito.'],
+['Al pasar corriente, ¿dónde va la última conexión?',['Al negativo de la batería descargada','A una parte metálica del motor del carro descargado, lejos de la batería','Al positivo de la buena'],1,'La última conexión puede sacar chispa, y la batería suelta gases inflamables.']
+];
+
+const CASA=[
+{t:'Cómo llega la energía a su casa',m:'5 min',h:`
+<p>La energía se produce en centrales (hidroeléctricas, térmicas, solares), viaja por líneas de transmisión a muy alto voltaje y en las subestaciones se va bajando. En su cuadra, un <b>transformador</b> montado en el poste la baja a la tensión de uso: 120 V y 240 V.</p>
+<h4>El recorrido dentro del predio</h4>
+<ul>
+<li><b>Acometida:</b> los cables que van del poste o de la red subterránea hasta el medidor. La construye el usuario, pero siguiendo las normas del <b>operador de red</b> (la empresa de energía de la zona), que es quien autoriza la conexión.</li>
+<li><b>Medidor o contador:</b> registra los kWh. Va en una caja o gabinete accesible desde afuera para la lectura, normalmente sobre un murete o en fachada.</li>
+<li><b>Alimentador:</b> el cable que va del medidor al tablero de la casa.</li>
+<li><b>Tablero de distribución:</b> donde se reparte la energía en circuitos, cada uno con su breaker.</li>
+<li><b>Circuitos ramales:</b> los que salen del tablero hacia bombillos, tomacorrientes y aparatos.</li>
+</ul>
+<h4>Bifilar o trifilar</h4>
+<p>Una casa pequeña puede recibir <b>dos cables</b> (una fase y el neutro): solo tiene 120 V. Lo más común hoy es la acometida <b>trifilar</b>: dos fases y un neutro. Entre cualquier fase y el neutro hay 120 V, y entre las dos fases hay unos 240 V (o 208 V si la red del sector es trifásica). Así se pueden conectar duchas, aires o estufas a 240 V y repartir la carga.</p>
+<div class="note">Balancear la carga es repartir los circuitos entre las dos fases para que cada una lleve más o menos lo mismo. Un tablero desbalanceado calienta más el neutro y la acometida.</div>`},
+
+{t:'El tablero y las protecciones',m:'6 min',h:`
+<p>El tablero es el corazón de la instalación. Por dentro tiene barras de cobre: las <b>barras de fase</b> donde se enchufan o atornillan los breakers, una <b>barra de neutro</b> y una <b>barra de tierra</b>.</p>
+<h4>El breaker (interruptor automático)</h4>
+<p>Protege el <b>cable</b>, no el aparato. Tiene dos mecanismos: uno térmico que se dispara con sobrecargas sostenidas (el cable se está calentando) y uno magnético que actúa al instante con un cortocircuito. Por eso el breaker se escoge según el calibre del cable, nunca más grande.</p>
+<ul>
+<li><b>Monopolar:</b> ocupa un espacio, protege un circuito de 120 V.</li>
+<li><b>Bipolar:</b> ocupa dos espacios, toma las dos fases y da 240 V. Para duchas, aires y estufas de 240 V.</li>
+<li><b>Totalizador o principal:</b> corta toda la casa. Se dimensiona con el cálculo de carga.</li>
+</ul>
+<p>Hay tableros de breakers enchufables (los más comunes en vivienda) y tableros con riel DIN. No se mezclan marcas ni tipos que el fabricante no autoriza.</p>
+<h4>Protección diferencial</h4>
+<p>El breaker normal no protege a las personas de un corrientazo, porque la corriente que mata es mucho menor que la que lo dispara. El <b>diferencial</b> compara lo que sale por la fase con lo que vuelve por el neutro; si falta algo, es porque se está fugando (quizás por una persona) y corta en milésimas de segundo. Para protección de personas se usan de 30 mA o menos; los tomacorrientes con diferencial incorporado (GFCI) disparan con unos 5 mA.</p>
+<p>Se usa en <b>baños, cocinas, lavaderos, zonas exteriores, piscinas</b> y en general donde haya agua. Tienen un botón de prueba: oprímalo una vez al mes.</p>
+<h4>DPS: protector contra sobretensiones</h4>
+<p>Colombia es de los países con más rayos del mundo. Un rayo cercano o una maniobra en la red producen picos de voltaje que queman televisores, neveras y equipos electrónicos. El <b>DPS</b> se instala en el tablero y desvía esos picos a tierra. Solo sirve si hay una buena puesta a tierra.</p>
+<h4>Buenas prácticas del tablero</h4>
+<ul>
+<li>Cada breaker marcado con lo que protege: "Cocina", "Ducha", "Alcobas".</li>
+<li>Un solo cable por terminal de breaker.</li>
+<li>El neutro y la tierra se unen <b>en un solo punto</b>: en el tablero principal o en la acometida. En subtableros van en barras separadas.</li>
+<li>Espacios libres de reserva para crecer.</li>
+<li>Tapa puesta y sin huecos por donde se meta la mano.</li>
+</ul>`},
+
+{t:'Los circuitos de una casa',m:'6 min',h:`
+<p>No se conecta todo a un solo cable. La instalación se divide en circuitos para que una falla no deje a oscuras toda la casa y para que ningún cable lleve más de lo que aguanta.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Circuito</th><th>Breaker y cable típico</th><th>Observación</th></tr></thead><tbody>
+<tr><td>Iluminación</td><td>15 A, 14 AWG</td><td>Puede hacerse en 20 A con 12 AWG</td></tr>
+<tr><td>Tomas de alcobas y sala</td><td>20 A, 12 AWG</td><td>Uso general</td></tr>
+<tr><td>Tomas de cocina</td><td>20 A, 12 AWG</td><td>Mínimo dos circuitos, con diferencial</td></tr>
+<tr><td>Lavandería</td><td>20 A, 12 AWG</td><td>Solo la zona de ropas</td></tr>
+<tr><td>Baños</td><td>20 A, 12 AWG</td><td>Con diferencial</td></tr>
+<tr><td>Nevera</td><td>20 A, 12 AWG</td><td>Recomendable que sea exclusivo</td></tr>
+<tr><td>Ducha eléctrica</td><td>Según placa, típico 30 A, 10 AWG</td><td>Exclusivo</td></tr>
+<tr><td>Aire acondicionado</td><td>Según placa del equipo</td><td>Exclusivo, muchas veces a 240 V</td></tr>
+<tr><td>Estufa u horno eléctrico</td><td>Típico 40 A, 8 AWG</td><td>Exclusivo, 240 V</td></tr>
+<tr><td>Motobomba, calentador</td><td>Según placa</td><td>Exclusivo</td></tr>
+</tbody></table></div>
+<h4>¿Cuántos tomacorrientes y dónde?</h4>
+<ul>
+<li>En alcobas y sala, la regla del Código Eléctrico Colombiano (NTC 2050) es que ningún punto de la pared quede a más de 1,8 m de un tomacorriente. En la práctica, uno cada 3,6 m de pared como máximo.</li>
+<li>En el mesón de la cocina, que ningún punto quede a más de 60 cm de un toma: uno cada 1,2 m.</li>
+<li>En el baño, al menos uno cerca del lavamanos, con diferencial y nunca al alcance de la ducha.</li>
+<li>Piense en el uso real: al lado de la cama, detrás del televisor, donde irá el escritorio.</li>
+</ul>
+<div class="note">Los circuitos exclusivos existen porque esas cargas consumen tanto que, compartidas, dispararían el breaker a cada rato o recalentarían el cable.</div>`},
+
+{t:'Cables y calibres',m:'6 min',h:`
+<p>El grosor del cable se mide en <b>AWG</b>: entre <b>más pequeño el número, más grueso</b> el cable y más corriente aguanta. Un cable delgado con mucha corriente se calienta, derrite el aislamiento y puede causar un incendio.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Calibre (cobre)</th><th>Breaker máximo</th><th>Uso típico</th></tr></thead><tbody>
+<tr><td>14 AWG</td><td>15 A</td><td>Iluminación</td></tr>
+<tr><td>12 AWG</td><td>20 A</td><td>Tomas generales, cocina, baño, lavandería</td></tr>
+<tr><td>10 AWG</td><td>30 A</td><td>Ducha, aire acondicionado, calentador</td></tr>
+<tr><td>8 AWG</td><td>40 a 50 A, según aislamiento</td><td>Estufa, horno, alimentadores cortos</td></tr>
+<tr><td>6 y 4 AWG</td><td>55 a 85 A, según aislamiento</td><td>Acometida y alimentador, según cálculo</td></tr>
+</tbody></table></div>
+<h4>Tipo de cable</h4>
+<ul>
+<li>Dentro de tubería se usa cable de cobre con aislamiento <b>THHN/THWN-2</b> (resiste calor y humedad). Alambre (un solo hilo, más fácil de conectar a tornillos) o cable (varios hilos, más flexible).</li>
+<li>El cable encauchetado o dúplex de extensión <b>no</b> se entierra en la pared ni se instala sin tubo.</li>
+<li>Compre cable con certificado RETIE. El cable "barato" muchas veces trae menos cobre del que dice.</li>
+</ul>
+<h4>Colores (RETIE)</h4>
+<div class="wires">
+<div><b style="background:#1B1B1B"></b>Fases: negro, rojo (y azul en sistemas trifásicos)</div>
+<div><b style="background:#FFFFFF"></b>Neutro: blanco</div>
+<div><b style="background:#2E8B3E"></b>Tierra: verde o cobre desnudo</div></div>
+<p>El cable que va del interruptor a la lámpara (retorno) debe ser de un color distinto al neutro y la tierra.</p>
+<h4>Empalmes</h4>
+<ul>
+<li>Los empalmes van <b>solo dentro de cajas</b>, nunca dentro del tubo ni enterrados en el pañete.</li>
+<li>Use conectores de resorte (capuchones) del tamaño adecuado o bornes; si usa cinta, que sea sobre un empalme bien torcido.</li>
+<li>Una conexión floja es la causa más común de chispas, calentamiento y olor a quemado.</li>
+</ul>`},
+
+{t:'Tubería y cajas',m:'5 min',h:`
+<p>Los cables no van sueltos en la pared: van dentro de <b>tubería</b> que los protege de golpes, clavos y humedad, y permite cambiarlos después.</p>
+<h4>Tubería</h4>
+<ul>
+<li>En vivienda lo más usado es el tubo <b>PVC conduit</b> (el de color naranja o gris para electricidad, no el de agua). En zonas expuestas o a la intemperie puede usarse tubería metálica (EMT) o PVC resistente al sol.</li>
+<li>Diámetros comunes: <b>½ pulgada</b> para un circuito ramal y <b>¾ pulgada</b> cuando pasan varios circuitos o cables más gruesos.</li>
+<li>No se llena el tubo de cables: con más de dos conductores, los cables no deben ocupar más del 40 % del área interna.</li>
+<li>Entre dos cajas no deben sumarse más de 360° de curvas (por ejemplo, cuatro curvas de 90°). Si hay más, se pone una caja de paso.</li>
+<li>Se usan curvas y uniones del mismo sistema, pegadas con soldadura para PVC.</li>
+</ul>
+<h4>Cajas</h4>
+<ul>
+<li><b>Rectangular 2×4 (caja 2400):</b> para interruptores y tomacorrientes sencillos.</li>
+<li><b>Cuadrada 4×4 (caja 5800):</b> cuando llegan muchos tubos o para aparatos dobles, con su suplemento.</li>
+<li><b>Octagonal:</b> en el techo, para lámparas.</li>
+</ul>
+<h4>Alturas habituales</h4>
+<ul>
+<li>Interruptores: alrededor de 1,20 m del piso terminado, al lado de la puerta por donde se abre.</li>
+<li>Tomacorrientes generales: entre 0,30 y 0,40 m.</li>
+<li>Cocina sobre el mesón y lavadora: alrededor de 1,10 a 1,20 m.</li>
+<li>Aire acondicionado: cerca de donde va la unidad, normalmente arriba, a unos 2 m.</li>
+</ul>
+<div class="note">Deje unos 20 cm de cable libre en cada caja. Recortar es fácil; alargar obliga a empalmar.</div>`},
+
+{t:'Interruptores, tomacorrientes y lámparas',m:'8 min',h:`
+<p>La regla de oro: <b>el interruptor siempre corta la fase</b>, nunca el neutro. Si corta el neutro, la lámpara se apaga, pero el bombillo sigue "vivo" y quien lo cambie se puede electrocutar.</p>
+<h4>Interruptor sencillo</h4>
+<p>La fase llega al interruptor; de él sale el <b>retorno</b> hasta la lámpara. El neutro y la tierra van directo a la lámpara.</p>
+${D_SENCILLO}
+<p>En el portalámparas (roseta), la fase o retorno va al <b>contacto del centro</b> y el neutro a la <b>rosca</b>. Así, si alguien toca la rosca al cambiar el bombillo, no hay peligro.</p>
+<h4>Interruptor doble</h4>
+<p>Dos interruptores en una misma placa que controlan dos lámparas o grupos distintos. Comparten la fase de entrada y cada uno tiene su propio retorno.</p>
+<h4>Interruptores conmutables (de escalera)</h4>
+<p>Para prender y apagar una misma lámpara desde dos sitios, como al pie y al final de una escalera o en los dos lados de una alcoba. Cada conmutable tiene un borne <b>común</b> y dos bornes para los <b>viajeros</b>. La fase entra al común del primero, los dos viajeros unen los dos conmutables, y del común del segundo sale el retorno a la lámpara.</p>
+${D_CONMUT}
+<p>Para más de dos sitios, entre los dos conmutables se ponen interruptores de cruce (de 4 vías).</p>
+<h4>Tomacorriente polarizado con polo a tierra</h4>
+${D_TOMA}
+<ul>
+<li>Nunca invierta fase y neutro: muchos aparatos quedan con la carcasa o el interruptor interno del lado equivocado.</li>
+<li>El tomacorriente de 240 V tiene otra forma, para que no se enchufe por error un aparato de 120 V.</li>
+<li>El tomacorriente GFCI (con botones de prueba y reinicio) tiene bornes de entrada (LINE) y de salida (LOAD). Los tomas conectados en LOAD quedan también protegidos.</li>
+<li>Los tomas con puertos USB son prácticos, pero deben tener certificado RETIE.</li>
+</ul>`},
+
+{t:'Ventiladores de techo y de pared',m:'6 min',h:`
+<p>En tierra caliente el ventilador de techo es de los aparatos más usados, y también de los peor instalados. El problema casi nunca es eléctrico: es mecánico.</p>
+<h4>La sujeción es lo primero</h4>
+<ul>
+<li>Un ventilador pesa entre 5 y 10 kg y vibra. No se cuelga de la caja octagonal de una lámpara ni de un chazo plástico: se usa una <b>caja o soporte certificado para ventilador</b>, anclado a la placa, a una viga o a un travesaño firme.</li>
+<li>Las aspas deben quedar a unos <b>2,3 m del piso</b> como mínimo y a buena distancia de paredes, closets y puertas.</li>
+<li>Si el techo es de drywall o machimbre, el soporte se amarra a la estructura, no a la lámina.</li>
+<li>Apriete todos los tornillos de las aspas y use el kit de balanceo si bambolea. Un ventilador desbalanceado afloja su propio soporte con el tiempo.</li>
+</ul>
+<h4>La conexión</h4>
+<p>Si el ventilador tiene kit de luz, lo ideal es controlarlos por separado: un interruptor doble, con un retorno para el motor y otro para la luz. Por eso al techo deben llegar fase o retornos, neutro y tierra.</p>
+${D_VENT}
+<ul>
+<li>La velocidad se controla con el regulador del propio ventilador (cadena o control remoto) o con un <b>regulador de pared para ventiladores</b>. Un dímer de bombillos no sirve y puede quemar el motor.</li>
+<li>La tierra va a la estructura metálica del ventilador.</li>
+<li>Los empalmes quedan dentro de la caja, con capuchones, y todo tapado por la campana.</li>
+</ul>
+<h4>El capacitor, falla típica</h4>
+<p>Los ventiladores monofásicos arrancan gracias a un <b>capacitor</b>. Cuando se daña, el ventilador zumba y no arranca, arranca solo si se le da impulso con la mano, o gira muy lento en todas las velocidades. Se cambia por uno del <b>mismo valor en microfaradios (µF) y de igual o mayor voltaje</b>, con la energía cortada.</p>
+<div class="note">Los ventiladores de pared y de pedestal se conectan a un tomacorriente normal. Si la clavija se calienta, cámbiela: casi siempre es un contacto flojo.</div>`},
+
+{t:'Nevera y congelador',m:'5 min',h:`
+<p>La nevera trabaja las 24 horas y su compresor arranca y para muchas veces al día. Cada arranque pide varias veces su corriente normal durante un instante.</p>
+<ul>
+<li><b>Toma con polo a tierra</b>, idealmente en un circuito de 20 A dedicado o con pocas cargas, para que un arranque del compresor no haga saltar el breaker de otros aparatos.</li>
+<li><b>Nada de extensiones ni multitomas.</b> Una extensión delgada calienta y baja el voltaje justo en el arranque, que es cuando el compresor más sufre.</li>
+<li><b>Protector de voltaje:</b> en sectores donde la energía sube, baja o se va seguido, un protector para nevera (con retardo de reconexión) evita que el compresor arranque con voltaje malo o que vuelva a arrancar apenas regresa la luz.</li>
+<li>Deje espacio atrás y a los lados para que salga el calor, lejos de la estufa y del sol de la tarde.</li>
+<li>Si la transportó acostada, espere antes de conectarla el tiempo que indique el fabricante, para que el aceite regrese al compresor.</li>
+</ul>
+<div class="note">Un congelador horizontal de un negocio o una nevera exhibidora sí conviene que tengan su propio circuito.</div>`},
+
+{t:'Lavadora y secadora',m:'4 min',h:`
+<p>La lavadora junta las dos cosas que no se llevan bien: agua y electricidad. Por eso aquí la protección es obligatoria, no opcional.</p>
+<ul>
+<li>Tomacorriente a unos <b>1,10 a 1,20 m</b> del piso, fuera del alcance de salpicaduras y del agua del desagüe.</li>
+<li><b>Polo a tierra real:</b> la carcasa metálica de una lavadora sin tierra es de los corrientazos más comunes en las casas.</li>
+<li>Circuito de lavandería de 20 A, 12 AWG, con <b>protección diferencial</b>.</li>
+<li>Si la zona de ropas es exterior o está bajo alero, el toma debe ser para intemperie, con tapa.</li>
+<li>La <b>secadora eléctrica</b> normalmente trabaja a 240 V y necesita un circuito exclusivo (típicamente 30 A, 10 AWG) con su toma de 240 V. Las secadoras a gas solo usan 120 V para el motor y el control.</li>
+</ul>
+<div class="note warn">Si la lavadora "pica" al tocarla, desconéctela y no la use hasta revisar la tierra y el aparato.</div>`},
+
+{t:'Aire acondicionado',m:'7 min',h:`
+<p>El aire acondicionado tipo mini split tiene una unidad interior (la que va en la pared de la alcoba) y una exterior o condensadora (la que tiene el compresor y el ventilador grande). La instalación es mitad eléctrica y mitad de refrigeración.</p>
+<h4>¿De qué tamaño?</h4>
+<p>La capacidad se mide en <b>BTU</b>. Como referencia aproximada en clima cálido se usan unos 600 BTU por metro cuadrado, y más si el cuarto recibe sol directo, tiene techo sin cielo raso, o hay muchas personas o equipos. Una alcoba de 12 a 15 m² suele quedar bien con 9.000 BTU; de 18 a 22 m², con 12.000 BTU.</p>
+<h4>La parte eléctrica</h4>
+<ul>
+<li><b>Circuito exclusivo</b> desde el tablero. Los equipos de 9.000 y 12.000 BTU vienen a 120 V o a 220 V; los de 18.000 en adelante casi siempre a 220 V, con breaker bipolar.</li>
+<li>El calibre y el breaker salen de la <b>placa de la condensadora</b>: trae la corriente mínima del circuito (MCA) y la protección máxima (MOP o "fusible máximo"). Se respetan esos valores.</li>
+<li>Cerca de la condensadora se instala un <b>interruptor de desconexión</b> para que el técnico la pueda apagar sin ir al tablero.</li>
+<li>Entre unidades va el cable que indica el manual (alimentación y comunicación), sin empalmes intermedios.</li>
+<li>Los equipos <b>inverter</b> consumen bastante menos y arrancan suave, sin el golpe de corriente de los convencionales.</li>
+</ul>
+<h4>La parte de refrigeración</h4>
+<ul>
+<li>Tubería de cobre aislada entre unidades, con la longitud y los diámetros del manual, y abocinados bien hechos.</li>
+<li>Antes de abrir el gas se hace <b>vacío con bomba de vacío</b>. Sin vacío, la humedad dentro del sistema daña el compresor.</li>
+<li>El drenaje de la unidad interior con pendiente, lejos de muros y del tablero.</li>
+<li>Condensadora sobre soportes firmes, con aire libre alrededor y protegida del sol directo si es posible.</li>
+</ul>
+<div class="note">La carga y el manejo de refrigerantes los hace un técnico en refrigeración. Una mala instalación hace que el equipo gaste más y dure la mitad.</div>`},
+
+{t:'Ducha eléctrica y calentador',m:'5 min',h:`
+<p>La ducha eléctrica calienta el agua con una resistencia en el momento en que pasa. Es cómoda y barata de comprar, pero es la carga más grande de muchas casas y está donde más agua hay.</p>
+<ul>
+<li><b>Circuito exclusivo</b> con el calibre y el breaker que pide la placa. Una ducha de 3.500 W a 120 V consume unos 29 A: cable 10 AWG y breaker de 30 A como mínimo. Si el recorrido es largo, engrose el cable (vea el tema de caída de tensión).</li>
+<li>Si la casa tiene acometida trifilar, una ducha a 220 V consume la mitad de corriente y el cable se calienta menos.</li>
+<li><b>Tierra obligatoria</b> conectada al cable verde de la ducha, y <b>protección diferencial</b> en el circuito.</li>
+<li>Los empalmes se hacen con bornes o conectores adecuados, dentro de una caja, <b>nunca</b> con cinta al aire detrás de la ducha.</li>
+<li>Abra primero el agua y después la energía, y al terminar al revés. Sin agua, la resistencia se quema en segundos.</li>
+</ul>
+<h4>Calentadores de paso y de acumulación</h4>
+<p>Los calentadores eléctricos de acumulación (tanque) tienen menos potencia que una ducha pero trabajan más horas. También van en circuito exclusivo, con tierra y con la válvula de alivio de presión en buen estado.</p>
+<div class="note warn">Si la ducha da corrientazo, no es normal ni se arregla con chancletas: falta tierra o hay una fuga. Corte el breaker y hágala revisar.</div>`},
+
+{t:'Cocina y equipos electrónicos',m:'5 min',h:`
+<h4>Estufa, horno y microondas</h4>
+<ul>
+<li>La <b>estufa o el horno eléctrico</b> van a 240 V, en circuito exclusivo (típicamente 40 A, 8 AWG, según placa), con su toma o caja de conexión.</li>
+<li>El <b>microondas</b>, el horno pequeño, la freidora de aire y la olla arrocera son cargas de 800 a 1.800 W. Conéctelos en los tomas de la cocina y repártalos: dos de ellos en el mismo circuito al tiempo pueden hacer saltar el breaker.</li>
+<li>Los tomas del mesón deben estar lejos del lavaplatos y con diferencial.</li>
+</ul>
+<h4>Televisores, computadores y equipos sensibles</h4>
+<ul>
+<li>Un <b>DPS en el tablero</b> más una multitoma con protección contra sobretensiones protege contra picos de rayos y de la red.</li>
+<li>Un <b>regulador de voltaje</b> ayuda donde el voltaje sube y baja mucho.</li>
+<li>Una <b>UPS</b> da unos minutos de batería para guardar el trabajo y apagar bien el computador o mantener el módem.</li>
+<li>Todo esto solo funciona bien si el toma tiene tierra.</li>
+</ul>`},
+
+
+{t:'Puesta a tierra',m:'6 min',h:`
+<p>La puesta a tierra es un camino de muy baja resistencia hacia el suelo. Si un cable de fase toca la carcasa metálica de una nevera o una lavadora, la corriente se va por la tierra, se dispara la protección y nadie recibe el corrientazo.</p>
+<h4>Cómo se hace</h4>
+<ul>
+<li>Se clava un <b>electrodo</b> en el suelo, normalmente una varilla de acero recubierta de cobre (copperweld) de 2,4 m de largo, cerca del tablero o del medidor.</li>
+<li>Se une a la varilla un cable de cobre (desnudo o verde) con soldadura exotérmica o con un conector certificado para enterrar. Una unión con alambre amarrado no sirve.</li>
+<li>Ese cable llega a la barra de tierra del tablero, y desde ahí a cada tomacorriente y a cada carcasa metálica por el cable verde o desnudo de cada circuito.</li>
+<li>Se deja una caja de inspección para poder revisar la unión y medir.</li>
+</ul>
+<h4>Se mide, no se supone</h4>
+<p>La resistencia de la puesta a tierra se mide con un <b>telurómetro</b>. El RETIE fija valores máximos de referencia según el tipo de instalación. Si el terreno es seco o rocoso, se ponen más varillas unidas entre sí o se mejora el suelo con productos aprobados.</p>
+<div class="note warn">El tubo del agua no es una puesta a tierra, y un tomacorriente de tres huecos sin cable de tierra conectado es un engaño: se ve seguro y no lo es. Un probador de tomacorrientes de tres luces lo detecta en segundos.</div>
+<h4>Pararrayos</h4>
+<p>La puesta a tierra de la casa no es un pararrayos. En viviendas altas, aisladas o en zonas de muchas tormentas puede necesitarse un sistema de protección contra rayos, que lo diseña un profesional a partir de una evaluación de riesgo.</p>`},
+
+{t:'Cálculo de la carga de la casa',m:'7 min',h:`
+<p>Antes de comprar cables y breakers hay que saber cuánta potencia va a pedir la vivienda. Con eso se dimensiona la acometida, el breaker principal y se hace la solicitud al operador de red.</p>
+<h4>El método básico del Código Eléctrico (NTC 2050)</h4>
+<ul>
+<li><b>Iluminación y tomas generales:</b> 32 VA por cada metro cuadrado construido.</li>
+<li><b>Pequeños artefactos de cocina:</b> 1.500 VA por cada circuito, mínimo dos.</li>
+<li><b>Lavandería:</b> 1.500 VA.</li>
+</ul>
+<p>Como no todo se prende al mismo tiempo, a esa suma se le aplica un <b>factor de demanda</b>: los primeros 3.000 VA se cuentan completos y lo que pase de ahí se cuenta al 35 %.</p>
+<p>Luego se suman las <b>cargas grandes</b>: ducha, aires, estufa, calentador, motobomba, con los vatios de su placa. (La norma también permite factores de demanda para estas; aquí se suman completas para quedar del lado seguro.)</p>
+<h4>Ejemplo: casa de 80 m² con ducha y un aire</h4>
+<ul>
+<li>Iluminación: 80 × 32 = 2.560 VA</li>
+<li>Cocina: 2 × 1.500 = 3.000 VA</li>
+<li>Lavandería: 1.500 VA. Subtotal: 7.060 VA</li>
+<li>Con demanda: 3.000 + (4.060 × 0,35) = 4.421 VA</li>
+<li>Más ducha 3.500 VA y aire 1.200 VA: <b>9.121 VA</b></li>
+</ul>
+<p>A 240 V (acometida trifilar) son unos 38 A: un breaker principal de 40 A queda justo, así que se escoge uno de 50 A con su alimentador calculado para esa corriente. A 120 V serían 76 A por un solo par de cables, que es demasiado: por eso casi todas las casas nuevas se conectan trifilares.</p>
+<div class="note">Haga el suyo con la calculadora de carga de la casa, en Herramientas.</div>`},
+
+{t:'Caída de tensión',m:'4 min',h:`
+<p>Todo cable tiene algo de resistencia. Si el circuito es largo y lleva mucha corriente, parte del voltaje se "pierde" en el camino y el aparato recibe menos de 120 V: los motores se calientan, las neveras sufren y los bombillos alumbran menos.</p>
+<div class="formula">ΔV = 2 × L × I × R</div>
+<p>L es la longitud en kilómetros (se multiplica por 2 porque la corriente va y vuelve), I la corriente y R la resistencia del cable en ohmios por kilómetro.</p>
+<p>La recomendación del Código Eléctrico es no pasar de <b>3 %</b> en un circuito ramal y de <b>5 %</b> sumando alimentador y ramal. En 120 V, 3 % son 3,6 V.</p>
+<h4>Ejemplo</h4>
+<p>Una ducha de 3.500 W a 120 V consume unos 29 A. Con cable 10 AWG a 20 m del tablero, la caída es cercana a 3,9 %: se pasa. Con 8 AWG baja a casi 2,5 %. Por eso, en recorridos largos, el cable se engruesa aunque el calibre menor aguante la corriente.</p>`},
+
+{t:'Paso a paso de una instalación nueva',m:'7 min',h:`
+<p>Así se hace la instalación eléctrica de una casa, en el orden de la obra:</p>
+<ol>
+<li><b>Diseño.</b> Plano con la ubicación de cada salida (luces, tomas, interruptores), cuadro de cargas, diagrama unifilar y cálculo de calibres y protecciones. Para una vivienda sencilla lo puede hacer el mismo profesional que construye; el RETIE exige que alguien competente responda por él.</li>
+<li><b>Trámite con el operador de red.</b> Se pide la factibilidad o disponibilidad del servicio con la carga calculada. El operador indica cómo debe ir la acometida y el sitio del medidor.</li>
+<li><b>Obra negra.</b> Antes del pañete se hacen las regatas, se instalan tubos y cajas bien fijos y aplomados, y se dejan los tubos del techo antes de fundir la placa. Los tubos se tapan para que no les entre mezcla.</li>
+<li><b>Tablero y acometida.</b> Se instala el tablero, la caja del medidor y el ducto de la acometida según la norma del operador.</li>
+<li><b>Puesta a tierra.</b> Se clava la varilla, se hace la unión y se mide.</li>
+<li><b>Alambrado.</b> Con la obra ya pañetada, se pasa la sonda por cada tubo, se amarran los cables y se halan. Colores correctos, 20 cm de reserva en cada caja y cada cable marcado en el tablero.</li>
+<li><b>Aparatos.</b> Interruptores, tomas y lámparas se instalan después de pintar, para no mancharlos ni dañarlos.</li>
+<li><b>Pruebas.</b> Todo se revisa antes de energizar (siguiente tema).</li>
+<li><b>Certificación RETIE.</b> Se firma la declaración de cumplimiento y, cuando aplica, se hace la inspección.</li>
+<li><b>Conexión.</b> Con los documentos, el operador de red instala o activa el medidor y energiza.</li>
+</ol>
+<div class="note">El error más costoso es improvisar en obra negra: una caja olvidada o un tubo que no llega obliga a romper pared ya terminada.</div>`},
+
+{t:'Pruebas y certificación RETIE',m:'6 min',h:`
+<h4>Pruebas antes de energizar</h4>
+<ul>
+<li><b>Continuidad:</b> que cada cable llegue completo a donde debe.</li>
+<li><b>Aislamiento:</b> con un megóhmetro (megger) se comprueba que no haya fugas entre fases, neutro y tierra.</li>
+<li><b>Polaridad:</b> que la fase esté en la ranura corta de cada toma y que los interruptores corten la fase.</li>
+<li><b>Puesta a tierra:</b> medición con telurómetro.</li>
+<li><b>Diferenciales:</b> que disparen al oprimir el botón de prueba.</li>
+<li><b>Tensión:</b> ya energizado, medir 120 V entre fase y neutro, 0 V aproximadamente entre neutro y tierra, y unos 240 V entre fases.</li>
+</ul>
+<h4>El RETIE</h4>
+<p>El <b>Reglamento Técnico de Instalaciones Eléctricas</b> es obligatorio en Colombia. La versión actual es la de la Resolución 40117 de 2024 del Ministerio de Minas y Energía y sus modificaciones. Exige, entre otras cosas, que los productos (cables, breakers, tomas) tengan certificado y que las instalaciones demuestren cumplimiento.</p>
+<ul>
+<li>Toda instalación nueva, ampliada o remodelada debe tener la <b>declaración de cumplimiento</b> firmada por quien la construyó.</li>
+<li>En los casos que el reglamento señala, se exige además la <b>certificación plena</b>: declaración del diseñador, declaración del constructor y <b>dictamen de inspección</b> de un organismo acreditado por ONAC.</li>
+<li>El operador de red pide estos documentos para conectar el servicio.</li>
+</ul>
+<p>Quien firma debe ser un profesional competente con <b>matrícula profesional vigente</b>; para técnicos electricistas la expide el CONTE. La iluminación, además, tiene su propio reglamento: el RETILAP.</p>
+<div class="note">Los requisitos cambian con el tiempo y dependen del tipo de instalación. Antes de construir, confirme con el operador de red y con el profesional qué documentos le van a pedir.</div>`},
+
+{t:'Fallas comunes y cómo reconocerlas',m:'6 min',h:`
+<div class="table-wrap"><table>
+<thead><tr><th>Lo que pasa</th><th>Causa probable</th><th>Qué hacer</th></tr></thead><tbody>
+<tr><td>El breaker salta al prender la plancha o el microondas</td><td>Sobrecarga: demasiados aparatos en ese circuito</td><td>Repartir aparatos en otros tomas o hacer un circuito nuevo. Nunca poner un breaker más grande.</td></tr>
+<tr><td>El breaker salta apenas se sube, sin nada prendido</td><td>Cortocircuito en el cableado o en un aparato</td><td>Desenchufar todo y probar. Si sigue, electricista.</td></tr>
+<tr><td>El diferencial se dispara</td><td>Fuga a tierra: humedad en una caja, un aparato dañado</td><td>Desenchufar aparatos uno por uno para hallar el culpable. Revisar cajas mojadas.</td></tr>
+<tr><td>Un grupo de tomas se quedó sin energía</td><td>Un GFCI disparado más atrás, o una conexión suelta</td><td>Buscar y reiniciar el toma GFCI del baño o la cocina.</td></tr>
+<tr><td>Unos bombillos brillan de más y otros casi no, aparatos que se queman</td><td>Neutro abierto en la acometida o el tablero</td><td>Urgente: apagar el principal y llamar al operador de red o a un electricista.</td></tr>
+<tr><td>Corrientazo al tocar la ducha, la nevera o la lavadora</td><td>Fuga a la carcasa y falta de tierra</td><td>No usar, bajar el breaker y revisar tierra y aparato.</td></tr>
+<tr><td>Toma o clavija caliente, olor a quemado</td><td>Conexión floja o sobrecarga</td><td>Desconectar ya y cambiar el toma o la clavija.</td></tr>
+<tr><td>La luz parpadea</td><td>Conexión floja, bombillo LED dañado o no compatible con el regulador</td><td>Cambiar el bombillo; si sigue, revisar conexiones.</td></tr>
+<tr><td>La factura subió sin razón</td><td>Aparato dañado, fuga o conexión indebida</td><td>Apagar todo y ver si el medidor sigue marcando.</td></tr>
+</tbody></table></div>
+<div class="note warn">Revisar un síntoma no es lo mismo que repararlo. Lo que implica abrir tableros, cajas o acometidas le corresponde a un electricista matriculado.</div>`},
+
+{t:'Ahorro y eficiencia en la casa',m:'4 min',h:`
+<ul>
+<li><b>Bombillos LED:</b> dan la misma luz que uno incandescente gastando cerca de 80 % menos.</li>
+<li><b>Nevera:</b> lejos de la estufa y del sol, con espacio atrás para ventilar y el empaque de la puerta en buen estado. Es de los aparatos que más pesan en la factura porque trabaja todo el día.</li>
+<li><b>Ducha eléctrica:</b> es la carga más grande de muchas casas. Cada minuto cuenta.</li>
+<li><b>Aire acondicionado:</b> los equipos inverter gastan menos; puertas y ventanas cerradas, y a 24 °C en vez de 18 °C.</li>
+<li><b>Consumo fantasma:</b> televisores, decodificadores y cargadores enchufados gastan aunque estén "apagados". Una multitoma con interruptor ayuda.</li>
+<li><b>Plancha y lavadora:</b> mejor en tandas grandes que en muchas pequeñas.</li>
+<li><b>Energía solar:</b> los paneles con inversor pueden reducir la factura; deben instalarse cumpliendo el RETIE y, si se conectan a la red, con aprobación del operador.</li>
+</ul>
+<div class="note">Con la calculadora de consumo, en Herramientas, puede ver cuánto pesa cada aparato en su factura.</div>`},
+
+{t:'Herramientas y materiales',m:'4 min',h:`
+<h4>Herramientas básicas</h4>
+<ul>
+<li><b>Probador de tensión sin contacto:</b> un lapicero que pita cerca de un cable con energía. Lo primero que se usa, siempre.</li>
+<li><b>Multímetro:</b> mide voltaje, continuidad y resistencia.</li>
+<li><b>Pinza amperimétrica:</b> mide la corriente sin cortar el cable.</li>
+<li><b>Probador de tomacorrientes:</b> de tres luces, revisa polaridad y tierra.</li>
+<li>Alicate, pinza de punta, pelacables, destornilladores de pala y estrella con aislamiento para 1.000 V.</li>
+<li><b>Sonda o guía</b> para pasar cables por el tubo, metro, nivel y taladro.</li>
+</ul>
+<p>El megóhmetro y el telurómetro son equipos de medición profesionales que usa quien certifica la instalación.</p>
+<h4>Materiales de una instalación</h4>
+<ul>
+<li>Cable THHN/THWN-2 en los calibres y colores necesarios, y cable desnudo para tierra.</li>
+<li>Tubo PVC conduit, curvas, uniones, adaptadores terminales y soldadura para PVC.</li>
+<li>Cajas 2×4, 4×4 y octagonales con sus suplementos.</li>
+<li>Tablero, breakers, diferenciales y DPS.</li>
+<li>Varilla de tierra, conector o soldadura exotérmica y caja de inspección.</li>
+<li>Interruptores, tomacorrientes, rosetas, conectores de resorte y cinta aislante.</li>
+</ul>
+<div class="note">Todo producto eléctrico que se vende en Colombia debe tener certificado RETIE. Pídalo en el almacén.</div>`}
+];
+
+const MOT=[
+{t:'Cómo funciona un motor eléctrico',m:'6 min',h:`
+<p>Un motor convierte electricidad en movimiento. La parte fija, el <b>estator</b>, tiene bobinas de cobre que, al recibir corriente alterna, crean un campo magnético que gira. La parte que da vueltas, el <b>rotor</b>, es arrastrada por ese campo. En la mayoría de motores de bombas el rotor es de <b>jaula de ardilla</b>: barras de aluminio o cobre, sin escobillas ni conexiones, por eso duran tanto.</p>
+<h4>Velocidad</h4>
+<p>Con la red de 60 Hz de Colombia, un motor de <b>2 polos</b> gira a unas 3.450 a 3.500 RPM y uno de <b>4 polos</b> a unas 1.725 a 1.750. Las motobombas centrífugas pequeñas casi siempre son de 2 polos.</p>
+<h4>La placa de datos: el documento del motor</h4>
+<ul>
+<li><b>HP o kW:</b> potencia en el eje. 1 HP equivale a unos 746 W.</li>
+<li><b>Voltaje y corriente (A):</b> si trae dos valores (115/230 V o 220/440 V) es de tensión dual, y la corriente cambia según la conexión.</li>
+<li><b>RPM y Hz.</b></li>
+<li><b>F.S. (factor de servicio):</b> 1,15 significa que aguanta un 15 % de sobrecarga ocasional, no que deba trabajar así siempre.</li>
+<li><b>Clase de aislamiento</b> (B, F, H): cuánta temperatura soportan las bobinas.</li>
+<li><b>IP:</b> protección contra polvo y agua. IP44 aguanta salpicaduras; IP55 chorros de agua y polvo; para ambientes mojados y sucios se pide IP55 o más.</li>
+<li><b>Diagrama de conexiones:</b> dentro de la tapa de la caja de bornes o en la placa. Es la guía para conectarlo.</li>
+</ul>
+<div class="note">Una regla que vale oro: la corriente real del motor, medida con pinza, debe estar por debajo de la corriente de placa. Si está por encima, el motor está sobrecargado o algo anda mal.</div>`},
+
+{t:'Monofásicos y trifásicos',m:'6 min',h:`
+<h4>Motor monofásico</h4>
+<p>Funciona con 120 V o 220-240 V de dos cables. Una sola fase no crea un campo que gire por sí solo, así que el motor necesita ayuda para arrancar:</p>
+<ul>
+<li><b>Capacitor de arranque</b> (negro, grande en µF): da el empujón y se desconecta a los pocos segundos mediante un <b>interruptor centrífugo</b> o un relé.</li>
+<li><b>Capacitor de marcha</b> (metálico o plástico gris, pocos µF): queda conectado siempre y mejora el rendimiento.</li>
+</ul>
+<p>Si el capacitor de arranque o el centrífugo fallan, el motor <b>zumba y no arranca</b>, se calienta y el térmico lo dispara. Es la falla más común de las motobombas monofásicas.</p>
+<p>En la práctica los motores monofásicos llegan hasta unos 3 a 5 HP; por encima se vuelven costosos y exigen demasiada corriente en el arranque.</p>
+<h4>Motor trifásico</h4>
+<p>Recibe tres fases desfasadas que crean el campo giratorio solas: no necesita capacitor ni centrífugo. Es más sencillo, más eficiente, más barato por HP y dura más. Es el estándar para bombas y maquinaria de más de 3 HP.</p>
+<ul>
+<li>Necesita red trifásica (208, 220 o 440 V). En muchas zonas rurales solo llega monofásica: la opción es pedir la extensión al operador de red, usar una planta trifásica o, para motores pequeños y medianos, un <b>variador de frecuencia de entrada monofásica y salida trifásica</b>.</li>
+<li>Los aparatos "convertidores" caseros con capacitores hacen girar el motor pero le quitan buena parte de su potencia y lo calientan.</li>
+</ul>
+<div class="note warn">Un motor trifásico que pierde una fase sigue zumbando o girando forzado y se quema en minutos. Por eso en zonas con red inestable se instala un relé de falla de fase.</div>`},
+
+{t:'Conexiones del motor y sentido de giro',m:'6 min',h:`
+<p>Siempre se conecta según el <b>diagrama de la placa</b>. Los esquemas de abajo son los generales.</p>
+<h4>Motores de tensión dual</h4>
+<ul>
+<li><b>Monofásico 115/230 V:</b> tiene dos bobinas de trabajo. En paralelo trabaja a 115 V; en serie, a 230 V. Conectar en 115 un motor puesto para 230 lo deja sin fuerza; al revés, lo quema.</li>
+<li><b>Trifásico 220/440 V de 9 terminales (T1 a T9):</b> las bobinas se agrupan en doble estrella o doble triángulo para 220 V, o en serie para 440 V. El agrupamiento exacto sale de la placa.</li>
+<li><b>Trifásico de 6 terminales:</b> se conecta en <b>estrella</b> (Y) para el voltaje mayor o en <b>triángulo</b> (Δ) para el menor, con puentes en la bornera. Estos son los motores que permiten arranque estrella-triángulo.</li>
+</ul>
+<h4>Cambiar el sentido de giro</h4>
+<ul>
+<li><b>Trifásico:</b> se intercambian <b>dos</b> de las tres fases, cualesquiera. Es la forma de corregir una bomba que gira al revés.</li>
+<li><b>Monofásico:</b> se invierten los terminales del bobinado de arranque según el diagrama. Muchos motores de bomba vienen con giro fijo y no se deben invertir.</li>
+</ul>
+<div class="note">Una bomba centrífuga girando al revés sí saca algo de agua, pero muy poca y a baja presión. Antes de acoplar, dé un toque de arranque y compare con la flecha que trae la carcasa.</div>
+<h4>Bornes y cables</h4>
+<ul>
+<li>Terminales ponchados del calibre correcto, arandelas y tuercas bien apretadas. Un borne flojo se recalienta y quema la bornera.</li>
+<li>Prensaestopas o conector hermético en la entrada del cable a la caja, para que no entre agua ni polvo.</li>
+<li>El cable de tierra va al tornillo de tierra de la carcasa, siempre.</li>
+</ul>`},
+
+{t:'Protección y control: contactor, térmico y guardamotor',m:'8 min',h:`
+<p>Un motor no se protege con un breaker común y ya. Necesita tres cosas distintas:</p>
+<ul>
+<li><b>Protección contra cortocircuito:</b> breaker o fusibles. Debe aguantar el arranque, así que se escoge más grande que la corriente del motor (hasta 2,5 veces con breaker de tiempo inverso).</li>
+<li><b>Protección contra sobrecarga:</b> el <b>relé térmico</b>, que se ajusta a la <b>corriente de placa</b> del motor. Es el que realmente cuida las bobinas cuando la bomba se atasca, trabaja forzada o falta una fase.</li>
+<li><b>Control:</b> el <b>contactor</b>, un interruptor de potencia que se acciona con una bobina. Permite prender el motor con pulsadores, un flotador, un presostato o un temporizador.</li>
+</ul>
+<p>El <b>guardamotor</b> junta en un solo aparato la protección magnética contra cortocircuito y la térmica contra sobrecarga, con perilla de ajuste. Con un guardamotor y un contactor queda un arrancador completo y compacto.</p>
+<h4>El circuito de mando del arranque directo</h4>
+${D_MANDO}
+<p>Al oprimir <b>Marcha</b> se energiza la bobina del contactor KM, que cierra sus contactos principales (el motor arranca) y también un <b>contacto auxiliar</b> conectado en paralelo con el pulsador. Así, al soltar Marcha, la bobina sigue alimentada por ese auxiliar: es la <b>auto-retención</b>. Al oprimir <b>Parada</b>, o si se dispara el <b>térmico</b>, se corta la bobina y el motor se detiene. Si se va la luz, el motor no vuelve a arrancar solo, lo cual es una medida de seguridad.</p>
+<h4>Otras protecciones que valen la pena</h4>
+<ul>
+<li><b>Relé de falla de fase y de voltaje:</b> desconecta si falta una fase, si se invierten o si el voltaje está muy alto o muy bajo. Indispensable para motores trifásicos en zonas rurales.</li>
+<li><b>Protección contra marcha en seco:</b> flotador, electrodos de nivel o relé que detecta baja corriente. Una bomba sin agua se daña rápido.</li>
+<li><b>DPS</b> en el tablero del motor, donde caen muchos rayos.</li>
+<li><b>Protección de falla a tierra</b> en bombas sumergidas y equipos en sitios húmedos.</li>
+</ul>
+<div class="note">El tablero del motor debe tener grado de protección para el sitio donde va: con techo, cerrado y con empaque (IP54 o más) si hay agua, lluvia o polvo.</div>`},
+
+{t:'Formas de arrancar un motor',m:'5 min',h:`
+<p>Al arrancar, un motor pide de <b>6 a 8 veces</b> su corriente normal durante unos segundos. En motores pequeños no importa; en motores grandes baja el voltaje de toda la red, hace parpadear las luces y puede disparar la planta o el breaker.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Arranque</th><th>Cómo funciona</th><th>Cuándo se usa</th></tr></thead><tbody>
+<tr><td>Directo</td><td>El contactor conecta el motor a todo el voltaje de una vez</td><td>Motores pequeños, normalmente hasta 5 a 10 HP según la red</td></tr>
+<tr><td>Estrella-triángulo</td><td>Arranca en estrella con menos voltaje por bobina y a los segundos pasa a triángulo. La corriente de arranque baja a más o menos un tercio</td><td>Motores trifásicos de 6 terminales, medianos, que arrancan sin mucha carga</td></tr>
+<tr><td>Arrancador suave</td><td>Electrónica que sube el voltaje poco a poco</td><td>Bombas medianas y grandes; evita el golpe de ariete en la tubería</td></tr>
+<tr><td>Variador de frecuencia</td><td>Cambia la frecuencia y el voltaje para controlar la velocidad</td><td>Cuando se quiere regular caudal o presión, ahorrar energía o alimentar un trifásico desde red monofásica</td></tr>
+</tbody></table></div>
+<div class="note">En bombas, el variador ahorra mucha energía: bajar la velocidad un 20 % reduce el consumo casi a la mitad, porque la potencia de una bomba centrífuga cae con el cubo de la velocidad.</div>`},
+
+{t:'Tipos de bombas',m:'6 min',h:`
+<h4>Centrífuga de superficie</h4>
+<p>La más común: un impulsor gira dentro de una carcasa y lanza el agua hacia afuera. Se instala por encima del agua y la <b>chupa</b> por una tubería de succión.</p>
+<ul>
+<li>La presión del aire solo puede subir el agua unos 10 m en teoría. En la práctica, la succión de una bomba de superficie <b>no debe pasar de 6 a 7 m</b>, y menos si la tubería es larga o el agua está caliente.</li>
+<li>Necesita estar <b>cebada</b>: la carcasa y la succión llenas de agua antes de arrancar. Por eso lleva válvula de pie (cheque con coladera) al final de la succión.</li>
+</ul>
+<h4>Sumergible</h4>
+<p>El motor y la bomba van dentro del agua. No tienen problema de succión porque empujan el agua desde abajo.</p>
+<ul>
+<li><b>De pozo profundo:</b> cilíndricas, de 4 o 6 pulgadas, con varias etapas para dar mucha altura.</li>
+<li><b>De achique o drenaje:</b> para sacar agua de excavaciones, sótanos, apiques, frentes de mina e inundaciones. Muchas manejan agua con arena o lodo; hay que escogerlas para eso.</li>
+</ul>
+<h4>Presurizador o sistema hidroneumático</h4>
+<p>Bomba más <b>tanque con aire a presión</b> y un <b>presostato</b> que la prende cuando baja la presión y la apaga cuando sube. Da presión pareja en la casa. Si el tanque pierde el aire, la bomba prende y apaga cada pocos segundos y se daña.</p>
+<h4>Motobombas a gasolina o diésel</h4>
+<p>No son eléctricas, pero se usan mucho donde no hay red. El principio de la bomba es el mismo.</p>
+<h4>La curva de la bomba</h4>
+<p>Cada bomba tiene una <b>curva</b>: a más altura, menos caudal. La bomba se escoge para que el punto de trabajo (su caudal a su altura) quede en la zona media de la curva. Una bomba sobrada o escasa trabaja mal y gasta más.</p>
+<div class="note">La <b>altura dinámica total</b> es la suma de la altura de succión, la altura de descarga y las pérdidas por fricción en tubos, codos y válvulas. Ese es el número que se busca en la curva. Hágalo con la calculadora de bombas, en Herramientas.</div>`},
+
+{t:'Instalación de una bomba paso a paso',m:'8 min',h:`
+<h4>Bomba de superficie</h4>
+<ol>
+<li><b>Base firme y nivelada</b>, a salvo de inundaciones, bajo techo o en caseta ventilada.</li>
+<li><b>Succión lo más corta y recta posible</b>, de diámetro igual o mayor que la boca de la bomba, con pendiente siempre subiendo hacia la bomba para que no se formen bolsas de aire.</li>
+<li><b>Válvula de pie con coladera</b> en la punta, sumergida bien por debajo del nivel mínimo del agua y separada del fondo para no chupar lodo.</li>
+<li>Uniones selladas: una entrada de aire en la succión deja la bomba sin cebar aunque todo "se vea bien".</li>
+<li>En la descarga: <b>cheque</b>, <b>válvula de corte</b> y unión universal para poder desmontar la bomba.</li>
+<li>Tubería soportada por su cuenta: la bomba no debe cargar el peso de los tubos.</li>
+<li>Cebar, verificar el sentido de giro y arrancar.</li>
+</ol>
+<h4>Bomba sumergible</h4>
+<ol>
+<li>Cuelgue la bomba de una <b>cuerda o guaya de acero inoxidable</b>, nunca del cable eléctrico.</li>
+<li>Use <b>cable sumergible</b> (plano o redondo para bombas) del calibre que dé la tabla del fabricante según la distancia; las bombas de pozo pierden fuerza con cables delgados.</li>
+<li>Los empalmes del cable se hacen con <b>kit de empalme sumergible</b> (termoencogible con adhesivo o resina). Cinta aislante bajo el agua termina en falla a tierra.</li>
+<li>Amarre el cable a la tubería cada 3 m con cintillos o abrazaderas.</li>
+<li>Para achique en excavaciones, ponga la bomba sobre una base o dentro de una canasta para que no se entierre en el lodo.</li>
+<li>Control de nivel con <b>flotador eléctrico</b> o electrodos, para que prenda y apague sola y no trabaje en seco.</li>
+</ol>
+<h4>La parte eléctrica</h4>
+<ul>
+<li>Tablero con breaker, contactor, térmico o guardamotor, y relé de nivel o presostato.</li>
+<li>Monofásicas sumergibles de pozo llevan una <b>caja de control</b> con los capacitores en superficie.</li>
+<li>Tierra conectada a la bomba y a la tubería metálica.</li>
+<li>Mida la corriente con pinza en el primer arranque y compárela con la placa.</li>
+</ul>`},
+
+{t:'Cables y protecciones para motores',m:'5 min',h:`
+<p>Los motores tienen reglas propias porque su corriente no es pareja: arrancan con un pico grande y luego trabajan, a veces, horas seguidas.</p>
+<ul>
+<li><b>Cable:</b> debe soportar al menos el <b>125 %</b> de la corriente del motor a plena carga.</li>
+<li><b>Breaker o fusibles contra cortocircuito:</b> se permite hasta el <b>250 %</b> de esa corriente con breaker de tiempo inverso, para que aguante el arranque. Si ese valor no existe comercialmente, se toma el siguiente.</li>
+<li><b>Relé térmico o guardamotor:</b> ajustado a la <b>corriente de placa</b>. Hasta 125 % en motores con factor de servicio de 1,15 o más, y hasta 115 % en los demás.</li>
+<li><b>Caída de tensión:</b> 3 % en funcionamiento como máximo. En el arranque el voltaje cae mucho más; si el cable es muy largo y delgado, el motor no arranca y se quema intentándolo.</li>
+</ul>
+<p>El Código Eléctrico Colombiano (NTC 2050) trae tablas de corriente a plena carga para motores según HP y voltaje. La calculadora de motor, en Herramientas, las usa como referencia; si tiene la placa, mande la placa.</p>
+<div class="note warn">Subir el térmico "porque se dispara mucho" es la forma más rápida de quemar un motor. Si se dispara, algo lo está forzando: búsquelo.</div>`},
+
+{t:'Plantas eléctricas para motores',m:'5 min',h:`
+<p>Donde no hay red o se va seguido, las bombas y motores se mueven con <b>plantas eléctricas</b> (generadores a diésel o gasolina).</p>
+<ul>
+<li><b>Tamaño:</b> el problema es el arranque. Como regla práctica, para arrancar un motor en directo la planta debe tener de <b>3 a 5 veces</b> la potencia del motor. Con arrancador suave o variador, bastante menos. Confirme con el fabricante de la planta.</li>
+<li>Arranque primero el motor más grande y después las cargas pequeñas.</li>
+<li>Una planta monofásica solo mueve motores monofásicos; para trifásicos se necesita planta trifásica o variador.</li>
+<li><b>Tierra:</b> la planta se aterriza con su propia varilla según el manual.</li>
+<li><b>Ventilación:</b> nunca en espacios cerrados ni dentro de una mina o túnel. El monóxido de carbono del escape mata sin oler.</li>
+</ul>
+<h4>Conexión a la casa o al tablero</h4>
+<p>La planta se conecta solo a través de un <b>interruptor de transferencia</b> (manual o automático) que separa la red pública de la planta. Conectarla a un tomacorriente o directo al tablero manda energía de vuelta por la acometida al transformador, que la sube a miles de voltios: así mueren linieros que creen estar trabajando en una línea sin energía.</p>`},
+
+{t:'Motores y bombas en minería',m:'7 min',h:`
+<p>En la minería el agua es permanente: hay que sacarla de apiques, frentes, pozos y piscinas, casi siempre con bombas sumergibles y motores trabajando en lodo, polvo y humedad. Es de los ambientes más duros para un equipo eléctrico, y de los más peligrosos para las personas.</p>
+<h4>Equipos y cables para ambiente duro</h4>
+<ul>
+<li>Motores y tableros con grado de protección <b>IP55 o más</b>, cerrados, con empaque y prensaestopas.</li>
+<li><b>Cable de uso extra rudo</b>, encauchetado, resistente al agua, al aceite y a la abrasión, sujeto y protegido del paso de maquinaria. Nada de cable de extensión casera.</li>
+<li>Tableros elevados, con techo y fuera de zonas que se inundan.</li>
+<li><b>Protección de falla a tierra</b> y puesta a tierra efectiva en cada motor, tablero y estructura metálica.</li>
+<li>Empalmes sumergibles o bornes en caja hermética. Un cable pelado dentro de un charco energiza toda el agua a su alrededor.</li>
+</ul>
+<h4>Minería subterránea</h4>
+<p>Dentro de una mina puede haber <b>gases inflamables</b> como el metano (grisú), además de poca ventilación. Una chispa de un contactor, un interruptor o un empalme mal hecho puede provocar una explosión. Por eso, en esas atmósferas los equipos deben ser <b>a prueba de explosión</b> o certificados para ese uso, y la instalación la diseña y la hace personal competente.</p>
+<ul>
+<li>En Colombia, la seguridad en labores mineras subterráneas está reglamentada (Decreto 1886 de 2015), además del RETIE para la parte eléctrica.</li>
+<li>Nunca se meten plantas eléctricas ni motores de combustión en espacios subterráneos sin el sistema de ventilación y los controles que exige la norma.</li>
+</ul>
+<h4>Bloqueo y etiquetado</h4>
+<p>Antes de meter la mano a una bomba, sacarla del pozo o destapar una bornera: <b>cortar, bloquear con candado, etiquetar y verificar</b> con un probador que no hay tensión. Solo quien puso el candado lo quita. En frentes de trabajo con varias personas, esto evita que alguien energice un equipo mientras otro lo está revisando.</p>
+<div class="note warn">Esta información es para entender y trabajar con más seguridad. Las instalaciones eléctricas en minas deben hacerlas y firmarlas profesionales competentes, cumpliendo la normativa minera y el RETIE.</div>`},
+
+{t:'Mantenimiento y fallas de motores y bombas',m:'7 min',h:`
+<div class="table-wrap"><table>
+<thead><tr><th>Lo que pasa</th><th>Causa probable</th><th>Qué revisar</th></tr></thead><tbody>
+<tr><td>El motor zumba y no arranca</td><td>Capacitor o centrífugo dañado (monofásico), falta una fase (trifásico), bomba trabada</td><td>Capacitor, voltaje en las tres fases, que el eje gire libre a mano</td></tr>
+<tr><td>El térmico se dispara</td><td>Sobrecarga, voltaje bajo, falta de fase, térmico mal ajustado</td><td>Corriente con pinza en cada fase y voltaje en el motor</td></tr>
+<tr><td>El motor se calienta mucho</td><td>Sobrecarga, ventilador o aletas sucias, voltaje malo, arranques muy seguidos</td><td>Limpieza, ventilación, corriente, número de arranques por hora</td></tr>
+<tr><td>La bomba prende pero no saca agua</td><td>Sin cebar, aire en la succión, válvula de pie tapada, gira al revés, succión muy alta</td><td>Cebado, uniones de la succión, coladera, sentido de giro</td></tr>
+<tr><td>Saca poca agua</td><td>Impulsor gastado por arena, tubería tapada, cable delgado (bombas de pozo), bomba pequeña para la altura</td><td>Presión y caudal contra la curva, impulsor, voltaje en la bomba</td></tr>
+<tr><td>El presurizador prende y apaga a cada rato</td><td>Tanque sin aire o membrana rota, fuga en la red</td><td>Presión de aire del tanque con la bomba apagada, fugas</td></tr>
+<tr><td>Ruido de piedras dentro de la bomba</td><td>Cavitación: la bomba chupa más de lo que puede</td><td>Altura de succión, diámetro de la succión, coladera</td></tr>
+<tr><td>Ruido metálico o vibración</td><td>Rodamientos gastados, desalineación, impulsor desbalanceado</td><td>Rodamientos, base, acople</td></tr>
+<tr><td>Salta el diferencial o da corrientazo</td><td>Agua en la bornera o en el motor, cable dañado</td><td>Aislamiento con megger, cable y empalmes</td></tr>
+</tbody></table></div>
+<h4>Mantenimiento preventivo</h4>
+<ul>
+<li><b>Cada mes:</b> medir la corriente de cada fase (deben ser parecidas y menores que la placa), revisar ruido, temperatura y fugas.</li>
+<li><b>Cada tres a seis meses:</b> reapretar bornes y contactos del tablero, limpiar aletas y ventilador, revisar prensaestopas.</li>
+<li><b>Cada año o al sacar una sumergible:</b> medir aislamiento con megger, revisar rodamientos, impulsor y sellos.</li>
+<li>Lleve una hoja de vida del equipo: fecha, corriente medida y lo que se cambió. Así se ve venir la falla.</li>
+</ul>`}
+];
+
+const QOLD=[
+['¿Qué pasa si el circuito está abierto?',['El bombillo brilla más','No circula corriente','El voltaje se duplica'],1,'Sin un camino completo los electrones no pueden circular, así que no hay corriente.'],
+['En la comparación con una manguera, el voltaje es…',['La cantidad de agua','El grosor de la manguera','La presión que empuja el agua'],2,'El voltaje es el empuje; la corriente es la cantidad que pasa y la resistencia es lo que la frena.'],
+['Una resistencia de 30 Ω conectada a 120 V deja pasar…',['4 A','0,25 A','3.600 A'],0,'I = V ÷ R = 120 ÷ 30 = 4 amperios.'],
+['¿Qué unidad usa la factura de energía para cobrar?',['Voltios','Kilovatios-hora (kWh)','Amperios'],1,'Se cobra la energía consumida, que es potencia por tiempo: kWh.'],
+['Un aparato de 2.000 W prendido 30 minutos gasta…',['1 kWh','2 kWh','60 kWh'],0,'2.000 W × 0,5 h ÷ 1.000 = 1 kWh.'],
+['¿Cómo están conectados los aparatos de una casa?',['En serie','En paralelo','Da igual'],1,'En paralelo: cada aparato recibe el voltaje completo y funciona de forma independiente.'],
+['¿Para qué sirve el polo a tierra?',['Para ahorrar energía','Para darle a una falla un camino seguro que no pase por las personas','Para subir el voltaje'],1,'Si un aparato tiene una fuga, la corriente se va por la tierra y se dispara la protección.'],
+['Su breaker se dispara seguido. ¿Qué hace?',['Lo cambia por uno más grande','Lo amarra para que no salte','Busca la causa con un electricista'],2,'El breaker está avisando de sobrecarga o falla. Agrandarlo o puentearlo puede causar un incendio.'],
+['¿Cuál es el voltaje normal de un tomacorriente en una casa en Colombia?',['12 V','120 V','1.000 V'],1,'El tomacorriente residencial es de 120 V a 60 Hz.'],
+['Alguien quedó pegado a un cable. ¿Qué es lo primero?',['Jalarlo con las manos','Echarle agua','Cortar la energía o separarlo con algo seco que no conduzca'],2,'Si lo toca, la corriente también pasa por usted. Primero corte la energía o use un objeto aislante, y llame al 123.'],
+['¿Qué cable debe cortar el interruptor de una lámpara?',['El neutro','La fase','La tierra'],1,'Si corta el neutro, el bombillo queda con energía aunque esté apagado y quien lo cambie se puede electrocutar.'],
+['¿Qué calibre de cable va con un breaker de 20 A?',['14 AWG','12 AWG','18 AWG'],1,'El 12 AWG soporta 20 A. El 14 AWG solo admite un breaker de 15 A.'],
+['En un tomacorriente polarizado, la ranura más larga es…',['El neutro','La fase','La tierra'],0,'La ranura larga es el neutro, la corta es la fase y el orificio redondo es la tierra.'],
+['¿Dónde se exige protección diferencial?',['En las alcobas','En baños, cocinas y zonas húmedas','Solo en el tablero'],1,'Donde hay agua el riesgo de corrientazo es mayor, por eso se protege a las personas con diferencial.'],
+['Unos bombillos brillan de más y otros casi no, y se quemó un aparato. ¿Qué puede ser?',['Un bombillo dañado','Neutro abierto en la acometida o el tablero','Mucho consumo de la nevera'],1,'Con el neutro abierto el voltaje se desequilibra entre las fases. Es urgente: apague el principal y llame a un electricista.'],
+['¿Qué documento exige el RETIE a toda instalación nueva para poder conectarla?',['La factura del almacén','La declaración de cumplimiento del constructor','Una foto del tablero'],1,'Toda instalación debe tener la declaración de cumplimiento firmada por quien la construyó; en algunos casos, además, el dictamen de inspección.'],
+['¿De qué se debe colgar un ventilador de techo?',['De la caja octagonal de la lámpara','De un soporte certificado para ventilador anclado a la estructura','De un chazo plástico'],1,'El ventilador pesa y vibra. Necesita un soporte hecho para eso y anclado firme.'],
+['¿De dónde salen el calibre y el breaker de un aire acondicionado?',['De la placa de la condensadora (MCA y protección máxima)','Del tamaño de la alcoba','Siempre 15 A'],0,'La placa indica la corriente mínima del circuito y la protección máxima. Se respetan esos valores.'],
+['Una motobomba monofásica zumba pero no arranca. ¿Qué es lo más probable?',['Falta agua en el tanque','El capacitor de arranque o el centrífugo','La tubería de descarga es muy larga'],1,'Sin el empujón del capacitor el motor monofásico no arranca: zumba, se calienta y dispara el térmico.'],
+['¿Cómo se cambia el sentido de giro de un motor trifásico?',['Intercambiando dos de las tres fases','Cambiando el neutro por la tierra','No se puede'],0,'Basta intercambiar dos fases cualesquiera para invertir el campo giratorio.'],
+['¿A qué valor se ajusta el relé térmico de un motor?',['Al doble de la corriente de placa','A la corriente de placa del motor','Al máximo que permita, para que no salte'],1,'El térmico cuida las bobinas. Se ajusta a la corriente de placa; subirlo es la forma más rápida de quemar el motor.'],
+['¿Cuál es la succión máxima práctica de una bomba de superficie?',['Unos 6 a 7 metros','20 metros','Ilimitada si la bomba es grande'],0,'La presión atmosférica solo sube el agua unos 10 m en teoría; en la práctica no se pasa de 6 a 7 m.'],
+['¿De qué se cuelga una bomba sumergible en un pozo?',['Del cable eléctrico','De la manguera de descarga','De una cuerda o guaya de acero inoxidable'],2,'El cable no está hecho para cargar peso. Si se estira, se daña el aislamiento y aparece una falla a tierra.'],
+['¿Por qué no se conecta una planta eléctrica directo a un tomacorriente de la casa?',['Porque gasta más combustible','Porque manda energía de vuelta a la red y puede matar a un liniero','Porque daña la nevera'],1,'Sin interruptor de transferencia, la energía de la planta sube por el transformador a alto voltaje en la red que se cree apagada.'],
+['En una mina subterránea con posibles gases, ¿qué equipos eléctricos se usan?',['Los mismos de una casa','A prueba de explosión o certificados para esa atmósfera','Cualquiera si está tapado con plástico'],1,'Una chispa de un contactor o un empalme puede encender el metano. Se usan equipos certificados y lo instala personal competente.']
+];
+
+/* ---------- herramientas existentes ---------- */
+const ohmDefs={V:['Voltaje (V)','voltios',120],I:['Corriente (I)','amperios',2],R:['Resistencia (R)','ohmios',60]};
+const findSel=document.getElementById('ohmFind'),ohmIn=document.getElementById('ohmInputs');
+function buildOhm(){
+  const f=findSel.value;ohmIn.innerHTML='';
+  Object.keys(ohmDefs).filter(k=>k!==f).forEach(k=>{
+    ohmIn.insertAdjacentHTML('beforeend',`<label class="f" for="o${k}">${ohmDefs[k][0]} en ${ohmDefs[k][1]}</label><input type="number" id="o${k}" value="${ohmDefs[k][2]}" min="0" step="any">`);
+  });
+  ohmIn.querySelectorAll('input').forEach(i=>i.oninput=calcOhm);calcOhm();
+}
+function calcOhm(){
+  const f=findSel.value,g=k=>parseFloat(document.getElementById('o'+k)?.value);
+  let r,e;
+  if(f==='I'){r=g('V')/g('R');e=`I = V ÷ R = ${fmt(g('V'))} ÷ ${fmt(g('R'))}`}
+  if(f==='V'){r=g('I')*g('R');e=`V = I × R = ${fmt(g('I'))} × ${fmt(g('R'))}`}
+  if(f==='R'){r=g('V')/g('I');e=`R = V ÷ I = ${fmt(g('V'))} ÷ ${fmt(g('I'))}`}
+  const u={I:'A',V:'V',R:'Ω'}[f];
+  document.getElementById('ohmRes').textContent=Number.isFinite(r)?`${fmt(r,3)} ${u}`:'Escriba valores mayores que cero';
+  document.getElementById('ohmExpl').textContent=Number.isFinite(r)?e:'';
+}
+findSel.onchange=buildOhm;buildOhm();
+
+
+let serie=true;
+$('bSerie').onclick=()=>{serie=true;$('bSerie').setAttribute('aria-pressed',true);$('bPar').setAttribute('aria-pressed',false);sim()};
+$('bPar').onclick=()=>{serie=false;$('bPar').setAttribute('aria-pressed',true);$('bSerie').setAttribute('aria-pressed',false);sim()};
+['sV','sR1','sR2'].forEach(id=>$(id).oninput=sim);
+function bulb(x,y,p,label){
+  const glow=Math.min(1,p/24);
+  return `<circle cx="${x}" cy="${y}" r="${10+glow*22}" fill="var(--live)" opacity="${glow*.55}"/>
+  <circle cx="${x}" cy="${y}" r="13" fill="var(--panel)" stroke="var(--ink)" stroke-width="2.5"/>
+  <text x="${x}" y="${y+4}" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">${label}</text>`;
+}
+function sim(){
+  const V=+$('sV').value,R1=+$('sR1').value,R2=+$('sR2').value;
+  $('vV').textContent=V;$('vR1').textContent=R1;$('vR2').textContent=R2;
+  let I,I1,I2,V1,V2,Rt;
+  if(serie){Rt=R1+R2;I=V/Rt;I1=I2=I;V1=I*R1;V2=I*R2}
+  else{Rt=R1*R2/(R1+R2);I1=V/R1;I2=V/R2;I=I1+I2;V1=V2=V}
+  const P1=V1*I1,P2=V2*I2;
+  const w='stroke="var(--copper)" stroke-width="4" fill="none" stroke-linecap="round"';
+  let s=`<rect x="22" y="62" width="30" height="46" rx="4" fill="var(--ink)"/><text x="37" y="90" text-anchor="middle" font-size="12" font-weight="700" fill="var(--bg)">${V}V</text>`;
+  if(serie){
+    s+=`<path d="M37 62 V25 H290 V145 H37 V108" ${w}/>`+bulb(130,25,P1,'A')+bulb(220,25,P2,'B');
+  }else{
+    s+=`<path d="M37 62 V25 H280 V145 H37 V108 M150 25 V145 M230 25 V145" ${w}/>`+bulb(150,85,P1,'A')+bulb(230,85,P2,'B');
+  }
+  $('simSvg').innerHTML=s;
+  $('simOut').innerHTML=`<div><small>Corriente total</small><b>${fmt(I)} A</b></div><div><small>Bombillo A</small><b>${fmt(P1,1)} W</b></div><div><small>Bombillo B</small><b>${fmt(P2,1)} W</b></div>`;
+  $('simExpl').textContent=serie
+    ?`En serie la corriente es la misma (${fmt(I)} A) y el voltaje se reparte: A recibe ${fmt(V1,1)} V y B ${fmt(V2,1)} V. El bombillo de mayor resistencia brilla más.`
+    :`En paralelo los dos reciben los ${V} V completos. Cada uno toma su propia corriente (${fmt(I1)} A y ${fmt(I2)} A). El de menor resistencia brilla más.`;
+}
+sim();
+
+
+const defaults=[['Nevera',150,10],['Televisor',100,5],['Bombillos LED (5)',45,6],['Ventilador',60,8],['Lavadora',500,1],['Plancha',1000,0.5],['Cargador de celular',10,3]];
+let apps=store.get('eb_apps',defaults.map(a=>({n:a[0],w:a[1],h:a[2]})));
+$('tarifa').value=store.get('eb_tarifa','');
+function renderApps(){
+  const tb=$('apps');tb.innerHTML='';
+  apps.forEach((a,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><input value="${a.n.replace(/"/g,'&quot;')}" data-k="n" aria-label="Aparato"></td>
+      <td><input type="number" min="0" value="${a.w}" data-k="w" aria-label="Vatios" style="max-width:90px"></td>
+      <td><input type="number" min="0" max="24" step="0.5" value="${a.h}" data-k="h" aria-label="Horas por día" style="max-width:80px"></td>
+      <td class="num" data-o="k"></td><td class="num" data-o="p"></td>
+      <td><button class="x" aria-label="Quitar ${a.n}">×</button></td>`;
+    tr.querySelectorAll('input').forEach(inp=>inp.oninput=()=>{const k=inp.dataset.k;apps[i][k]=k==='n'?inp.value:parseFloat(inp.value)||0;store.set('eb_apps',apps);totals()});
+    tr.querySelector('.x').onclick=()=>{apps.splice(i,1);store.set('eb_apps',apps);renderApps()};
+    tb.appendChild(tr);
+  });
+  totals();
+}
+function totals(){
+  const t=parseFloat($('tarifa').value);let K=0;
+  [...$('apps').rows].forEach((tr,i)=>{const a=apps[i],k=a.w*a.h*30/1000;K+=k;
+    tr.querySelector('[data-o=k]').textContent=fmt(k,1);
+    tr.querySelector('[data-o=p]').textContent=t>0?'$'+fmt(k*t,0):'—';});
+  $('totK').textContent=fmt(K,1)+' kWh';
+  $('totP').textContent=t>0?'$'+fmt(K*t,0):'Escriba el valor del kWh';
+}
+$('tarifa').oninput=()=>{store.set('eb_tarifa',$('tarifa').value);totals()};
+$('addApp').onclick=()=>{apps.push({n:'Nuevo aparato',w:100,h:1});store.set('eb_apps',apps);renderApps();
+  const rows=$('apps').rows;rows[rows.length-1].querySelector('input').select()};
+renderApps();
+
+
+
+/* ---------- calculadora de circuito ---------- */
+const AWG=[{c:'14',a:15,r:10.1},{c:'12',a:20,r:6.34},{c:'10',a:30,r:3.97},{c:'8',a:40,r:2.51},{c:'6',a:55,r:1.61},{c:'4',a:70,r:1.01},{c:'2',a:95,r:0.64}];
+const BRK=[15,20,30,40,50,60,70,80,90,100,125];
+function calCircuito(){
+  const P=+$('cP').value,V=+$('cV').value,Lm=+$('cL').value;
+  if(!(P>0)||!(Lm>=0)){$('cOut').innerHTML='<div><small>Escriba la potencia y la distancia</small></div>';$('cTab').innerHTML='';return}
+  const I=P/V,Id=I*1.25;
+  const rows=AWG.map(w=>({...w,pct:2*Lm*I*w.r/1000/V*100}));
+  const rec=rows.find(w=>w.a>=Id&&w.pct<=3);
+  let brk=null;if(rec){brk=BRK.find(b=>b>=Id&&b<=rec.a)||[...BRK].reverse().find(b=>b<=rec.a)}
+  $('cOut').innerHTML=`<div><small>Corriente</small><b>${fmt(I,1)} A</b></div>
+    <div><small>Calibre recomendado</small><b>${rec?rec.c+' AWG':'Consulte'}</b></div>
+    <div><small>Breaker</small><b>${brk?brk+' A':'—'}</b></div>
+    <div><small>Caída de tensión</small><b>${rec?fmt(rec.pct,1)+' %':'—'}</b></div>`;
+  $('cTab').innerHTML=`<thead><tr><th>Calibre</th><th>Soporta</th><th>Caída de tensión</th><th>Resultado</th></tr></thead><tbody>${rows.map(w=>{
+    const st=w.a<Id?'<span class="bad">No aguanta la corriente</span>':w.pct>3?'<span class="bad">Mucha caída de tensión</span>':'<span class="ok">Sirve</span>';
+    return `<tr${rec&&w.c===rec.c?' class="hl"':''}><td>${w.c} AWG</td><td>${w.a} A</td><td>${fmt(w.pct,1)} %</td><td>${st}</td></tr>`}).join('')}</tbody>`;
+  if(!rec)$('cOut').insertAdjacentHTML('beforeend','<div style="grid-column:1/-1"><small>La carga es muy grande o el recorrido muy largo para un circuito de casa. Revíselo con un diseñador; puede convenir pasar a 240 V.</small></div>');
+}
+['cP','cV','cL'].forEach(id=>$(id).oninput=calCircuito);calCircuito();
+
+/* ---------- calculadora de carga de la vivienda ---------- */
+function calCasa(){
+  const n=id=>Math.max(0,parseFloat($(id).value)||0);
+  const A=n('hA'),il=A*32,ck=3000,lv=1500,sub=il+ck+lv;
+  const dem=Math.min(sub,3000)+Math.max(0,sub-3000)*0.35;
+  const esp=[['Ducha eléctrica',n('hD')],['Aires acondicionados',n('hAir')*n('hAirW')],['Estufa u horno',n('hE')],['Calentador',n('hC')],['Motobomba',n('hM')],['Otras cargas',n('hO')]].filter(x=>x[1]>0);
+  const espT=esp.reduce((s,x)=>s+x[1],0),tot=dem+espT,I240=tot/240,I120=tot/120;
+  const prin=BRK.find(b=>b>=I240*1.1)||'más de 125';
+  $('hTab').innerHTML=`<thead><tr><th>Concepto</th><th style="text-align:right">VA</th></tr></thead><tbody>
+    <tr><td>Iluminación y tomas generales (${fmt(A,0)} m² × 32)</td><td class="num">${fmt(il,0)}</td></tr>
+    <tr><td>Pequeños artefactos de cocina (2 circuitos)</td><td class="num">${fmt(ck,0)}</td></tr>
+    <tr><td>Lavandería</td><td class="num">${fmt(lv,0)}</td></tr>
+    <tr><td>Con factor de demanda (3.000 al 100 %, resto al 35 %)</td><td class="num">${fmt(dem,0)}</td></tr>
+    ${esp.map(x=>`<tr><td>${x[0]}</td><td class="num">${fmt(x[1],0)}</td></tr>`).join('')}
+    <tr><td><b>Total estimado</b></td><td class="num"><b>${fmt(tot,0)}</b></td></tr></tbody>`;
+  $('hOut').innerHTML=`<div><small>Corriente a 240 V (trifilar)</small><b>${fmt(I240,1)} A</b></div>
+    <div><small>Breaker principal sugerido</small><b>${prin} A</b></div>
+    <div><small>Si fuera bifilar a 120 V</small><b>${fmt(I120,1)} A</b></div>`;
+  const ilc=Math.max(1,Math.ceil(il/1440));
+  const cir=[`Iluminación: ${ilc} ${ilc>1?'circuitos':'circuito'} de 15 A`,`Tomas generales: repartidos por zonas, de 20 A`,`Cocina: 2 circuitos de 20 A con diferencial`,`Lavandería: 1 circuito de 20 A`,`Baños: 1 circuito de 20 A con diferencial`,...esp.map(x=>`${x[0]}: circuito exclusivo`)];
+  $('hCirc').innerHTML=`<p style="margin:0 0 4px"><b>Circuitos mínimos a considerar</b></p><ul style="margin:0;padding-left:20px">${cir.map(c=>`<li>${c}</li>`).join('')}</ul>
+    ${I120>60?'<p class="muted" style="font-size:14px">Esta carga es demasiado grande para una acometida bifilar: necesita trifilar a 120/240 V.</p>':''}
+    <p class="muted" style="font-size:14px">Estimación educativa con el método básico de la NTC 2050. El cálculo oficial, el calibre de la acometida y el breaker principal los define el diseñador.</p>`;
+}
+['hA','hD','hAir','hAirW','hE','hC','hM','hO'].forEach(id=>$(id).oninput=calCasa);calCasa();
+
+
+
+
+/* ---------- calculadora de bomba ---------- */
+const HPS=[0.25,0.33,0.5,0.75,1,1.5,2,3,5,7.5,10,15,20,25,30,40,50];
+const hpTxt=h=>({0.25:'1/4',0.33:'1/3',0.5:'1/2',0.75:'3/4'}[h]||String(h).replace('.',','))+' HP';
+let pumpHP=null;
+function calBomba(){
+  const n=id=>Math.max(0,parseFloat($(id).value)||0);
+  const Q=n('pQ')/60000,H=n('pH')*(1+n('pF')/100),E=Math.max(0.1,n('pE')/100);
+  const Ph=9810*Q*H,Pe=Ph/E,hp=Pe/746;
+  pumpHP=HPS.find(h=>h>=hp*1.15)||null;
+  $('pOut').innerHTML=`<div><small>Altura dinámica total</small><b>${fmt(H,1)} m</b></div>
+    <div><small>Caudal</small><b>${fmt(n('pQ')*60/1000,1)} m³/h</b></div>
+    <div><small>Potencia al eje</small><b>${fmt(Pe/1000,2)} kW</b></div>
+    <div><small>Motor comercial sugerido</small><b>${pumpHP?hpTxt(pumpHP):'Más de 50 HP'}</b></div>`;
+}
+['pQ','pH','pF','pE'].forEach(id=>$(id).oninput=calBomba);calBomba();
+
+/* ---------- calculadora de instalación del motor (tablas de corriente NTC 2050 / NEC) ---------- */
+const FLC={
+ m120:{V:120,ph:1,a:{0.25:5.8,0.33:7.2,0.5:9.8,0.75:13.8,1:16,1.5:20,2:24,3:34}},
+ m240:{V:230,ph:1,a:{0.25:2.9,0.33:3.6,0.5:4.9,0.75:6.9,1:8,1.5:10,2:12,3:17,5:28,7.5:40,10:50}},
+ t208:{V:208,ph:3,a:{0.5:2.4,0.75:3.5,1:4.6,1.5:6.6,2:7.5,3:10.6,5:16.7,7.5:24.2,10:30.8,15:46.2,20:59.4,25:74.8,30:88,40:114,50:143}},
+ t220:{V:220,ph:3,a:{0.5:2.2,0.75:3.2,1:4.2,1.5:6,2:6.8,3:9.6,5:15.2,7.5:22,10:28,15:42,20:54,25:68,30:80,40:104,50:130}},
+ t440:{V:440,ph:3,a:{0.5:1.1,0.75:1.6,1:2.1,1.5:3,2:3.4,3:4.8,5:7.6,7.5:11,10:14,15:21,20:27,25:34,30:40,40:52,50:65}}
+};
+const MAWG=[...AWG,{c:'1/0',a:125,r:0.40},{c:'2/0',a:145,r:0.32},{c:'4/0',a:195,r:0.20}];
+const MBRK=[15,20,25,30,35,40,45,50,60,70,80,90,100,110,125,150,175,200,225,250,300,350,400];
+$('mHP').innerHTML=HPS.map(h=>`<option value="${h}"${h===2?' selected':''}>${hpTxt(h)}</option>`).join('');
+function calMotor(){
+  const s=FLC[$('mS').value],hp=+$('mHP').value,Lm=Math.max(0,parseFloat($('mL').value)||0),I=s.a[hp];
+  if(!I){$('mOut').innerHTML='<div style="grid-column:1/-1"><small>Esta potencia no es común en ese sistema. Pruebe con otro voltaje o con un motor trifásico.</small></div>';$('mNote').textContent='';return}
+  const k=s.ph===3?Math.sqrt(3):2;
+  const rows=MAWG.map(w=>({...w,pct:k*Lm*I*w.r/1000/s.V*100}));
+  const rec=rows.find(w=>w.a>=I*1.25&&w.pct<=3);
+  const brk=MBRK.find(b=>b>=I*2.5);
+  $('mOut').innerHTML=`<div><small>Corriente a plena carga</small><b>${fmt(I,1)} A</b></div>
+    <div><small>Corriente de arranque aprox.</small><b>${fmt(I*6,0)} A</b></div>
+    <div><small>Cable mínimo</small><b>${rec?rec.c+' AWG':'Consulte'}</b></div>
+    <div><small>Caída de tensión</small><b>${rec?fmt(rec.pct,1)+' %':'—'}</b></div>
+    <div><small>Breaker máximo (cortocircuito)</small><b>${brk?brk+' A':'—'}</b></div>
+    <div><small>Ajuste del térmico</small><b>${fmt(I,1)} a ${fmt(I*1.25,1)} A</b></div>`;
+  $('mNote').textContent=`Calculado para ${s.ph===3?'tres fases':'una fase'} a ${s.V} V con la tabla de corriente de la NTC 2050. El térmico se ajusta a la corriente de la placa de su motor; el valor de la tabla es una referencia. `+(s.ph===1&&hp>=3?'A esta potencia un motor monofásico exige mucho de la red; si puede, use trifásico.':'')+(rec&&rec.pct>2?'Con esta distancia, en el arranque la caída será varias veces mayor; si el motor arranca con dificultad, suba un calibre.':'');
+}
+['mHP','mS','mL'].forEach(id=>$(id).oninput=calMotor);calMotor();
+$('pUse').onclick=()=>{if(pumpHP){$('mHP').value=pumpHP;calMotor();openTool('motor')}};
+
+
+
+/* ---------- simulador de multímetro ---------- */
+const MM_S={
+ fn:{n:'Tomacorriente: fase y neutro',src:'ac',v:120.4},
+ nt:{n:'Tomacorriente: neutro y tierra',src:'ac',v:0.6},
+ st:{n:'Tomacorriente sin tierra conectada: fase y tierra',src:'ac',v:3.1},
+ pila:{n:'Pila AA nueva',src:'dc',v:1.58},
+ bat:{n:'Batería de moto',src:'dc',v:12.7},
+ duch:{n:'Resistencia de ducha (sin energía)',src:'pas',r:4.8},
+ cab:{n:'Cable de una extensión (sin energía)',src:'pas',r:0.2},
+ roto:{n:'Cable roto por dentro (sin energía)',src:'pas',r:Infinity},
+ serie:{n:'Bombillo de 60 W, con el circuito abierto para medir corriente',src:'serie'}
+};
+let mm={f:'off',j:'v',fuse:true};
+$('mmS').innerHTML=Object.entries(MM_S).map(([k,s])=>`<option value="${k}">${s.n}</option>`).join('');
+function mmSet(lcd,msg,kind){$('mmLcd').textContent=lcd;const m=$('mmMsg');m.innerHTML=msg;m.className='note'+(kind==='bad'?' warn':kind==='ok'?' good':'');$('mmFuse').hidden=mm.fuse}
+function mmRead(){
+  document.querySelectorAll('#mmDial button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.f===mm.f));
+  document.querySelectorAll('#mmJacks button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.j===mm.j));
+  const s=MM_S[$('mmS').value],f=mm.f,j=mm.j,isA=f==='aac'||f==='adc';
+  if(f==='off')return mmSet('','Gire la perilla a la función que necesita.');
+  if(j==='a'){
+    if(!mm.fuse)return mmSet('0,00','El fusible del borne de corriente está quemado. Cámbielo antes de volver a medir corriente.','bad');
+    if(s.src==='serie'){
+      if(f==='aac')return mmSet('0,50 A','Correcto. El multímetro quedó en serie y la corriente del bombillo pasa por él: 60 W ÷ 120 V = 0,5 A.','ok');
+      if(f==='adc')return mmSet('0,00 A','La corriente de la casa es alterna. Gire la perilla a A~.');
+      return mmSet('0,00','La corriente está pasando por el borne A, pero la perilla no está en corriente. Gírela a A~.');
+    }
+    if(s.src==='pas')return mmSet('0,00','Para medir resistencia o continuidad la punta roja va en el borne VΩ.');
+    if(s.id==='pila'||s===MM_S.pila)return mmSet(f==='adc'?'5,2 A':'0,00','Está poniendo la pila en cortocircuito a través del multímetro. Con una pila no pasa a mayores, pero así no se mide un voltaje: la punta roja va en VΩ.','bad');
+    mm.fuse=false;
+    return mmSet('- - - -','<b>¡Cortocircuito!</b> Con la punta roja en el borne A, el multímetro es casi un cable y usted lo puso sobre un voltaje. Se quemó el fusible interno. En un tablero real esto puede causar un arco que quema manos y cara.','bad');
+  }
+  if(isA)return mmSet('0,00','La perilla está en corriente, pero la punta roja sigue en VΩ. Para medir corriente se pasa la punta al borne A y el multímetro se pone en serie con la carga.');
+  if(f==='ohm'||f==='cont'){
+    if(s.src!=='pas')return mmSet('Err','No mida resistencia ni continuidad en un circuito con energía: la lectura es falsa y puede dañar el multímetro. Corte la energía primero.','bad');
+    if(!isFinite(s.r))return mmSet('OL',f==='cont'?'No pita: el cable está abierto en algún punto.':'OL: no hay camino, el circuito está abierto.');
+    if(f==='cont')return s.r<30?mmSet(fmt(s.r,1)+' Ω  🔊','Pita: hay continuidad.','ok'):mmSet(fmt(s.r,1)+' Ω','Hay camino, pero con resistencia: no pita.');
+    return mmSet(fmt(s.r,1)+' Ω',s===MM_S.duch?'Unos pocos ohmios: la resistencia de la ducha está sana.':'Casi cero: el cable está bien.','ok');
+  }
+  if(f==='vac'){
+    if(s.src==='serie')return mmSet('120,1 V','Está midiendo el voltaje en el hueco del circuito abierto. Para medir corriente, pase la punta roja al borne A y la perilla a A~.');
+    if(s.src==='ac'){const msg={fn:'Normal: alrededor de 120 V entre fase y neutro.',nt:'Casi cero entre neutro y tierra: bien instalado.',st:'Casi cero entre fase y tierra: a este tomacorriente le falta la tierra o está suelta.'}[$('mmS').value];return mmSet(fmt(s.v,1)+' V',msg,$('mmS').value==='st'?'bad':'ok')}
+    if(s.src==='dc')return mmSet('0,0 V','Eso es corriente continua. Gire la perilla a V⎓.');
+    return mmSet('0,0 V','No hay voltaje: el circuito está sin energía.');
+  }
+  if(f==='vdc'){
+    if(s.src==='dc')return mmSet(fmt(s.v,2)+' V',s===MM_S.pila?'Una pila nueva marca un poco más de 1,5 V.':'12,7 V en reposo: batería cargada.','ok');
+    if(s.src==='ac'||s.src==='serie')return mmSet('0,0 V','El tomacorriente es de corriente alterna. En V⎓ marca cero o un valor sin sentido: use V~.');
+    return mmSet('0,0 V','No hay voltaje: el circuito está sin energía.');
+  }
+}
+document.querySelectorAll('#mmDial button').forEach(b=>b.onclick=()=>{mm.f=b.dataset.f;mmRead()});
+document.querySelectorAll('#mmJacks button').forEach(b=>b.onclick=()=>{mm.j=b.dataset.j;mmRead()});
+$('mmS').onchange=mmRead;$('mmFuse').onclick=()=>{mm.fuse=true;mmRead()};mmRead();
+
+/* ---------- calculadora solar aislada ---------- */
+let sLoads=store.get('eb_sload',[{n:'Bombillos LED (6)',w:54,h:5},{n:'Televisor',w:80,h:4},{n:'Nevera eficiente',w:120,h:10},{n:'Ventilador',w:60,h:8},{n:'Cargadores de celular',w:20,h:3}]);
+function renderSolar(){
+  $('sLoads').innerHTML=sLoads.map((a,i)=>`<tr><td><input value="${a.n.replace(/"/g,'&quot;')}" data-i="${i}" data-k="n" aria-label="Aparato"></td>
+   <td><input type="number" min="0" value="${a.w}" data-i="${i}" data-k="w" aria-label="Vatios" style="max-width:90px"></td>
+   <td><input type="number" min="0" max="24" step="0.5" value="${a.h}" data-i="${i}" data-k="h" aria-label="Horas por día" style="max-width:80px"></td>
+   <td class="num">${fmt(a.w*a.h,0)}</td><td><button class="x" data-i="${i}" aria-label="Quitar">×</button></td></tr>`).join('');
+  $('sLoads').querySelectorAll('input').forEach(inp=>inp.oninput=()=>{const a=sLoads[+inp.dataset.i],k=inp.dataset.k;a[k]=k==='n'?inp.value:parseFloat(inp.value)||0;store.set('eb_sload',sLoads);calSolar(false)});
+  $('sLoads').querySelectorAll('.x').forEach(b=>b.onclick=()=>{sLoads.splice(+b.dataset.i,1);store.set('eb_sload',sLoads);renderSolar()});
+  calSolar(false);
+}
+function calSolar(re=true){
+  if(re)return renderSolar();
+  const n=id=>Math.max(0,parseFloat($(id).value)||0);
+  const E=sLoads.reduce((s,a)=>s+a.w*a.h,0),Eb=E/0.9,HSP=Math.max(0.5,n('sHSP')),V=+$('sSys').value,dod=+$('sB').value,days=Math.max(0.5,n('sD')),Wp=Math.max(10,n('sWp'));
+  const need=Eb/(HSP*0.8),np=Math.max(1,Math.ceil(need/Wp)),Ah=Eb*days/(dod*V),ctrl=np*Wp/V*1.25,inv=sLoads.reduce((s,a)=>s+a.w,0)*1.25;
+  [...$('sLoads').rows].forEach((tr,i)=>tr.cells[3].textContent=fmt(sLoads[i].w*sLoads[i].h,0));
+  $('sOut').innerHTML=`<div><small>Consumo diario</small><b>${fmt(E,0)} Wh</b></div>
+   <div><small>Paneles de ${fmt(Wp,0)} Wp</small><b>${np} (${fmt(np*Wp,0)} Wp)</b></div>
+   <div><small>Baterías a ${V} V</small><b>${fmt(Ah,0)} Ah</b></div>
+   <div><small>Controlador MPPT</small><b>${fmt(ctrl,0)} A</b></div>
+   <div><small>Inversor, mínimo</small><b>${fmt(inv,0)} W</b></div>`;
+}
+['sHSP','sSys','sB','sD','sWp'].forEach(id=>$(id).oninput=()=>calSolar(false));
+$('sAdd').onclick=()=>{sLoads.push({n:'Nuevo aparato',w:50,h:1});store.set('eb_sload',sLoads);renderSolar()};
+renderSolar();
+
+/* ---------- bombeo solar ---------- */
+function calBombeo(){
+  const n=id=>Math.max(0,parseFloat($(id).value)||0);
+  const Q=n('bQ'),H=n('bH'),HSP=Math.max(0.5,n('bHSP')),ef=Math.max(0.1,n('bE')/100),Wp=Math.max(10,n('bWp'));
+  const Eh=2.725*Q*H,Ee=Eh/ef,need=Ee/(HSP*0.8),np=Math.max(1,Math.ceil(need/Wp));
+  $('bOut').innerHTML=`<div><small>Energía hidráulica diaria</small><b>${fmt(Eh,0)} Wh</b></div>
+   <div><small>Energía eléctrica diaria</small><b>${fmt(Ee,0)} Wh</b></div>
+   <div><small>Potencia de paneles</small><b>${fmt(need,0)} Wp</b></div>
+   <div><small>Paneles de ${fmt(Wp,0)} Wp</small><b>${np}</b></div>
+   <div><small>Caudal medio con sol</small><b>${fmt(Q/HSP,1)} m³/h</b></div>`;
+}
+['bQ','bH','bHSP','bE','bWp'].forEach(id=>$(id).oninput=calBombeo);calBombeo();
+
+/* ---------- presupuesto de materiales ---------- */
+let precios=store.get('eb_precios',{});
+const PRE_IN=['qL','qT','qG','qS1','qS2','qS3','qCi','qCt','qCe','qD','qH','qMO','qImp'];
+const preVals=store.get('eb_preq',{});PRE_IN.forEach(id=>{if(preVals[id]!=null)$(id).value=preVals[id]});
+function calPres(){
+  const n=id=>Math.max(0,parseFloat($(id).value)||0);
+  PRE_IN.forEach(id=>preVals[id]=$(id).value);store.set('eb_preq',preVals);
+  const L=n('qL'),T=n('qT'),G=Math.min(n('qG'),T),S1=n('qS1'),S2=n('qS2'),S3=n('qS3'),Ci=n('qCi'),Ct=n('qCt'),Ce=n('qCe'),D=n('qD'),H=n('qH');
+  const sal=L+T+S1+S2+2*S3;
+  const t12=(L+T)*D+(Ci+Ct)*H+(S1+S2+2*S3)*2.5+S3*D,t34=Ce*H;
+  const c14=(3*(L*D+Ci*H)+2.5*(2*S1+3*S2+6*S3)+2*D*S3)*1.1,c12=3*(T*D+Ct*H)*1.1,c10=3*Ce*H*1.1;
+  const esp=Ci+Ct+2*Ce+2,tab=[4,6,8,12,16,18,24,30,42].find(x=>x>=esp)||42;
+  const items=[
+   ['t12','Tubo PVC conduit de ½" (tramo de 3 m)',Math.ceil(t12/3*1.1),'tramos'],
+   ['t34','Tubo PVC conduit de ¾" (tramo de 3 m)',Math.ceil(t34/3*1.1),'tramos'],
+   ['acc','Curvas, uniones y adaptadores',Math.ceil(2*sal+2*Ce),'unidades'],
+   ['sol','Soldadura para PVC',Math.max(1,Math.ceil((t12+t34)/200)),'tarros'],
+   ['c14','Cable THHN 14 AWG',Math.ceil(c14),'m'],
+   ['c12','Cable THHN 12 AWG',Math.ceil(c12),'m'],
+   ['c10','Cable THHN 10 AWG',Math.ceil(c10),'m'],
+   ['oct','Caja octagonal',L,'unidades'],
+   ['c24','Caja 2×4 (2400)',T+S1+S2+2*S3,'unidades'],
+   ['ros','Roseta o portalámpara',L,'unidades'],
+   ['tom','Tomacorriente doble con tierra',T-G,'unidades'],
+   ['gfc','Tomacorriente con diferencial (GFCI)',G,'unidades'],
+   ['is1','Interruptor sencillo',S1,'unidades'],
+   ['is2','Interruptor doble',S2,'unidades'],
+   ['is3','Interruptor conmutable',2*S3,'unidades'],
+   ['cap','Conectores de resorte (capuchones)',3*sal,'unidades'],
+   ['tab',`Tablero de ${tab} circuitos`,1,'unidad'],
+   ['b1','Breaker monopolar',Ci+Ct,'unidades'],
+   ['b2','Breaker bipolar (circuitos a 240 V)',Ce,'unidades'],
+   ['tie','Kit de puesta a tierra (varilla y conector)',1,'kit'],
+   ['cin','Cinta aislante',Math.max(1,Math.ceil(sal/20)),'rollos']
+  ].filter(x=>x[2]>0);
+  let mat=0;
+  $('qTab').innerHTML=`<thead><tr><th>Material</th><th style="text-align:right">Cantidad</th><th>Precio unitario</th><th style="text-align:right">Subtotal</th></tr></thead><tbody>${items.map(([k,nm,q,u])=>{const p=parseFloat(precios[k])||0;mat+=p*q;
+    return `<tr><td>${nm}</td><td class="num">${fmt(q,0)} ${u}</td><td><input type="number" min="0" data-k="${k}" value="${precios[k]??''}" placeholder="$" aria-label="Precio de ${nm}" style="max-width:130px"></td><td class="num">${p?'$'+fmt(p*q,0):'—'}</td></tr>`}).join('')}</tbody>`;
+  $('qTab').querySelectorAll('input').forEach(inp=>inp.onchange=()=>{precios[inp.dataset.k]=inp.value;store.set('eb_precios',precios);calPres()});
+  const puntos=L+T+Ce,mo=puntos*n('qMO'),imp=(mat+mo)*n('qImp')/100,tot=mat+mo+imp;
+  $('qOut').innerHTML=`<div><small>Materiales</small><b>$${fmt(mat,0)}</b></div>
+   <div><small>Mano de obra (${puntos} puntos)</small><b>$${fmt(mo,0)}</b></div>
+   <div><small>Imprevistos</small><b>$${fmt(imp,0)}</b></div>
+   <div><small>Total</small><b>$${fmt(tot,0)}</b></div>`;
+  window._pres={items,mat,mo,imp,tot,puntos};
+}
+PRE_IN.forEach(id=>$(id).oninput=calPres);calPres();
+$('qCsv').onclick=async()=>{
+  const p=window._pres;const rows=[['Material','Cantidad','Unidad','Precio unitario','Subtotal']];
+  p.items.forEach(([k,nm,q,u])=>{const pr=parseFloat(precios[k])||0;rows.push([nm,q,u,pr,pr*q])});
+  rows.push([],['Materiales','','','',Math.round(p.mat)],['Mano de obra ('+p.puntos+' puntos)','','','',Math.round(p.mo)],['Imprevistos','','','',Math.round(p.imp)],['Total','','','',Math.round(p.tot)]);
+  const csv='\ufeff'+rows.map(r=>r.map(c=>`"${String(c??'').replace(/"/g,'""')}"`).join(';')).join('\r\n');
+  const r=await saveFile('presupuesto-electrico.csv',csv,'text/csv');
+  toast(r==='ok'?'Presupuesto listo para guardar.':r==='declined'?'Descarga cancelada.':'No se pudo descargar en esta vista.');
+};
+
+/* ---------- utilidades: guardar archivos y avisos ---------- */
+async function saveFile(name,data,mime){
+  try{if(window.claude&&typeof window.claude.use==='function'){const d=await window.claude.use('downloads');if(d){await d.save({filename:name,data:data instanceof Blob?data:new Blob([data],{type:mime})});return 'ok'}}}
+  catch(e){return e&&e.code==='declined'?'declined':'fail'}
+  try{const b=data instanceof Blob?data:new Blob([data],{type:mime});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);return 'ok'}catch(e){return 'fail'}
+}
+let toastT;function toast(msg){const t=$('toast');t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,3500)}
+
+/* ---------- cursos ---------- */
+const QB={fund:QOLD.slice(0,10),casa:QOLD.slice(10,18),mot:QOLD.slice(18),solar:QSOLAR,finca:QFINCA,multi:QMULTI,planos:QPLANOS,oficio:QOFICIO,motos:QMOTOS};
+const COURSES=[
+ {id:'fund',t:'Fundamentos',d:'Qué es la electricidad, voltaje, corriente, ley de Ohm, potencia y seguridad básica.',data:L,key:'eb_done'},
+ {id:'multi',t:'Multímetro y pinza',d:'Medir voltaje, resistencia, continuidad y corriente sin accidentes.',data:MULTI,key:'eb_multi'},
+ {id:'casa',t:'La electricidad de una casa',d:'Del poste al tomacorriente: tablero, circuitos, cables, aparatos, tierra y RETIE.',data:CASA,key:'eb_casa2'},
+ {id:'planos',t:'Planos y presupuesto',d:'Símbolos, plano, cuadro de cargas, unifilar y cómo cotizar un trabajo.',data:PLANOS,key:'eb_planos'},
+ {id:'mot',t:'Motores y bombas',d:'Motobombas, achique, pozos, arrancadores, plantas y minería.',data:MOT,key:'eb_mot'},
+ {id:'solar',t:'Energía solar',d:'Paneles, baterías, inversores, bombeo solar y conexión a la red.',data:SOLAR,key:'eb_solarp'},
+ {id:'finca',t:'Electricidad en la finca',d:'Cercas eléctricas, galpones, ordeño, agua y rayos.',data:FINCA,key:'eb_finca'},
+ {id:'motos',t:'Motos y carros 12 V',d:'Batería, carga, accesorios y cómo pasar corriente.',data:MOTOS,key:'eb_motos'},
+ {id:'oficio',t:'El oficio de electricista',d:'Estudios, matrícula CONTE, trabajo seguro, primeros auxilios y formalización.',data:OFICIO,key:'eb_oficio'}
+];
+const CBYID=Object.fromEntries(COURSES.map(c=>[c.id,c]));
+const doneOf=c=>store.get(c.key,[]);
+const bestOf=id=>store.get('eb_best_'+id,null);
+const PASS=80;
+
+function renderHome(){
+  const totT=COURSES.reduce((s,c)=>s+c.data.length,0),doneT=COURSES.reduce((s,c)=>s+doneOf(c).filter(i=>i<c.data.length).length,0);
+  const passed=COURSES.filter(c=>(bestOf(c.id)||0)>=PASS).length;
+  $('stats').innerHTML=`<div><b>${doneT}</b> <small>de ${totT} temas leídos</small></div><div><b>${passed}</b> <small>de ${COURSES.length} evaluaciones aprobadas</small></div>`;
+  $('cards').innerHTML=COURSES.map((c,i)=>{const d=doneOf(c).filter(x=>x<c.data.length).length,b=bestOf(c.id);
+    return `<li><button class="ccard" data-c="${c.id}"><span class="cn">${i+1}</span><span class="cbody"><h3>${c.t}</h3><p>${c.d}</p>
+     <span class="bar"><i style="width:${d/c.data.length*100}%"></i></span>
+     <small>${d} de ${c.data.length} temas${b!=null?(b>=PASS?`<em class="pass">Aprobado con ${b} %</em>`:`<em>Evaluación: ${b} %</em>`):''}</small></span></button></li>`}).join('');
+  $('cards').querySelectorAll('.ccard').forEach(b=>b.onclick=()=>openCourse(b.dataset.c));
+}
+
+let curCourse=null;
+function openCourse(id,openIdx=-1){
+  const c=CBYID[id];curCourse=c;stopSpeak();
+  $('cTitle').textContent=c.t;$('cDesc').textContent=c.d;
+  show('curso');renderCourse(openIdx);window.scrollTo({top:0});
+}
+function renderCourse(openIdx){
+  const c=curCourse;let done=doneOf(c);const ol=$('courseList');ol.innerHTML='';
+  c.data.forEach((l,i)=>{
+    const li=document.createElement('li');li.dataset.n=i+1;if(done.includes(i))li.classList.add('done');
+    li.innerHTML=`<details class="lesson"${openIdx===i?' open':''}><summary><h3>${l.t}</h3><span>${done.includes(i)?'Leído':l.m}</span></summary>
+      <div class="lesson-body">${canSpeak?'<button class="listen">Escuchar este tema</button>':''}<div class="content">${l.h}</div>
+      <button class="btn mark" data-i="${i}">${done.includes(i)?'Marcar como no leído':'Marcar como leído'}</button></div></details>`;
+    ol.appendChild(li);
+  });
+  ol.querySelectorAll('.btn.mark').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i,was=done.includes(i);done=was?done.filter(x=>x!==i):[...done,i];store.set(c.key,done);stopSpeak();
+    const nx=!was&&i<c.data.length-1?i+1:i;renderCourse(nx);
+    const el=ol.querySelectorAll('details')[nx];if(el&&el.scrollIntoView)el.scrollIntoView({block:'start',behavior:'smooth'});
+  });
+  ol.querySelectorAll('.listen').forEach(b=>b.onclick=()=>toggleSpeak(b,b.nextElementSibling));
+  ol.querySelectorAll('details').forEach(d=>d.addEventListener('toggle',()=>{if(!d.open&&d.contains(speakingBtn))stopSpeak()}));
+  const d=done.filter(x=>x<c.data.length).length;
+  $('cTxt').textContent=`${d} de ${c.data.length} temas`;$('cBar').style.width=(d/c.data.length*100)+'%';
+}
+$('cBack').onclick=()=>{stopSpeak();show('inicio')};
+$('cQuiz').onclick=()=>{stopSpeak();show('evaluacion');startQuiz(curCourse.id)};
+
+/* ---------- navegación ---------- */
+function show(v){
+  document.querySelectorAll('section.view').forEach(s=>s.classList.toggle('active',s.id===v));
+  const tab=v==='curso'?'inicio':v;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===tab));
+  if(v==='inicio')renderHome();if(v==='evaluacion')renderEval();
+  if(v!=='curso')stopSpeak();
+  window.scrollTo({top:0});
+}
+document.querySelectorAll('nav.tabs button').forEach(b=>b.onclick=()=>show(b.dataset.v));
+
+/* ---------- herramientas ---------- */
+function openTool(id){
+  document.querySelectorAll('.tool').forEach(p=>p.hidden=p.id!=='tool-'+id);
+  document.querySelectorAll('#chips button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===id));
+  store.set('eb_tool',id);
+  if(!$('herramientas').classList.contains('active'))show('herramientas');
+}
+document.querySelectorAll('#chips button').forEach(b=>b.onclick=()=>openTool(b.dataset.t));
+document.querySelectorAll('[data-open-tool]').forEach(a=>a.onclick=e=>{e.preventDefault();openTool(a.dataset.openTool)});
+(()=>{const t=store.get('eb_tool','ohm');document.querySelectorAll('.tool').forEach(p=>p.hidden=p.id!=='tool-'+t);document.querySelectorAll('#chips button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===t))})();
+
+/* ---------- lectura en voz alta ---------- */
+const canSpeak='speechSynthesis' in window;
+let speakingBtn=null;
+function pickVoice(){const vs=speechSynthesis.getVoices();return ['es-CO','es-US','es-MX','es-419','es-ES'].map(l=>vs.find(v=>v.lang.replace('_','-')===l)).find(Boolean)||vs.find(v=>v.lang.startsWith('es'))}
+function stopSpeak(){if(!canSpeak)return;speechSynthesis.cancel();if(speakingBtn){speakingBtn.textContent='Escuchar este tema';speakingBtn.classList.remove('on')}speakingBtn=null}
+function toggleSpeak(btn,content){
+  if(speakingBtn===btn)return stopSpeak();
+  stopSpeak();
+  const clone=content.cloneNode(true);clone.querySelectorAll('svg,.diagram,.symgrid,.wires').forEach(n=>n.remove());
+  clone.querySelectorAll('li,p,h4,tr,div').forEach(n=>n.append('. '));
+  const text=clone.textContent.replace(/\s+/g,' ').replace(/(\.\s*){2,}/g,'. ').replace(/×/g,' por ').replace(/÷/g,' dividido ').replace(/Ω/g,' ohmios').replace(/≈/g,' aproximadamente ');
+  const parts=text.match(/[^.!?]+[.!?]*/g)||[text];const voice=pickVoice();
+  speakingBtn=btn;btn.textContent='Detener lectura';btn.classList.add('on');
+  parts.forEach((p,i)=>{const u=new SpeechSynthesisUtterance(p.trim());u.lang='es-CO';if(voice)u.voice=voice;u.rate=0.97;
+    if(i===parts.length-1)u.onend=()=>{if(speakingBtn===btn)stopSpeak()};speechSynthesis.speak(u)});
+}
+if(canSpeak)speechSynthesis.onvoiceschanged=()=>{};
+
+/* ---------- evaluaciones ---------- */
+$('eName').value=store.get('eb_name','');
+$('eName').oninput=()=>store.set('eb_name',$('eName').value.trim());
+function renderEval(){
+  $('quiz').hidden=true;$('certBox').hidden=true;$('eList').hidden=false;
+  const all=COURSES.every(c=>(bestOf(c.id)||0)>=PASS);
+  $('eList').innerHTML=`<div class="table-wrap"><table class="etab"><thead><tr><th>Módulo</th><th>Mejor resultado</th><th></th></tr></thead><tbody>${COURSES.map(c=>{const b=bestOf(c.id);
+    return `<tr><td>${c.t}<br><small class="muted">${QB[c.id].length} preguntas</small></td><td>${b==null?'<span class="muted">Sin presentar</span>':b>=PASS?`<span class="ok">${b} %, aprobado</span>`:`<span class="bad">${b} %</span>`}</td>
+    <td class="acts"><button class="btn small" data-q="${c.id}">${b==null?'Presentar':'Repetir'}</button>${b>=PASS?`<button class="btn alt small" data-cert="${c.id}">Certificado</button>`:''}</td></tr>`}).join('')}</tbody></table></div>
+    <div class="panel final"><h3>Certificado del curso completo</h3><p>${all?'Aprobó todos los módulos. Ya puede generar su certificado final.':`Se habilita al aprobar los ${COURSES.length} módulos con ${PASS} % o más.`}</p>
+    <button class="btn" id="finalCert"${all?'':' disabled'}>Generar certificado final</button></div>`;
+  $('eList').querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>startQuiz(b.dataset.q));
+  $('eList').querySelectorAll('[data-cert]').forEach(b=>b.onclick=()=>makeCert(b.dataset.cert));
+  if(all)$('finalCert').onclick=()=>makeCert('final');
+}
+let qz=null;
+function startQuiz(id){
+  const qs=[...QB[id]].sort(()=>Math.random()-0.5);
+  qz={id,qs,i:0,score:0};$('eList').hidden=true;$('certBox').hidden=true;$('quiz').hidden=false;renderQ();window.scrollTo({top:0});
+}
+function renderQ(){
+  const box=$('quiz'),c=CBYID[qz.id];
+  if(qz.i>=qz.qs.length){
+    const pct=Math.round(qz.score/qz.qs.length*100),prev=bestOf(qz.id);if(prev==null||pct>prev)store.set('eb_best_'+qz.id,pct);
+    const ok=pct>=PASS;
+    box.innerHTML=`<h3>${c.t}: ${qz.score} de ${qz.qs.length} (${pct} %)</h3>
+      <p>${ok?'Aprobado. Puede generar el certificado de este módulo.':`Para aprobar se necesita ${PASS} %. Repase los temas y vuelva a intentarlo.`}</p>
+      <div class="acts">${ok?`<button class="btn" id="qCert">Ver certificado</button>`:`<button class="btn" id="qRev">Repasar el módulo</button>`}<button class="btn alt" id="qAgain">Intentar de nuevo</button><button class="btn alt" id="qBack">Volver a las evaluaciones</button></div>`;
+    if(ok)$('qCert').onclick=()=>makeCert(qz.id);else $('qRev').onclick=()=>openCourse(qz.id);
+    $('qAgain').onclick=()=>startQuiz(qz.id);$('qBack').onclick=renderEval;return;
+  }
+  const [q,o,cr,e]=qz.qs[qz.i];
+  box.innerHTML=`<div class="muted">${c.t}, pregunta ${qz.i+1} de ${qz.qs.length}</div><div class="q">${q}</div>
+    <div class="opts">${o.map((t,i)=>`<button data-i="${i}">${t}</button>`).join('')}</div><div class="expl" id="expl"></div>`;
+  box.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i;box.querySelectorAll('.opts button').forEach(x=>{x.disabled=true;if(+x.dataset.i===cr)x.classList.add('right')});
+    if(i===cr)qz.score++;else b.classList.add('wrong');
+    $('expl').innerHTML=`<p><b>${i===cr?'Correcto.':'No es esa.'}</b> ${e}</p><button class="btn" id="next">${qz.i<qz.qs.length-1?'Siguiente pregunta':'Ver resultado'}</button>`;
+    $('next').onclick=()=>{qz.i++;renderQ()};$('next').focus();
+  });
+}
+
+/* ---------- certificados ---------- */
+async function makeCert(id){
+  const name=($('eName').value||'').trim();
+  if(name.length<3){renderEval();$('eName').focus();toast('Escriba su nombre completo para el certificado.');return}
+  const final=id==='final',c=CBYID[id];
+  const score=final?Math.round(COURSES.reduce((s,x)=>s+(bestOf(x.id)||0),0)/COURSES.length):bestOf(id);
+  const fecha=new Date().toLocaleDateString('es-CO',{timeZone:'America/Bogota',day:'numeric',month:'long',year:'numeric'});
+  try{await document.fonts.ready}catch(e){}
+  const cv=document.createElement('canvas');cv.width=1600;cv.height=1131;const g=cv.getContext('2d');
+  g.fillStyle='#FBFCFC';g.fillRect(0,0,1600,1131);
+  g.strokeStyle='#B5652B';g.lineWidth=14;g.strokeRect(40,40,1520,1051);g.lineWidth=2;g.strokeRect(66,66,1468,999);
+  g.fillStyle='#1B2A3A';g.fillRect(66,66,1468,110);
+  g.fillStyle='#F5C518';g.beginPath();g.moveTo(130,86);g.lineTo(100,130);g.lineTo(124,130);g.lineTo(116,160);g.lineTo(150,114);g.lineTo(126,114);g.closePath();g.fill();
+  g.fillStyle='#FFFFFF';g.font='700 46px "Barlow Condensed", "Arial Narrow", sans-serif';g.textAlign='left';g.fillText('Electricidad básica',170,137);
+  g.textAlign='right';g.font='500 28px Barlow, Arial, sans-serif';g.fillText('Vibras Positivas HM',1500,135);
+  g.textAlign='center';g.fillStyle='#1B2A3A';
+  g.font='700 78px "Barlow Condensed", "Arial Narrow", sans-serif';g.fillText('Certificado de participación',800,300);
+  g.fillStyle='#58687A';g.font='400 34px Barlow, Arial, sans-serif';g.fillText('Se hace constar que',800,380);
+  g.fillStyle='#1B2A3A';let fs=86;g.font=`700 ${fs}px "Barlow Condensed", "Arial Narrow", sans-serif`;while(g.measureText(name).width>1300&&fs>40){fs-=4;g.font=`700 ${fs}px "Barlow Condensed", "Arial Narrow", sans-serif`}
+  g.fillText(name,800,490);g.strokeStyle='#B5652B';g.lineWidth=3;g.beginPath();g.moveTo(350,520);g.lineTo(1250,520);g.stroke();
+  g.fillStyle='#58687A';g.font='400 34px Barlow, Arial, sans-serif';
+  g.fillText(final?'completó y aprobó los nueve módulos del curso':'completó y aprobó el módulo',800,600);
+  g.fillStyle='#B5652B';g.font='700 60px "Barlow Condensed", "Arial Narrow", sans-serif';
+  g.fillText(final?'Electricidad básica: de la casa al motor':c.t,800,690);
+  g.fillStyle='#1B2A3A';g.font='500 34px Barlow, Arial, sans-serif';
+  g.fillText(`con un resultado de ${score} % en la evaluación${final?' (promedio)':''}`,800,770);
+  g.fillText(fecha,800,830);
+  g.fillStyle='#58687A';g.font='400 22px Barlow, Arial, sans-serif';
+  g.fillText('Certificado de un curso educativo libre. No reemplaza la formación técnica formal ni la matrícula profesional del CONTE.',800,1010);
+  const url=cv.toDataURL('image/png');
+  $('eList').hidden=true;$('quiz').hidden=true;$('certBox').hidden=false;
+  $('certImg').src=url;$('certImg').alt=`Certificado de ${name}`;
+  const fname=`certificado-${final?'curso-completo':id}-${name.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}.png`;
+  $('certDl').onclick=()=>cv.toBlob(async b=>{const r=await saveFile(fname,b,'image/png');toast(r==='ok'?'Certificado listo para guardar.':r==='declined'?'Descarga cancelada.':'Mantenga presionada la imagen para guardarla.')},'image/png');
+  $('certBack').onclick=renderEval;window.scrollTo({top:0});
+}
+
+/* ---------- instalación y uso sin conexión ---------- */
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('installBtn').hidden=false});
+$('installBtn').onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('installBtn').hidden=true};
+(()=>{const host=location.hostname;const hosted=/claude\.ai$|claude\.site$|claudeusercontent|anthropic/.test(host);
+  if(!hosted&&location.protocol==='https:'){
+    const l=document.createElement('link');l.rel='manifest';l.href='manifest.webmanifest';document.head.appendChild(l);
+    const ap=document.createElement('link');ap.rel='apple-touch-icon';ap.href='icon-192.png';document.head.appendChild(ap);
+    if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+  }})();
+
+renderHome();
+
+</script>
+</body>
+</html>
