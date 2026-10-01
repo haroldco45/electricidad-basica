@@ -1,6 +1,6 @@
 // Electricidad básica: funciona sin conexión.
 // Cambie la versión cada vez que publique cambios para que los teléfonos descarguen la nueva.
-const VERSION = 'eb-v1';
+const VERSION = 'eb-v2';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 
 self.addEventListener('install', e => {
